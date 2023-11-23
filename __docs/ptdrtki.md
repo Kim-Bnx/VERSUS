@@ -12,7 +12,7 @@
 
 <br />
 
-## Every day I ...
+## EVERY DAY I ...
 ## Stand up and talk
 Stand-up meetings supra mega rapide pour savoir comment vont les animaux et ouvrir le trello pour voir qui de quoi de qui quand ou comment ta capter.
 
@@ -25,11 +25,15 @@ Stand-up meetings supra mega rapide pour savoir comment vont les animaux et ouvr
 - Les liens vers les ressources recherchées et utilisées
 - Bugs rencontrés et solutions mises en place
 
-## Every week we 
+<br />
+<br />
+
+## EVERY DAY WE ...
 - [Rétrospectives](https://github.com/O-clock-Cheesecake/Projects/blob/master/feuille-de-route.md#r%C3%A9trospectives)
 - Déploiement (sauf Sprint 0) AVANT chaque rétrospective
 - Point hebdomadaire avec les encadrants.
 
+<br />
 <br />
 
 ## SPRINT 0 : Un grand pouvoir ...
