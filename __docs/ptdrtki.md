@@ -29,7 +29,7 @@ Stand-up meetings supra mega rapide pour savoir comment vont les animaux et ouvr
 <br />
 <br />
 
-## EVERY DAY WE ...
+## EVERY WEEK WE ...
 - [Rétrospectives](https://github.com/O-clock-Cheesecake/Projects/blob/master/feuille-de-route.md#r%C3%A9trospectives)
 - Déploiement (sauf Sprint 0) AVANT chaque rétrospective
 - Point hebdomadaire avec les encadrants.
