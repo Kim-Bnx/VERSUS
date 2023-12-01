@@ -1,5 +1,3 @@
 # 🎮 VERSUS
 
-.
-
 SoonTM
