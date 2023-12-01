@@ -34,5 +34,28 @@
   "workbench.iconTheme": "material-icon-theme",
   "cSpell.words": [
     "airbnb"
-  ]
+  ],
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#fc8ba4",
+    "activityBar.background": "#fc8ba4",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#e7fee0",
+    "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#15202b99",
+    "editorGroup.border": "#fc8ba4",
+    "sash.hoverBorder": "#fc8ba4",
+    "sideBar.border": "#fc8ba4",
+    "statusBar.background": "#fb597d",
+    "statusBar.debuggingBackground": "#59fbd7",
+    "statusBar.debuggingForeground": "#15202b",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#fa2756",
+    "statusBarItem.remoteBackground": "#fb597d",
+    "statusBarItem.remoteForeground": "#15202b",
+    "titleBar.activeBackground": "#fb597d",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#fb597d99",
+    "titleBar.inactiveForeground": "#15202b99"
+  }
 }
