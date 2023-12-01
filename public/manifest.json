@@ -1,6 +1,6 @@
 {
-  "short_name": "Versus",
-  "name": "Versus Application",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",
