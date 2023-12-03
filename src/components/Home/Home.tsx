@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Container } from '@mantine/core';
+import { BackgroundImage, Box, Container } from '@mantine/core';
 import { IconHeart } from '@tabler/icons-react';
 import Slider from '../Slider/Slider';
 
@@ -22,7 +22,7 @@ function Home() {
 
       <Slider />
 
-      <div className="category container">
+      <Box className="category container">
         <div className="category__title container__title">
           <h2 className="category__title-name container__title-name">
             Catégories
@@ -32,7 +32,10 @@ function Home() {
         </div>
 
         <div className="category__grid grid">
-          <div className="thumb">
+          <BackgroundImage
+            className="thumb"
+            src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+          >
             <div
               className="button-favorite"
               onMouseEnter={handleFavoriteHover}
@@ -58,15 +61,14 @@ function Home() {
               <p className="thumb__dates-start">10/12/2023</p>
               <p className="thumb__dates-duration">5 jours</p>
             </div>
-          </div>
+          </BackgroundImage>
 
-          <div className="thumb">
+          <BackgroundImage
+            className="thumb"
+            src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+          >
             <div className="button-favorite">
-              <IconHeart
-                stroke={1.5}
-                fill={isHovered ? 'rgb(216, 60, 60)' : 'black'}
-                color={isHovered ? 'rgb(216, 60, 60)' : '#929292'}
-              />
+              <IconHeart stroke={1.5} fill="black" color="#929292" />
             </div>
 
             <div className="thumb__infos">
@@ -82,15 +84,14 @@ function Home() {
               <p className="thumb__dates-start">10/12/2023</p>
               <p className="thumb__dates-duration">8 jours</p>
             </div>
-          </div>
+          </BackgroundImage>
 
-          <div className="thumb">
+          <BackgroundImage
+            className="thumb"
+            src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+          >
             <div className="button-favorite">
-              <IconHeart
-                stroke={1.5}
-                fill={isHovered ? 'rgb(216, 60, 60)' : 'black'}
-                color={isHovered ? 'rgb(216, 60, 60)' : '#929292'}
-              />
+              <IconHeart stroke={1.5} fill="black" color="#929292" />
             </div>
 
             <div className="thumb__infos">
@@ -106,11 +107,11 @@ function Home() {
               <p className="thumb__dates-start">10/12/2023</p>
               <p className="thumb__dates-duration">10 jours</p>
             </div>
-          </div>
+          </BackgroundImage>
         </div>
-      </div>
+      </Box>
 
-      <div className="favorites-games container">
+      <Box className="favorites-games container">
         <div className="games__title container__title">
           <h2 className="games__title-name container__title-name">
             vos jeux préférés
@@ -118,23 +119,35 @@ function Home() {
         </div>
 
         <div className="games__grid grid">
-          <div className="thumb">
-            <p>Heartstone</p>
-          </div>
+          <BackgroundImage
+            src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
+            className="thumb"
+          >
+            {/* <p>Heartstone</p> */}
+          </BackgroundImage>
 
-          <div className="thumb">
-            <p>Heartstone</p>
-          </div>
+          <BackgroundImage
+            src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
+            className="thumb"
+          >
+            {/* <p>Heartstone</p> */}
+          </BackgroundImage>
 
-          <div className="thumb">
-            <p>Heartstone</p>
-          </div>
+          <BackgroundImage
+            src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
+            className="thumb"
+          >
+            {/* <p>Heartstone</p> */}
+          </BackgroundImage>
 
-          <div className="thumb">
-            <p>Heartstone</p>
-          </div>
+          <BackgroundImage
+            src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
+            className="thumb"
+          >
+            {/* <p>Heartstone</p> */}
+          </BackgroundImage>
         </div>
-      </div>
+      </Box>
     </Container>
   );
 }

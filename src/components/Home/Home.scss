@@ -28,8 +28,6 @@
   }
 
   .category__grid {
-
-
     .thumb {
       position: relative;
       width: 30.333333%;
@@ -57,10 +55,13 @@
 
       &__type {
         position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         bottom: 3.5rem;
         right: 1rem;
         background-color: #1d1d1d;
-        padding: 0.2rem 1.2rem;
+        padding: 0.4rem 1.2rem;
         border-radius: 0.8rem;
 
         &-text {

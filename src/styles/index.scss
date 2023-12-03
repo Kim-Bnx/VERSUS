@@ -47,7 +47,9 @@ html {
 }
 
 .thumb {
-  border: 2px solid white;
+  cursor: pointer;
+  background-size: cover;
+  background-position: bottom;
 }
 
 input {
@@ -74,6 +76,7 @@ input {
   position: absolute;
   top: 0.8rem;
   right: 1rem;
+  background-color: #0c0c0c;
   border: 1px solid #333333;
   border-radius: 50%;
   padding: 0.5rem;

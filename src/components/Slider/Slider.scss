@@ -1,7 +1,6 @@
 @use '../../styles/variables' as v;
 
 .slider {
-  width: 100%;
   display: flex;
   height: 400px;
 
@@ -12,17 +11,21 @@
     .slide {
       display: flex;
       width: 100%;
-      border: 2px solid white;
+      border-right: 5px solid transparent;
 
       &-lefty {
         width: 60%;
+        background-size: cover;
+        background-position: bottom;
       }
 
       &-righty {
         width: 40%;
 
         .event {
-          border-left: 2px solid white;
+          border-right: 1px solid #929292;
+          border-bottom: 1px solid #929292;
+          border-top: 1px solid #929292;
           height: 100%;
 
           &-description {
