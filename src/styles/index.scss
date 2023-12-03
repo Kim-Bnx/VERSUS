@@ -20,12 +20,16 @@ html {
   background-color: #0c0c0c;
 }
 
+.page {
+  padding: 10em 10rem 5rem 10rem;
+}
+
 .container {
   padding-top: 7rem;
 
   &__title {
     padding-bottom: 1.5rem;
-    
+
     &-name {
       font-size: 2.5rem;
       line-height: 3rem;
@@ -44,4 +48,34 @@ html {
 
 .thumb {
   border: 2px solid white;
+}
+
+input {
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.button {
+  background-color: inherit;
+  border: 1px solid #929292;
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #929292;
+    color: black;
+  }
+}
+
+.button-favorite {
+  position: absolute;
+  top: 0.8rem;
+  right: 1rem;
+  border: 1px solid #333333;
+  border-radius: 50%;
+  padding: 0.5rem;
+  cursor: pointer;
 }

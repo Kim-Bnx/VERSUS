@@ -1,10 +1,17 @@
-import { rem, Container } from '@mantine/core';
+import { useState } from 'react';
+import { Container } from '@mantine/core';
 import { IconHeart } from '@tabler/icons-react';
 import Slider from '../Slider/Slider';
 
 import './Home.scss';
 
 function Home() {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleFavoriteHover = () => {
+    setIsHovered(!isHovered);
+  };
+
   return (
     <Container fluid className="page">
       <div className="title-container">
@@ -26,8 +33,16 @@ function Home() {
 
         <div className="category__grid grid">
           <div className="thumb">
-            <div className="favorite">
-              <IconHeart stroke={1.5} color="#929292" />
+            <div
+              className="button-favorite"
+              onMouseEnter={handleFavoriteHover}
+              onMouseLeave={handleFavoriteHover}
+            >
+              <IconHeart
+                stroke={1.5}
+                fill={isHovered ? 'rgb(216, 60, 60)' : 'black'}
+                color={isHovered ? 'rgb(216, 60, 60)' : '#929292'}
+              />
             </div>
 
             <div className="thumb__infos">
@@ -46,8 +61,12 @@ function Home() {
           </div>
 
           <div className="thumb">
-            <div className="favorite">
-              <IconHeart stroke={1.5} color="#929292" />
+            <div className="button-favorite">
+              <IconHeart
+                stroke={1.5}
+                fill={isHovered ? 'rgb(216, 60, 60)' : 'black'}
+                color={isHovered ? 'rgb(216, 60, 60)' : '#929292'}
+              />
             </div>
 
             <div className="thumb__infos">
@@ -66,8 +85,12 @@ function Home() {
           </div>
 
           <div className="thumb">
-            <div className="favorite">
-              <IconHeart stroke={1.5} color="#929292" />
+            <div className="button-favorite">
+              <IconHeart
+                stroke={1.5}
+                fill={isHovered ? 'rgb(216, 60, 60)' : 'black'}
+                color={isHovered ? 'rgb(216, 60, 60)' : '#929292'}
+              />
             </div>
 
             <div className="thumb__infos">

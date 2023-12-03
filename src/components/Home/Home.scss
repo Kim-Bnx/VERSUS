@@ -2,10 +2,12 @@
 
 .title-container {
   text-align: center;
-  padding: 1rem 0;
-
   &__title {
-    padding-bottom: 2rem;
+    font-size: 2.5rem;
+    list-style: 2.5rem;
+    font-weight: 400;
+
+    padding-bottom: 4rem;
   }
 }
 
@@ -26,20 +28,12 @@
   }
 
   .category__grid {
-    .favorite {
-      position: absolute;
-      top: 0.8rem;
-      right: 1rem;
-      border: 1px solid #333333;
-      border-radius: 50%;
-      padding: 0.5rem;
-      cursor: pointer;
-    }
+
 
     .thumb {
       position: relative;
       width: 30.333333%;
-      height: 17rem;
+      height: 19rem;
 
       &__infos {
         position: absolute;
@@ -94,11 +88,12 @@
 .games__grid {
   .thumb {
     position: relative;
-    height: 22rem;
+    height: 26rem;
     width: 20%;
 
     p {
-      font-size: 2rem;
+      font-size: 1.7rem;
+      line-height: 1.7rem;
       text-transform: uppercase;
       text-align: center;
       position: absolute;
