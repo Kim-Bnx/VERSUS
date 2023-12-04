@@ -1,22 +1,27 @@
 /* eslint-disable import/prefer-default-export */
 import { createBrowserRouter } from 'react-router-dom';
-import App from './routes/App/App';
-import Error from './routes/Error/Error';
-import Home from './routes/Home/Home';
-import Event from './routes/Event/Event';
-import Profile from './routes/Profile/Profile';
-import Register from './routes/Register/Register';
-import SignIn from './routes/SignIn/SignIn';
+import Root from './pages/Root/Root';
+import Error from './pages/Error/Error';
+import Home from './pages/Home/Home';
+import Event from './pages/Event/Event';
+import Profile from './pages/Profile/Profile';
+import Register from './pages/Register/Register';
+import SignIn from './pages/SignIn/SignIn';
+import CreateEvent from './pages/CreateEvent/CreateEvent';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <Root />,
     errorElement: <Error />, // TODO edit the error component. Needs Header and Navbar
     children: [
       {
         path: '/',
         element: <Home />,
+      },
+      {
+        path: 'event/create',
+        element: <CreateEvent />,
       },
       {
         path: 'event/:slug',
@@ -29,18 +34,18 @@ export const router = createBrowserRouter([
       },
       {
         // route for the connected user to see researched user's profile
-        path: 'profile/:pseudo',
-        // render the same Profile component with some conditional elements or a new SearchedProfile component
+        path: 'profile/:username',
+        // ! EDIT CDC
         element: <Profile />,
       },
-      {
-        path: 'register',
-        element: <Register />,
-      },
-      {
-        path: 'sign-in',
-        element: <SignIn />,
-      },
     ],
+  },
+  {
+    path: '/register',
+    element: <Register />,
+  },
+  {
+    path: '/sign-in',
+    element: <SignIn />,
   },
 ]);

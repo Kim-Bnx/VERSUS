@@ -3,9 +3,9 @@ import Header from '../../components/Header/Header';
 import NavBar from '../../components/NavBar/NavBar';
 import Footer from '../../components/Footer/Footer';
 
-import './App.scss';
+import './Root.scss';
 
-function app() {
+function Root() {
   return (
     <div className="app">
       <Header />
@@ -16,4 +16,4 @@ function app() {
   );
 }
 
-export default app;
+export default Root;
