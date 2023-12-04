@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { BackgroundImage, Box, Container } from '@mantine/core';
 import { IconHeart } from '@tabler/icons-react';
-import Slider from '../Slider/Slider';
+import Slider from '../../components/Slider/Slider';
 
 import './Home.scss';
 

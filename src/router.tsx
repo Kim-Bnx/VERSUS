@@ -1,9 +1,9 @@
 /* eslint-disable import/prefer-default-export */
 import { createBrowserRouter } from 'react-router-dom';
-import App from './components/App/App';
-import Error from './components/Error/Error';
-import Home from './components/Home/Home';
-import Event from './components/Event/Event';
+import App from './routes/App/App';
+import Error from './routes/Error/Error';
+import Home from './routes/Home/Home';
+import Event from './routes/Event/Event';
 
 export const router = createBrowserRouter([
   {
