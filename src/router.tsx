@@ -28,14 +28,9 @@ export const router = createBrowserRouter([
         element: <Event />,
       },
       {
-        // route for the connected user to see his profile
-        path: 'profile',
-        element: <Profile />,
-      },
-      {
-        // route for the connected user to see researched user's profile
+        // route for the connected user to see researched user's profile or his own
         path: 'profile/:username',
-        // ! EDIT CDC
+        // ! EDIT CahierDesCharge
         element: <Profile />,
       },
     ],
