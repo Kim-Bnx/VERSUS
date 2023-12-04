@@ -11,6 +11,7 @@
 		"lint:fix": "eslint src/**/*.{js,jsx,ts,tsx} --fix"
 	},
 	"dependencies": {
+		"@mantine/carousel": "^7.2.2",
 		"@mantine/core": "^7.2.2",
 		"@mantine/dates": "^7.2.2",
 		"@mantine/form": "^7.2.2",
@@ -25,6 +26,7 @@
 		"axios": "^1.6.2",
 		"clsx": "^2.0.0",
 		"dayjs": "^1.11.10",
+		"embla-carousel-react": "^7.1.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-redux": "^8.1.3",

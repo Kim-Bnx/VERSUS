@@ -1,1 +1,105 @@
 @use '../../styles/variables' as v;
+
+.title-container {
+  text-align: center;
+  &__title {
+    font-size: 2.5rem;
+    list-style: 2.5rem;
+    font-weight: 400;
+
+    padding-bottom: 4rem;
+  }
+}
+
+.category {
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-more {
+      text-decoration: underline;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .category__grid {
+    .thumb {
+      position: relative;
+      width: 30.333333%;
+      height: 19rem;
+
+      &__infos {
+        position: absolute;
+        bottom: 4rem;
+        left: 1.5rem;
+        display: flex;
+        flex-direction: column;
+      }
+
+      &__name {
+        &-game {
+          text-transform: uppercase;
+        }
+
+        &-event {
+          text-transform: capitalize;
+          font-size: 2rem;
+          line-height: 2rem;
+        }
+      }
+
+      &__type {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        bottom: 3.5rem;
+        right: 1rem;
+        background-color: #1d1d1d;
+        padding: 0.4rem 1.2rem;
+        border-radius: 0.8rem;
+
+        &-text {
+          font-size: 0.8rem;
+          line-height: 0.8rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05rem;
+        }
+      }
+
+      &__dates {
+        position: absolute;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0.6rem 1rem;
+        bottom: 0;
+        background-color: #1d1d1d;
+      }
+    }
+  }
+}
+
+.games__grid {
+  .thumb {
+    position: relative;
+    height: 26rem;
+    width: 20%;
+
+    p {
+      font-size: 1.7rem;
+      line-height: 1.7rem;
+      text-transform: uppercase;
+      text-align: center;
+      position: absolute;
+      width: 100%;
+      bottom: 2rem;
+    }
+  }
+}

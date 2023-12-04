@@ -1,0 +1,74 @@
+@use '../../styles/variables' as v;
+
+.slider {
+  display: flex;
+  height: 400px;
+
+  .carousel {
+    max-width: 80%;
+    margin: 0 auto;
+
+    .slide {
+      display: flex;
+      width: 100%;
+      border-right: 5px solid transparent;
+
+      &-lefty {
+        width: 60%;
+        background-size: cover;
+        background-position: bottom;
+      }
+
+      &-righty {
+        width: 40%;
+
+        .event {
+          border-right: 1px solid #929292;
+          border-bottom: 1px solid #929292;
+          border-top: 1px solid #929292;
+          height: 100%;
+
+          &-description {
+            padding: 2rem 3rem 0 3rem;
+          }
+
+          &-title {
+            &__name {
+              font-size: 2rem;
+              line-height: 2rem;
+              font-weight: 400;
+              padding-bottom: 0.5rem;
+            }
+
+            &__game {
+              text-transform: uppercase;
+              line-height: 0.9rem;
+            }
+          }
+
+          &__date {
+            font-size: 0.9rem;
+            padding: 2rem 0;
+            text-transform: uppercase;
+          }
+
+          &__description {
+            text-align: justify;
+            overflow: hidden;
+            max-height: 7.5rem;
+          }
+
+          &-link {
+            position: absolute;
+            bottom: 2rem;
+            right: 1rem;
+
+            .button {
+              float: right;
+            }
+          }
+        }
+      }
+    }
+  }
+}
