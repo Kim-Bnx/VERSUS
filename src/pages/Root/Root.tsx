@@ -10,8 +10,6 @@ function Root() {
   return (
     <AppShell
       layout="alt"
-      header={{ height: 90 }}
-      footer={{ height: 60 }}
       navbar={{
         width: 190,
         breakpoint: 'sm',
@@ -20,10 +18,11 @@ function Root() {
       transitionDuration={500}
       transitionTimingFunction="ease"
     >
-      <AppShell.Header>
-        <Header />
-      </AppShell.Header>
-      <AppShell.Navbar p="md">Navbar</AppShell.Navbar>
+      <Header />
+      <AppShell.Navbar p="md">
+        Navbar
+        <Button color="#f0f">Bouton</Button>
+      </AppShell.Navbar>
       <AppShell.Main>
         <Outlet />
 

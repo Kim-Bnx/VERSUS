@@ -1,24 +1,7 @@
 @use '../../styles/variables' as v;
 
 .header {
-  background-color: #0c0c0c;
-  border-bottom: 3px solid #929292;
-  position: fixed;
-  width: 100%;
-  z-index: 1;
-
-  &-wrapper {
-    padding: 1.3rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .actions {
-    display: flex;
-  }
-
-  .profile {
-    display: none;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

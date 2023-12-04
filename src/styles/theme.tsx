@@ -2,9 +2,10 @@ import { createTheme } from '@mantine/core';
 
 // Mantine Theme Definition
 const themeProps = createTheme({
-  // white: '', neutral color (e.g. background)
-  // black: '', contrast color (e.g. text)
-  primaryColor: 'violet',
+  white: '#fff', // neutral color (e.g. background)
+  black: '#000', // contrast color (e.g. text)
+
+  primaryColor: 'blue',
   defaultRadius: 'sm',
 
   // fontFamily: 'Open Sans, sans-serif',

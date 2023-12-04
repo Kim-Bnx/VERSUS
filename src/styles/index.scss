@@ -49,20 +49,6 @@ input {
   }
 }
 
-.button {
-  background-color: inherit;
-  border: 1px solid #929292;
-  color: white;
-  padding: 0.4rem 1rem;
-  border-radius: 0.4rem;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #929292;
-    color: black;
-  }
-}
-
 .button-favorite {
   position: absolute;
   top: 0.8rem;
