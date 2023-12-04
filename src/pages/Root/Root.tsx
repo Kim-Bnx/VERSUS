@@ -19,10 +19,7 @@ function Root() {
       transitionTimingFunction="ease"
     >
       <Header />
-      <AppShell.Navbar p="md">
-        Navbar
-        <Button color="#f0f">Bouton</Button>
-      </AppShell.Navbar>
+      <NavBar />
       <AppShell.Main>
         <Outlet />
 
