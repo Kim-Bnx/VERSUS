@@ -1,0 +1,10 @@
+@use '../../styles/variables' as v;
+
+.page-content {
+  display: grid;
+  grid-template-columns: 1fr 1080px 1fr;
+}
+
+.mantine-Container-root {
+  grid-column: 2;
+}
