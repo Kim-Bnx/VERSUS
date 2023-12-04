@@ -44,7 +44,7 @@ function Home() {
               >
                 <IconHeart
                   stroke={1.5}
-                  fill={isHovered ? 'rgb(216, 60, 60)' : 'black'}
+                  fill={isHovered ? 'rgb(216, 60, 60)' : '#0c0c0c'}
                   color={isHovered ? 'rgb(216, 60, 60)' : '#929292'}
                 />
               </div>
@@ -69,7 +69,7 @@ function Home() {
               src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
             >
               <div className="button-favorite">
-                <IconHeart stroke={1.5} fill="black" color="#929292" />
+                <IconHeart stroke={1.5} fill="#0c0c0c" color="#929292" />
               </div>
 
               <div className="thumb__infos">
@@ -92,7 +92,7 @@ function Home() {
               src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
             >
               <div className="button-favorite">
-                <IconHeart stroke={1.5} fill="black" color="#929292" />
+                <IconHeart stroke={1.5} fill="#0c0c0c" color="#929292" />
               </div>
 
               <div className="thumb__infos">

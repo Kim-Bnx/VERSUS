@@ -28,13 +28,33 @@
       width: 100%;
       border-right: 5px solid transparent;
 
-      &-lefty {
+      &-image {
         width: 60%;
         background-size: cover;
         background-position: bottom;
+        position: relative;
+
+        .type {
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          bottom: 1.5rem;
+          right: 2rem;
+          background-color: #1d1d1d;
+          padding: 0.5rem 1.5rem;
+          border-radius: 0.8rem;
+
+          &-text {
+            font-size: 0.8rem;
+            line-height: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05rem;
+          }
+        }
       }
 
-      &-righty {
+      &-content {
         width: 40%;
 
         .event {
