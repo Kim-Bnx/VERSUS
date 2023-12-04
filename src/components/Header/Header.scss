@@ -16,23 +16,6 @@
 
   .actions {
     display: flex;
-    justify-content: space-between;
-    width: 40%;
-
-    .search-bar {
-      padding: 0.4rem 1rem;
-      border-radius: 0.4rem;
-      border: 1px solid #929292;
-      color: white;
-      width: 74%;
-
-      input {
-        background-color: inherit;
-        border: inherit;
-        width: 100%;
-        color: white;
-      }
-    }
   }
 
   .profile {

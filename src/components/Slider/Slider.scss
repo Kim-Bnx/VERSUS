@@ -2,24 +2,59 @@
 
 .slider {
   display: flex;
-  height: 400px;
+  height: 450px;
 
   .carousel {
-    max-width: 80%;
-    margin: 0 auto;
+    .mantine-Carousel-indicators {
+      margin-top: 2rem;
+
+      button {
+        width: 2rem;
+        height: 0.8rem;
+        margin-right: 1rem;
+        border-radius: 1rem;
+        border: 2px solid #929292;
+
+        &[data-active] {
+          opacity: 0.3;
+          width: 3rem;
+          background-color: #929292;
+        }
+      }
+    }
 
     .slide {
       display: flex;
       width: 100%;
       border-right: 5px solid transparent;
 
-      &-lefty {
+      &-image {
         width: 60%;
         background-size: cover;
         background-position: bottom;
+        position: relative;
+
+        .type {
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          bottom: 1.5rem;
+          right: 2rem;
+          background-color: #1d1d1d;
+          padding: 0.5rem 1.5rem;
+          border-radius: 0.8rem;
+
+          &-text {
+            font-size: 0.8rem;
+            line-height: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05rem;
+          }
+        }
       }
 
-      &-righty {
+      &-content {
         width: 40%;
 
         .event {

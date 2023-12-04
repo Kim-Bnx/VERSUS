@@ -1,4 +1,5 @@
-import { Container, Box, Button, TextInput, Anchor } from '@mantine/core';
+import { Container, Box, Button, Anchor } from '@mantine/core';
+import SearchBar from '../SearchBar/SearchBar';
 
 import './Header.scss';
 
@@ -11,10 +12,7 @@ function Header() {
             Organiser un event
           </Button>
 
-          <TextInput
-            className="search-bar"
-            placeholder="Recherche un évent, team, joueur ..."
-          />
+          <SearchBar />
         </Box>
 
         <Box className="profile">

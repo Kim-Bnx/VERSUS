@@ -26,11 +26,15 @@ function Slider() {
       >
         <Carousel.Slide className="slide">
           <BackgroundImage
-            className="slide-lefty"
+            className="slide-image"
             src="https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/bltb16f7bf3691493f5/5e32376ae147ae4537d93a32/LOL_PROMOART_5.jpg"
-          />
+          >
+            <div className="type">
+              <span className="type-text">PC</span>
+            </div>
+          </BackgroundImage>
 
-          <div className="slide-righty">
+          <div className="slide-content">
             <div className="event">
               <div className="event-description">
                 <div className="event-title">
@@ -67,7 +71,7 @@ function Slider() {
               >
                 <IconHeart
                   stroke={1.5}
-                  fill={isHovered ? 'rgb(216, 60, 60)' : 'black'}
+                  fill={isHovered ? 'rgb(216, 60, 60)' : '#0c0c0c'}
                   color={isHovered ? 'rgb(216, 60, 60)' : '#929292'}
                 />
               </div>
@@ -76,11 +80,15 @@ function Slider() {
         </Carousel.Slide>
         <Carousel.Slide className="slide">
           <BackgroundImage
-            className="slide-lefty"
+            className="slide-image"
             src="https://thegamehaus.com/wp-content/uploads/2023/11/naruto-x-boruto-ultimate-ninja-storm-connections-04-15-05-2023_0001019288.jpg"
-          />
+          >
+            <div className="type">
+              <span className="type-text">playstation 5</span>
+            </div>
+          </BackgroundImage>
 
-          <div className="slide-righty">
+          <div className="slide-content">
             <div className="event">
               <div className="event-description">
                 <div className="event-title">
@@ -127,14 +135,17 @@ function Slider() {
           </div>
         </Carousel.Slide>
 
-
         <Carousel.Slide className="slide">
           <BackgroundImage
-            className="slide-lefty"
+            className="slide-image"
             src="https://www.warlegend.net/wp-content/uploads/Super-Smash-Bros.-Ultimate-%E2%80%93-Lultime-rencontre-Nintendo-Switch-1-21-34-screenshot.jpg"
-          />
+          >
+            <div className="type">
+              <span className="type-text">switch</span>
+            </div>
+          </BackgroundImage>
 
-          <div className="slide-righty">
+          <div className="slide-content">
             <div className="event">
               <div className="event-description">
                 <div className="event-title">
