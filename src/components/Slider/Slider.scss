@@ -2,11 +2,26 @@
 
 .slider {
   display: flex;
-  height: 400px;
+  height: 450px;
 
   .carousel {
-    max-width: 80%;
-    margin: 0 auto;
+    .mantine-Carousel-indicators {
+      margin-top: 2rem;
+
+      button {
+        width: 2rem;
+        height: 0.8rem;
+        margin-right: 1rem;
+        border-radius: 1rem;
+        border: 2px solid #929292;
+
+        &[data-active] {
+          opacity: 0.3;
+          width: 3rem;
+          background-color: #929292;
+        }
+      }
+    }
 
     .slide {
       display: flex;
