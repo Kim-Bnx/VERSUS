@@ -4,6 +4,7 @@ import App from './routes/App/App';
 import Error from './routes/Error/Error';
 import Home from './routes/Home/Home';
 import Event from './routes/Event/Event';
+import Profile from './routes/Profile/Profile';
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,16 @@ export const router = createBrowserRouter([
       {
         path: 'event/:slug',
         element: <Event />,
+      },
+      {
+        // route for the connected user to see his profile
+        path: 'profile',
+        element: <Profile />,
+      },
+      {
+        // route for the connected user to see researched user's profile
+        path: 'profile/:pseudo',
+        element: <Profile />,
       },
     ],
   },
