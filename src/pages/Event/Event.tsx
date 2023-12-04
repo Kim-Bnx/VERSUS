@@ -1,4 +1,4 @@
-import './App.scss';
+import './Event.scss';
 
 function Event() {
   return 'Event';

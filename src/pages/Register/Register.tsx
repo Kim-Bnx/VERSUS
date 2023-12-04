@@ -1,4 +1,4 @@
-import './App.scss';
+import './Register.scss';
 
 function Register() {
   return 'Register';
