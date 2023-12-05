@@ -1,1 +1,52 @@
 @use '../../styles/variables' as v;
+
+.register-profile {
+  width: 425px;
+  background-color: black;
+  padding: 3rem;
+
+  .circle {
+    border-radius: 50%;
+    background-color: #333333;
+    width: 60px;
+    border: 1px solid white;
+    height: 60px;
+  }
+
+  .profile {
+    &-input {
+      width: 100%;
+      margin: 2rem 0;
+    }
+
+    &-avatar {
+      width: 100%;
+      justify-content: space-between;
+
+      p {
+        margin-bottom: 0.5rem;
+      }
+
+      .avatar {
+        &-selected {
+          .circle {
+            width: 80px;
+            height: 80px;
+          }
+        }
+
+        &-selection {
+          margin: 2rem 0 2rem 2rem;
+        }
+      }
+    }
+  }
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  width: 100%;
+}
