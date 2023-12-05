@@ -66,4 +66,4 @@ Launch project
 - [@mMormin](https://github.com/mMormin)
 - [@KimberleyBonix](https://github.com/KimberleyBonix)
 - [@rami-rostom](https://github.com/rami-rostom)
-- [@/WilliamViranin](https://github.com/WilliamViranin)
+- [@WilliamViranin](https://github.com/WilliamViranin)
