@@ -1,5 +1,13 @@
 @use '../../styles/variables' as v;
 
+.navbar__bottom {
+  flex-grow: 2;
+  display: flex;
+  gap: var(--mantine-spacing-md);
+  flex-direction: column;
+  justify-content: end;
+}
+
 .navbar__link {
   display: block;
 }
@@ -29,6 +37,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
+  cursor: pointer;
 }
 
 /* Accordeon content */
@@ -37,4 +46,11 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+// REGISTER BOX
+.navbar__register {
+  padding: var(--mantine-spacing-md);
+  background-color: var(--mantine-color-blue-light);
+  border-radius: var(--mantine-radius-sm);
 }

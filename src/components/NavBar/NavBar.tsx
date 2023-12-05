@@ -1,114 +1,82 @@
-import clsx from 'clsx';
 import {
-  Accordion,
-  Anchor,
   AppShell,
-  Avatar,
   Box,
+  Button,
   Flex,
   Text,
+  Tooltip,
   rem,
+  useComputedColorScheme,
+  useMantineColorScheme,
 } from '@mantine/core';
 import { IconDeviceGamepad2 } from '@tabler/icons-react';
-import { NavLink } from 'react-router-dom';
 import './NavBar.scss';
-
-type ItemProps = {
-  item: {
-    // image: string;
-    name: string;
-  };
-};
-
-function FavItem({ item }: ItemProps) {
-  return (
-    <Anchor href="/" className="favorite-item">
-      <Flex gap="sm" align="center">
-        <Avatar src="" alt="Favoris" size="sm" />
-        <Text size="md">{item.name}</Text>
-      </Flex>
-    </Anchor>
-  );
-}
+import { IoLogOutOutline, IoMoon, IoSunnySharp } from 'react-icons/io5';
+import { useState } from 'react';
+import NavBarUser from './NavBarUser';
+import NavBarGuest from './NavBarGuest';
 
 function NavBar() {
-  const navigationLinks = [
-    {
-      label: 'Mon Calendrier',
-      href: '/profile/username/schedule',
-    },
-    {
-      label: 'Mes events',
-      href: '/profile/username/events',
-    },
-    {
-      label: 'Mes équipes',
-      href: '/profile/username/teams',
-    },
-    {
-      label: 'Mes favoris',
-      href: '/profile/username/favorites',
-    },
-  ];
+  // SETTINGS OF THE COLOR SCHEME SWITCH
+  //
+  // setColorScheme() to apply color scheme
+  const { setColorScheme } = useMantineColorScheme();
+  // get the current scheme color applied
+  const computedColorScheme = useComputedColorScheme('dark', {
+    getInitialValueInEffect: true,
+  });
+  // switch the color scheme
+  const handleColorScheme = () => {
+    setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light');
+  };
+
+  // FETCH LOG USER
+  const [isLog, setIsLog] = useState(false);
 
   return (
     <AppShell.Navbar p="lg" className="navbar">
-      <IconDeviceGamepad2
-        style={{ width: rem(45), height: rem(45) }}
-        stroke={1}
-      />
-
-      <Box className="navbar__section">
-        <Text size="xs">Navigation</Text>
-
-        {navigationLinks.map((link) => (
-          <NavLink
-            to={link.href}
-            key={link.label}
-            className={({ isActive }) =>
-              clsx('navbar__link', { 'navbar__link--active': isActive })
-            }
-          >
-            {link.label}
-          </NavLink>
-        ))}
+      <Box className="logo">
+        <IconDeviceGamepad2
+          style={{ width: rem(45), height: rem(45) }}
+          stroke={1}
+        />
       </Box>
 
-      <Box className="navbar__section">
-        <Text size="xs">Favoris</Text>
+      {isLog && <NavBarUser />}
 
-        <Accordion unstyled>
-          <Accordion.Item value="test">
-            <Accordion.Control>Joueurs</Accordion.Control>
-            <Accordion.Panel>
-              <FavItem item={{ name: 'bla' }} />
-              <FavItem item={{ name: 'bla' }} />
-              <FavItem item={{ name: 'bla' }} />
-            </Accordion.Panel>
-          </Accordion.Item>
-        </Accordion>
+      <Box className="navbar__bottom">
+        {!isLog && <NavBarGuest />}
 
-        <Accordion unstyled>
-          <Accordion.Item value="test">
-            <Accordion.Control>Evénements</Accordion.Control>
-            <Accordion.Panel>
-              <FavItem item={{ name: 'bla' }} />
-              <FavItem item={{ name: 'bla' }} />
-              <FavItem item={{ name: 'bla' }} />
-            </Accordion.Panel>
-          </Accordion.Item>
-        </Accordion>
+        <Flex
+          align="center"
+          justify="center"
+          gap="md"
+          className="navbar__buttons"
+        >
+          <Tooltip
+            label={
+              computedColorScheme === 'light' ? 'Mode sombre' : 'Mode clair'
+            }
+          >
+            <Button onClick={handleColorScheme}>
+              <Text size="sm">
+                {computedColorScheme === 'light' ? (
+                  <IoMoon />
+                ) : (
+                  <IoSunnySharp />
+                )}
+              </Text>
+            </Button>
+          </Tooltip>
 
-        <Accordion unstyled>
-          <Accordion.Item value="test">
-            <Accordion.Control>Equipes</Accordion.Control>
-            <Accordion.Panel>
-              <FavItem item={{ name: 'bla' }} />
-              <FavItem item={{ name: 'bla' }} />
-              <FavItem item={{ name: 'bla' }} />
-            </Accordion.Panel>
-          </Accordion.Item>
-        </Accordion>
+          {isLog && (
+            <Tooltip label="Se déconnecter">
+              <Button className="logout" component="a" href="/">
+                <IoLogOutOutline />
+              </Button>
+            </Tooltip>
+          )}
+        </Flex>
       </Box>
     </AppShell.Navbar>
   );
