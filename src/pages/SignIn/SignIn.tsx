@@ -15,47 +15,57 @@ import {
 
 function SignIn() {
   return (
-    <Container fluid className="container">
-      <Box className="logo">
-        <Text className="logo" tt="uppercase" fw={400} fz="4rem" c="#FFF">
+    <Container fluid className="login">
+      <Box className="login__lefty">
+        <Text
+          className="login__logo"
+          tt="uppercase"
+          fw={400}
+          fz="4rem"
+          c="#FFF"
+        >
           versus
         </Text>
       </Box>
-      <Box component="form" className="login">
+      <Box component="form" className="login__righty">
         <Title className="login__title" size="2.25rem" c="#FFF">
           Connexion
         </Title>
         <Stack>
-          <Box>
+          <Box className="login__form">
             <TextInput
               label="Email"
               placeholder="Saisissez votre email"
-              withAsterisk
-              fz="1rem"
               c="#FFF"
+              className="email__input"
             />
             <TextInput
               label="Mot de passe"
               placeholder="Saisissez votre mot de passe"
-              withAsterisk
-              fz="1rem"
               c="#FFF"
+              className="password__input"
             />
-            <Group>
-              <Anchor href="#" underline="always" c="#FFF" fz="1rem">
+            <Group justify="space-between">
+              <Anchor href="#" underline="always" c="#FFF" fz="0.9rem">
                 Mot de passe oublié ?
               </Anchor>
-              <Button>Se connecter</Button>
+              <Button variant="outline">Se connecter</Button>
             </Group>
           </Box>
-          <Box>
-            <Text c="#FFF" fz="1rem">
+          <Box className="navigation">
+            <Text className="register__text" c="#FFF" fz="0.9rem">
               Vous n&apos;avez pas de compte ?
             </Text>
-            <Button>Inscrivez-vous</Button>
-          </Box>
-          <Box>
-            <Anchor href="#" underline="always" c="#FFF" fz="1rem">
+            <Button className="register__button" variant="outline" fullWidth>
+              Inscrivez-vous
+            </Button>
+            <Anchor
+              className="home"
+              href="#"
+              underline="always"
+              c="#FFF"
+              fz="0.9rem"
+            >
               Retour à la page d&apos;acccueil
             </Anchor>
           </Box>
