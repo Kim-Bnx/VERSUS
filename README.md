@@ -10,7 +10,7 @@ Versus is a training project developed in one month *(4 Sprints)* with the same 
 <br />
 
 ## Technological Stack
-Application built using [TypeScript](https://www.typescriptlang.org/), [Vitejs](https://vitejs.dev/), [ESLint](https://eslint.org/) et [Prettier](https://prettier.io/) through [React](https://fr.legacy.reactjs.org/) and component library [Mantine](https://mantine.dev/).
+Application built using [TypeScript](https://www.typescriptlang.org/), [Vitejs](https://vitejs.dev/), [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) through [React](https://fr.legacy.reactjs.org/) and component library [Mantine](https://mantine.dev/).
 
 <br />
 
@@ -25,7 +25,7 @@ Application built using [TypeScript](https://www.typescriptlang.org/), [Vitejs](
 
 <br />
 
-## Run Locally
+## :computer: Run Locally
 
 Clone the project
 
@@ -53,14 +53,14 @@ Launch project
 
 <br />
 
-## Acknowledgements
+## :notebook_with_decorative_cover: Acknowledgements
 
  - [Documents d'élaboration du projet](https://github.com/O-clock-Cheesecake/projet-5-versus/wiki)
  - [Cahier des charges](https://docs.google.com/document/d/1bTD5kVhkD7utuCIPbLkuoNbhCruBuwi9tcCYeXgs8Hc/edit#heading=h.k2mrd19y696k)
 
 <br />
 
-## Authors
+## :coffee: Authors
 
 - [@Sasha-Polgar](https://github.com/Sasha-Polgar)
 - [@mMormin](https://github.com/mMormin)
