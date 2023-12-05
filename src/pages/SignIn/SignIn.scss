@@ -1,1 +1,60 @@
 @use '../../styles/variables' as v;
+@import url('https://fonts.googleapis.com/css2?family=Asap:wght@400;700&family=Fugaz+One&display=swap');
+// TODO after testing do not use google fonts
+
+.login {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  background-color: #000;
+
+  &__logo {
+    font-family: 'Fugaz One', sans-serif;
+    font-size: 4rem;
+  }
+
+  &__righty {
+    background: #1d1d1d;
+    padding: 3rem;
+    border-radius: 0.5rem;
+    width: 30%;
+    max-width: 480px;
+  }
+
+  &__title {
+    text-align: center;
+    padding-bottom: 4rem;
+  }
+
+  &__form {
+    padding-bottom: 3rem;
+  }
+}
+
+.email__input {
+  padding-bottom: 1rem;
+}
+
+.password__input {
+  padding-bottom: 1rem;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .register {
+    &__text {
+      padding-bottom: 0.5rem;
+    }
+    &__button {
+      margin-bottom: 3rem;
+    }
+  }
+
+  .home {
+    margin-left: auto;
+  }
+}
