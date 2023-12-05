@@ -18,7 +18,7 @@ function Default() {
       </Title>
 
       <Stack>
-        <Box className="login__form">
+        <Box>
           <TextInput
             label="Email"
             placeholder="Saisissez votre email"
@@ -45,7 +45,7 @@ function Default() {
           </Group>
         </Box>
 
-        <Flex direction="row" wrap="wrap" className="navigation">
+        <Flex direction="row" wrap="wrap" className="form-bottom">
           <Text c="#FFF" fz="0.9rem">
             Vous avez déjà un compte ?
           </Text>

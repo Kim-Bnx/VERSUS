@@ -7,16 +7,15 @@ function Preferences() {
       align="center"
       justify="center"
       direction="column"
-      className="register-preferences register-section"
+      className="right-content"
     >
-      <Title size="1.5rem" className="register__title">
-        Vos préférences
-      </Title>
-
-      <span>Etape 2</span>
+      <Box className="title">
+        <Title size="1.5rem">Vos préférences</Title>
+        <span>Etape 2</span>
+      </Box>
 
       <Box className="profile-games section">
-        <p className="subtitle">vos jeux</p>
+        <p className="form-title">vos jeux</p>
 
         <Grid
           className="games"
@@ -56,7 +55,7 @@ function Preferences() {
       </Box>
 
       <Box className="profile-platforms section">
-        <p className="subtitle">vos plateformes</p>
+        <p className="form-title">vos plateformes</p>
 
         <Grid gutter={15} className="platforms">
           <Grid.Col span={3}>

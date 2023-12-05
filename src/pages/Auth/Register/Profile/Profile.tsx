@@ -5,7 +5,7 @@ import {
   Flex,
   Grid,
   Group,
-  Input,
+  TextInput,
   Title,
 } from '@mantine/core';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
@@ -16,30 +16,28 @@ function Profile() {
       align="center"
       justify="center"
       direction="column"
-      className="register-profile register-section"
+      className="right-content"
     >
-      <Title size="1.5rem" className="register__title">
-        Configuration de votre profil
-      </Title>
+      <Box className="title">
+        <Title size="1.5rem">Configuration de votre profil</Title>
+        <span>Etape 1 sur 2</span>
+      </Box>
 
-      <span>Etape 1 sur 2</span>
-
-      <Input.Wrapper
-        className="profile-input section"
+      <TextInput
         label="Pseudo"
-        error="DEFAULT ERROR AREA"
-      >
-        <Input placeholder="pseudonyme" />
-      </Input.Wrapper>
+        placeholder="pseudonyme"
+        c="#FFF"
+        className="section"
+      />
 
       <Flex className="profile-avatar section">
         <Box className="avatar-selected">
-          <p className="subtitle">Avatar</p>
+          <p className="form-title">Avatar</p>
           <div className="circle" />
         </Box>
 
         <div className="avatar-selection">
-          <p className="subtitle">Importer une image ou choisis</p>
+          <p className="form-title">Importer une image ou choisis</p>
           <Grid gutter={{ base: 0, xs: 'md', md: 10, xl: 10 }}>
             <Grid.Col span={4}>
               <div className="circle" />

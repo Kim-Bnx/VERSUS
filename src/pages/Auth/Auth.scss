@@ -29,17 +29,69 @@
       padding-bottom: 3rem;
     }
 
+    .circle {
+      border-radius: 50%;
+      background-color: #333333;
+      width: 60px;
+      border: 1px solid white;
+      height: 60px;
+    }
+
+    .avatar {
+      &-selected {
+        .circle {
+          width: 80px;
+          height: 80px;
+        }
+      }
+
+      &-selection {
+        margin: 1rem 0 2rem 2rem;
+      }
+    }
+
     .section {
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
+      width: 100%;
 
       .form-title,
+      .form-subtitle,
       .mantine-TextInput-label {
         margin-bottom: 0.3rem;
         text-transform: capitalize;
       }
     }
 
-    .navigation {
+    .profile {
+      &-games {
+        .games {
+          width: 95%;
+          margin: 0 auto;
+          .game {
+            background-color: #333333;
+            border-radius: 1rem;
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            line-height: 0.8rem;
+            display: inline-block;
+          }
+        }
+      }
+
+      &-platforms {
+        .platform {
+          background-color: #333333;
+          width: 5rem;
+          height: 5rem;
+          border-radius: 0.3rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+
+    .form-bottom {
       p {
         padding-bottom: 0.5rem;
       }
@@ -51,6 +103,10 @@
       a {
         margin-left: auto;
       }
+    }
+
+    .navigation {
+      width: 100%;
     }
   }
 }
