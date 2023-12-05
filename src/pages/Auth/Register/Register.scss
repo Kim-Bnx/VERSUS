@@ -1,11 +1,5 @@
-@use '../../styles/variables' as v;
-
 .page-register {
   .register-section {
-    width: 425px;
-    background-color: black;
-    padding: 3rem;
-
     .circle {
       border-radius: 50%;
       background-color: #333333;
@@ -14,14 +8,10 @@
       height: 60px;
     }
 
-    .subtitle {
-      margin-bottom: 0.5rem;
-      text-transform: capitalize;
-    }
-
     .section {
       margin-top: 2rem;
     }
+
     .profile {
       &-input {
         width: 100%;
