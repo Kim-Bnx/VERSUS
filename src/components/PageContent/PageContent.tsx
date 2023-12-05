@@ -6,7 +6,7 @@ import './PageContent.scss';
 
 function PageContent() {
   return (
-    <AppShell.Main className="page-content">
+    <AppShell.Main className="page-content content-grid" unstyled>
       <Outlet />
 
       <Footer />

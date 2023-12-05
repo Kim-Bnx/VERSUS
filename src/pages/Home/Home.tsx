@@ -13,7 +13,7 @@ function Home() {
   };
 
   return (
-    <Container fluid>
+    <>
       <div className="title-container">
         <h1 className="title-container__title">
           Organisez, rassemblez, jouez !
@@ -148,7 +148,7 @@ function Home() {
           </BackgroundImage>
         </div>
       </Box>
-    </Container>
+    </>
   );
 }
 

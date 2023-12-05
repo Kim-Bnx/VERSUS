@@ -14,7 +14,7 @@ function Root() {
         width: 190,
         breakpoint: 'sm',
       }}
-      padding="md"
+      padding={0}
       transitionDuration={500}
       transitionTimingFunction="ease"
     >

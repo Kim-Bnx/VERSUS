@@ -31,7 +31,7 @@ function NavBar() {
   };
 
   // FETCH LOG USER
-  const [isLog, setIsLog] = useState(false);
+  const [isLog, setIsLog] = useState(true);
 
   return (
     <AppShell.Navbar p="lg" className="navbar">
