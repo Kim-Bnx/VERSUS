@@ -1,21 +1,27 @@
-import { Outlet } from 'react-router-dom';
 import { AppShell } from '@mantine/core';
 import Header from '../../components/Header/Header';
 import NavBar from '../../components/NavBar/NavBar';
-import Footer from '../../components/Footer/Footer';
+import PageContent from '../../components/PageContent/PageContent';
 
 import './Root.scss';
 
 function Root() {
   return (
-    <div className="app">
-      <AppShell>
-        <Header />
-        <NavBar />
-        <Outlet />
-        <Footer />
-      </AppShell>
-    </div>
+    <AppShell
+      layout="alt"
+      header={{ height: 80 }}
+      navbar={{
+        width: 190,
+        breakpoint: 'sm',
+      }}
+      padding={0}
+      transitionDuration={500}
+      transitionTimingFunction="ease"
+    >
+      <Header />
+      <NavBar />
+      <PageContent />
+    </AppShell>
   );
 }
 

@@ -1,6 +1,56 @@
 @use '../../styles/variables' as v;
 
-.nav {
-  background-color: blue;
-  display: none;
+.navbar__bottom {
+  flex-grow: 2;
+  display: flex;
+  gap: var(--mantine-spacing-md);
+  flex-direction: column;
+  justify-content: end;
+}
+
+.navbar__link {
+  display: block;
+}
+
+.navbar__section {
+  margin: var(--mantine-spacing-lg) 0;
+}
+
+/** ACCORDION NAVBAR **/
+.mantine-Accordion-root {
+  margin-bottom: var(--mantine-spacing-xs);
+}
+/* Chevron rotation :not(open) */
+.mantine-Accordion-item:not([data-active='true']) {
+  .mantine-Accordion-chevron {
+    rotate: -90deg;
+  }
+}
+
+.mantine-Accordion-chevron {
+  transition: 0.5s;
+}
+
+/* Accordeon button */
+.mantine-Accordion-control {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+/* Accordeon content */
+.mantine-Accordion-content {
+  padding-left: var(--mantine-spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+// REGISTER BOX
+.navbar__register {
+  padding: var(--mantine-spacing-md);
+  background-color: var(--mantine-color-blue-light);
+  border-radius: var(--mantine-radius-sm);
 }
