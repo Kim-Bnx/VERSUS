@@ -1,42 +1,78 @@
 @use '../../styles/variables' as v;
 
-.register-profile {
-  width: 425px;
-  background-color: black;
-  padding: 3rem;
+.page-register {
+  .register-section {
+    width: 425px;
+    background-color: black;
+    padding: 3rem;
 
-  .circle {
-    border-radius: 50%;
-    background-color: #333333;
-    width: 60px;
-    border: 1px solid white;
-    height: 60px;
-  }
-
-  .profile {
-    &-input {
-      width: 100%;
-      margin: 2rem 0;
+    .circle {
+      border-radius: 50%;
+      background-color: #333333;
+      width: 60px;
+      border: 1px solid white;
+      height: 60px;
     }
 
-    &-avatar {
-      width: 100%;
-      justify-content: space-between;
+    .subtitle {
+      margin-bottom: 0.5rem;
+      text-transform: capitalize;
+    }
 
-      p {
-        margin-bottom: 0.5rem;
+    .section {
+      margin-top: 2rem;
+    }
+    .profile {
+      &-input {
+        width: 100%;
       }
 
-      .avatar {
-        &-selected {
-          .circle {
-            width: 80px;
-            height: 80px;
+      &-avatar {
+        width: 100%;
+        justify-content: space-between;
+
+        .avatar {
+          &-selected {
+            .circle {
+              width: 80px;
+              height: 80px;
+            }
+          }
+
+          &-selection {
+            margin: 1rem 0 2rem 2rem;
+
+            .subtitle {
+              text-transform: inherit;
+            }
           }
         }
+      }
 
-        &-selection {
-          margin: 2rem 0 2rem 2rem;
+      &-games {
+        .games {
+          width: 95%;
+          margin: 0 auto;
+          .game {
+            background-color: #333333;
+            border-radius: 1rem;
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            line-height: 0.8rem;
+            display: inline-block;
+          }
+        }
+      }
+
+      &-platforms {
+        .platform {
+          background-color: #333333;
+          width: 5rem;
+          height: 5rem;
+          border-radius: 0.3rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
       }
     }
@@ -44,9 +80,5 @@
 }
 
 .navigation {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1rem;
   width: 100%;
 }
