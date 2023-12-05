@@ -1,21 +1,32 @@
-import { createTheme, mergeMantineTheme, DEFAULT_THEME } from '@mantine/core';
+import { createTheme } from '@mantine/core';
 
 // Mantine Theme Definition
-const themeOverride = createTheme({
-  colorScheme: {
-    dark: {
-      background: '#1a1a1a',
-      primary: '#1a1a1a', // Set the background color
-      // Modify other colors as needed
-      // For example:
-      // primary: '#ffcc00',
-      // secondary: '#007bff',
-      // accent: '#4caf50',
-      // ...
+const themeProps = createTheme({
+  white: '#fff', // neutral color (e.g. background)
+  black: '#000', // contrast color (e.g. text)
+
+  primaryColor: 'blue',
+  defaultRadius: 'sm',
+
+  // fontFamily: 'Open Sans, sans-serif',
+  // fontFamilyMonospace: 'Inconsolata, monospace',
+
+  /** Controls various styles of h1-h6 elements, used in TypographyStylesProvider and Title components 
+    headings: {
+      fontFamily: string;
+      fontWeight: string;
+      sizes: {
+        h1: HeadingStyle;
+        h2: HeadingStyle;
+        h3: HeadingStyle;
+        h4: HeadingStyle;
+        h5: HeadingStyle;
+        h6: HeadingStyle;
+      };
     },
-  },
+    */
 });
 
-const theme = mergeMantineTheme(DEFAULT_THEME, themeOverride);
+const theme = themeProps;
 
 export default theme;
