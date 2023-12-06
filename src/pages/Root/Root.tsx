@@ -1,7 +1,7 @@
 import { AppShell } from '@mantine/core';
 import Header from '../../components/Header/Header';
 import NavBar from '../../components/NavBar/NavBar';
-import PageContent from '../../components/Main/Main';
+import Main from '../../components/Main/Main';
 
 function Root() {
   return (
@@ -18,7 +18,7 @@ function Root() {
     >
       <Header />
       <NavBar />
-      <PageContent />
+      <Main />
     </AppShell>
   );
 }

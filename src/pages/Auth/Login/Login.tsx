@@ -1,3 +1,5 @@
+import { ChangeEvent, FormEvent } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   Text,
   Box,
@@ -9,10 +11,51 @@ import {
   Button,
   Flex,
 } from '@mantine/core';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { changeInputLoginValue, login } from '../../../store/reducers/login';
 
 // use mantine form validators (https://mantine.dev/form/validators/) ?
 
 function Login() {
+  const history = useHistory();
+
+  const dispatch = useAppDispatch();
+
+  const emailValue = useAppSelector((state) => state.login.credentials.email);
+  const passwordValue = useAppSelector(
+    (state) => state.login.credentials.password
+  );
+  const errorMsg = useAppSelector((state) => state.login.error);
+
+  const handleChangeEmailValue = (event: ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+
+    dispatch(changeInputLoginValue({ fieldName: 'email', value: newValue }));
+  };
+
+  const handleChangePasswordValue = (event: ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+
+    dispatch(changeInputLoginValue({ fieldName: 'password', value: newValue }));
+  };
+
+  const handleSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      await dispatch(
+        login({
+          email: emailValue,
+          password: passwordValue,
+        })
+      );
+
+      history.push('/');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Box component="form" className="right-content">
       <Title className="title" size="2.25rem" c="#FFF">
@@ -20,12 +63,14 @@ function Login() {
       </Title>
 
       <Stack>
-        <Box>
+        <form onSubmit={handleSubmitForm}>
           <TextInput
             label="Email"
             placeholder="Saisissez votre email"
             c="#FFF"
             className="section"
+            value={emailValue}
+            onChange={handleChangeEmailValue}
           />
 
           <TextInput
@@ -33,6 +78,8 @@ function Login() {
             placeholder="Saisissez votre mot de passe"
             c="#FFF"
             className="section"
+            value={passwordValue}
+            onChange={handleChangePasswordValue}
           />
 
           <Group justify="space-between" className="section">
@@ -40,9 +87,17 @@ function Login() {
               Mot de passe oublié ?
             </Anchor>
 
-            <Button variant="outline">Se connecter</Button>
+            <Button
+              onClick={() => handleSubmitForm}
+              type="submit"
+              variant="outline"
+            >
+              Se connecter
+            </Button>
           </Group>
-        </Box>
+        </form>
+
+        {errorMsg && <Box>{errorMsg}</Box>}
 
         <Flex direction="row" wrap="wrap" className="form-bottom">
           <Text c="#FFF" fz="0.9rem">

@@ -49,7 +49,6 @@ const loginSlice = createSlice({
         state.error = 'Email ou mot de passe incorrect';
         state.isLoading = false;
       })
-
       .addCase(login.fulfilled, (state) => {
         state.isConnected = true;
         state.isLoading = false;
