@@ -57,13 +57,13 @@ function Login() {
   };
 
   return (
-    <Box component="form" className="right-content">
+    <Box className="right-content">
       <Title className="title" size="2.25rem" c="#FFF">
         Connexion
       </Title>
 
       <Stack>
-        <form onSubmit={handleSubmitForm}>
+        <Box component="form" onSubmit={handleSubmitForm}>
           <TextInput
             label="Email"
             placeholder="Saisissez votre email"
@@ -95,7 +95,7 @@ function Login() {
               Se connecter
             </Button>
           </Group>
-        </form>
+        </Box>
 
         {errorMsg && <Box>{errorMsg}</Box>}
 
