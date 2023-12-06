@@ -1,15 +1,23 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { DateValue } from '@mantine/dates';
-import { Event as EventState } from '../../@types';
+import { NewEvent, NewEventState } from '../../@types';
 
-const initialState: EventState = {
+const initialState: NewEventState = {
   title: '',
-  schedule: {
-    startDate: '',
-    endDate: '',
-  },
+  start_date: '',
+  end_date: '',
+  isLoading: false,
+  error: null,
 };
+
+export const createEvent = createAsyncThunk(
+  'event',
+  async (event: NewEvent) => {
+    const { data } = await axios.post('URL/events', event);
+
+    return data;
+  }
+);
 
 const eventSlice = createSlice({
   name: 'event',
@@ -21,13 +29,27 @@ const eventSlice = createSlice({
     changeEventDateEventValue(
       state,
       action: PayloadAction<{
-        fieldDate: keyof EventState['schedule'];
+        fieldDate: 'start_date' | 'end_date';
         date: string;
       }>
     ) {
       const { fieldDate, date } = action.payload;
-      state.schedule[fieldDate] = date;
+      state[fieldDate] = date;
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(createEvent.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(createEvent.rejected, (state) => {
+        state.error = 'Format de date incorrectes';
+        state.isLoading = false;
+      })
+      .addCase(createEvent.fulfilled, (state) => {
+        state.isLoading = false;
+      });
   },
 });
 

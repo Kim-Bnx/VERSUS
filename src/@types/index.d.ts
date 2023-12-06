@@ -1,5 +1,3 @@
-import { DateValue } from '@mantine/dates';
-
 export type LoginState = {
   isConnected: boolean;
   credentials: {
@@ -15,17 +13,16 @@ export type LoginCredentials = {
   password: string;
 };
 
-export type Event = {
+export type NewEventState = {
   title: string;
-  schedule: {
-    startDate: string;
-    endDate: string;
-  };
-  banner?: string;
-  location?: string;
-  status?: string;
-  description?: string;
-  rules?: string;
-  contacts?: string;
-  result?: string;
+  start_date: string;
+  end_date: string;
+  isLoading: boolean;
+  error: null | string;
+};
+
+export type NewEvent = {
+  title: string;
+  start_date: string;
+  end_date: string;
 };
