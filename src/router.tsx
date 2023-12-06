@@ -5,8 +5,9 @@ import Error from './pages/Error/Error';
 import Home from './pages/Home/Home';
 import Event from './pages/Event/Event';
 import Profile from './pages/Profile/Profile';
-import Register from './pages/Register/Register';
-import SignIn from './pages/SignIn/SignIn';
+import Auth from './pages/Auth/Auth';
+import Register from './pages/Auth/Register/Register';
+import Login from './pages/Auth/Login/Login';
 import CreateEvent from './pages/CreateEvent/CreateEvent';
 
 export const router = createBrowserRouter([
@@ -36,11 +37,16 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: '/register',
-    element: <Register />,
-  },
-  {
-    path: '/sign-in',
-    element: <SignIn />,
+    element: <Auth />,
+    children: [
+      {
+        path: '/register',
+        element: <Register />,
+      },
+      {
+        path: '/sign-in',
+        element: <Login />,
+      },
+    ],
   },
 ]);

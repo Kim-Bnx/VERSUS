@@ -2,16 +2,15 @@ import { AppShell } from '@mantine/core';
 import { Outlet } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 
-import './PageContent.scss';
+import './Main.scss';
 
-function PageContent() {
+function Main() {
   return (
-    <AppShell.Main className="page-content content-grid" unstyled>
+    <AppShell.Main className="page-content content-grid">
       <Outlet />
-
       <Footer />
     </AppShell.Main>
   );
 }
 
-export default PageContent;
+export default Main;
