@@ -40,21 +40,17 @@ function Login() {
     dispatch(changeInputLoginValue({ fieldName: 'password', value: newValue }));
   };
 
-  const handleSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    try {
-      await dispatch(
-        login({
-          email: emailValue,
-          password: passwordValue,
-        })
-      );
+    dispatch(
+      login({
+        email: emailValue,
+        password: passwordValue,
+      })
+    );
 
-      navigate('/');
-    } catch (error) {
-      console.error(error);
-    }
+    navigate('/');
   };
 
   return (
