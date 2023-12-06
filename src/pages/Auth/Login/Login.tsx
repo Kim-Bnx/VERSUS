@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Text,
   Box,
@@ -17,7 +17,7 @@ import { changeInputLoginValue, login } from '../../../store/reducers/login';
 // use mantine form validators (https://mantine.dev/form/validators/) ?
 
 function Login() {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
@@ -50,7 +50,7 @@ function Login() {
         })
       );
 
-      history.push('/');
+      navigate('/');
     } catch (error) {
       console.error(error);
     }
