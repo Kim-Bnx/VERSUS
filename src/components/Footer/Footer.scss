@@ -1,8 +1,6 @@
 @use '../../styles/variables' as v;
 
-footer {
-  width: 100%;
-  height: 25rem;
-  padding: 2rem;
-  background-color: #141517;
+.footer {
+  background-color: var(--mantine-color-dark-filled);
+  padding: var(--mantine-spacing-xl) 0;
 }
