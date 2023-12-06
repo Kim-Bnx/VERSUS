@@ -10,6 +10,7 @@ import {
   Group,
   Button,
   Flex,
+  PasswordInput,
 } from '@mantine/core';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { changeInputLoginValue, login } from '../../../store/reducers/login';
@@ -73,7 +74,7 @@ function Login() {
             onChange={handleChangeEmailValue}
           />
 
-          <TextInput
+          <PasswordInput
             label="Mot de passe"
             placeholder="Saisissez votre mot de passe"
             c="#FFF"
