@@ -23,6 +23,8 @@ function Login() {
   const dispatch = useAppDispatch();
 
   const emailValue = useAppSelector((state) => state.login.credentials.email);
+  const isConnected = useAppSelector((state) => state.login.isConnected);
+
   const passwordValue = useAppSelector(
     (state) => state.login.credentials.password
   );
@@ -49,9 +51,11 @@ function Login() {
         password: passwordValue,
       })
     );
-
-    navigate('/');
   };
+
+  if (isConnected) {
+    navigate('/');
+  }
 
   return (
     <Box className="right-content">

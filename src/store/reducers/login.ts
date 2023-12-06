@@ -8,6 +8,10 @@ const initialState: LoginState = {
     email: '',
     password: '',
   },
+  auth: {
+    userId: null,
+    token: '',
+  },
   isLoading: false,
   error: null,
 };
@@ -15,7 +19,10 @@ const initialState: LoginState = {
 export const login = createAsyncThunk(
   'login',
   async (credentials: LoginCredentials) => {
-    const { data } = await axios.post('URL/login', credentials);
+    const { data } = await axios.post(
+      'http://localhost:3000/login',
+      credentials
+    );
 
     return data;
   }
@@ -46,9 +53,15 @@ const loginSlice = createSlice({
         state.error = 'Email ou mot de passe incorrect';
         state.isLoading = false;
       })
-      .addCase(login.fulfilled, (state) => {
+      .addCase(login.fulfilled, (state, action) => {
+        const responseData = action.payload;
+
         state.isConnected = true;
         state.isLoading = false;
+        state.auth = {
+          userId: responseData.userId,
+          token: responseData.token,
+        };
       });
   },
 });
