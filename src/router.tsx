@@ -9,6 +9,9 @@ import Auth from './pages/Auth/Auth';
 import Register from './pages/Auth/Register/Register';
 import Login from './pages/Auth/Login/Login';
 import CreateEvent from './pages/CreateEvent/CreateEvent';
+import About from './pages/Footer/About/Abouts';
+import Contact from './pages/Footer/Contact/Contact';
+import Terms from './pages/Footer/Terms/Terms';
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +36,18 @@ export const router = createBrowserRouter([
         path: 'profile/:username',
         // ! EDIT CahierDesCharge
         element: <Profile />,
+      },
+      {
+        path: 'about',
+        element: <About />,
+      },
+      {
+        path: 'contact',
+        element: <Contact />,
+      },
+      {
+        path: 'terms',
+        element: <Terms />,
       },
     ],
   },
