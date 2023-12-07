@@ -1,4 +1,11 @@
 @use '../../styles/variables' as v;
+@import url('https://fonts.googleapis.com/css2?family=Asap:wght@400;700&family=Fugaz+One&display=swap');
+
+.logo {
+  font-family: 'Fugaz One', sans-serif;
+  font-size: 2rem;
+  text-transform: uppercase;
+}
 
 .navbar__bottom {
   flex-grow: 2;
@@ -10,6 +17,11 @@
 
 .navbar__link {
   display: block;
+  color: var(--mantine-color-anchor);
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .navbar__section {
@@ -53,4 +65,7 @@
   padding: var(--mantine-spacing-md);
   background-color: var(--mantine-color-blue-light);
   border-radius: var(--mantine-radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-sm);
 }

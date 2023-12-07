@@ -5,16 +5,14 @@ import {
   Flex,
   Text,
   Tooltip,
-  rem,
   useComputedColorScheme,
   useMantineColorScheme,
 } from '@mantine/core';
-import { IconDeviceGamepad2 } from '@tabler/icons-react';
 import './NavBar.scss';
 import { IoLogOutOutline, IoMoon, IoSunnySharp } from 'react-icons/io5';
-import { useState } from 'react';
 import NavBarUser from './NavBarUser';
 import NavBarGuest from './NavBarGuest';
+import { useAppSelector } from '../../hooks/redux';
 
 function NavBar() {
   // SETTINGS OF THE COLOR SCHEME SWITCH
@@ -31,21 +29,16 @@ function NavBar() {
   };
 
   // FETCH LOG USER
-  const [isLog, setIsLog] = useState(true);
+  const isConnected = useAppSelector((state) => state.login.isConnected);
 
   return (
     <AppShell.Navbar p="lg" className="navbar">
-      <Box className="logo">
-        <IconDeviceGamepad2
-          style={{ width: rem(45), height: rem(45) }}
-          stroke={1}
-        />
-      </Box>
+      <Box className="logo">Versus</Box>
 
-      {isLog && <NavBarUser />}
+      {isConnected && <NavBarUser />}
 
       <Box className="navbar__bottom">
-        {!isLog && <NavBarGuest />}
+        {!isConnected && <NavBarGuest />}
 
         <Flex
           align="center"
@@ -69,9 +62,9 @@ function NavBar() {
             </Button>
           </Tooltip>
 
-          {isLog && (
+          {isConnected && (
             <Tooltip label="Se déconnecter">
-              <Button className="logout" component="a" href="/">
+              <Button className="logout">
                 <IoLogOutOutline />
               </Button>
             </Tooltip>
