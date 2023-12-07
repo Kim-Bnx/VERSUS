@@ -57,6 +57,7 @@ Launch project
 
  - [Documents d'élaboration du projet](https://github.com/O-clock-Cheesecake/projet-5-versus/wiki)
  - [Cahier des charges](https://docs.google.com/document/d/1bTD5kVhkD7utuCIPbLkuoNbhCruBuwi9tcCYeXgs8Hc/edit#heading=h.k2mrd19y696k)
+ - [Github commands sheet](https://gist.github.com/mMormin/3ea1e1aad737d73d793e1654923a6e01)
 
 <br />
 
