@@ -29,7 +29,13 @@ function Header() {
   return (
     <AppShell.Header p="lg" className="header">
       <Flex gap="md" className="actions" visibleFrom="sm">
-        <Button className="button button-new__event">Organiser un event</Button>
+        <Button
+          className="button button-new__event"
+          component="a"
+          href="/event/create"
+        >
+          Organiser un event
+        </Button>
 
         <SearchBar />
       </Flex>

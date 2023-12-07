@@ -15,7 +15,10 @@ const initialState: LoginState = {
 export const login = createAsyncThunk(
   'login',
   async (credentials: LoginCredentials) => {
-    const { data } = await axios.post('URL/login', credentials);
+    const { data } = await axios.post(
+      'http://localhost:3000/login',
+      credentials
+    );
 
     return data;
   }

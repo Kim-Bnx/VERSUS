@@ -1,4 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { NewEvent, NewEventState } from '../../@types';
 
@@ -13,7 +14,7 @@ const initialState: NewEventState = {
 export const createEvent = createAsyncThunk(
   'event',
   async (event: NewEvent) => {
-    const { data } = await axios.post('URL/events', event);
+    const { data } = await axios.post('http://localhost:3000/event', event);
 
     return data;
   }

@@ -32,6 +32,10 @@ export const router = createBrowserRouter([
         element: <Event />,
       },
       {
+        path: 'event/:slug/settings',
+        element: <Event />,
+      },
+      {
         // route for the connected user to see researched user's profile or his own
         path: 'profile/:username',
         // ! EDIT CahierDesCharge
