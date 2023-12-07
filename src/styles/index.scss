@@ -16,46 +16,15 @@ code {
 }
 
 .container {
-  padding-top: 7rem;
+  margin-top: 7rem;
 
-  &__title {
-    padding-bottom: 1.5rem;
-
-    &-name {
-      font-size: 2.5rem;
-      line-height: 3rem;
-      letter-spacing: 0.05rem;
-      font-weight: 400;
-      text-transform: capitalize;
-    }
+  .title {
+    margin-bottom: 1.5rem;
   }
-}
-
-.grid {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.thumb {
-  cursor: pointer;
-  background-size: cover;
-  background-position: bottom;
 }
 
 input {
   &:focus-visible {
     outline: none;
   }
-}
-
-.button-favorite {
-  position: absolute;
-  top: 0.8rem;
-  right: 1rem;
-  background-color: #0c0c0c;
-  border: 1px solid #333333;
-  border-radius: 50%;
-  padding: 0.5rem;
-  cursor: pointer;
 }

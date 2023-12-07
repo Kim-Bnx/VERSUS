@@ -1,152 +1,153 @@
-import { useState } from 'react';
-import { BackgroundImage, Box } from '@mantine/core';
-import { IconHeart } from '@tabler/icons-react';
+import {
+  Anchor,
+  BackgroundImage,
+  Image,
+  Box,
+  Flex,
+  Title,
+  Text,
+  SimpleGrid,
+} from '@mantine/core';
+
 import Slider from '../../components/Slider/Slider';
+import FavoriteBtn from '../../components/Element/FavoriteBtn';
 
 import './Home.scss';
+import TypeTag from '../../components/Element/TypeTag';
 
 function Home() {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleFavoriteHover = () => {
-    setIsHovered(!isHovered);
-  };
-
   return (
     <>
-      <div className="title-container">
-        <h1 className="title-container__title">
-          Organisez, rassemblez, jouez !
-        </h1>
-      </div>
+      <Flex justify="center" align="center" className="title-container">
+        <Title order={1}>Organisez, rassemblez, jouez !</Title>
+      </Flex>
 
       <Slider />
 
-      <Box className="category container">
-        <div className="category__title container__title">
-          <h2 className="category__title-name container__title-name">
-            Catégories
-          </h2>
+      <Box className="container">
+        <Flex justify="space-between" align="center" className="title">
+          <Title tt="capitalize">Catégories</Title>
 
-          <span className="category__title-more">Voir plus</span>
-        </div>
+          <Anchor className="categories__title-more">Voir plus</Anchor>
+        </Flex>
 
-        <div className="category__grid grid">
+        <SimpleGrid cols={3} className="categories-grid">
+          <BackgroundImage src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80">
+            <Flex className="thumb" direction="column">
+              <FavoriteBtn />
+
+              <Box c="white" className="thumb__infos">
+                <Text tt="uppercase">league of legend</Text>
+                <Text tt="capitalize" size="2rem">
+                  Friendly party
+                </Text>
+              </Box>
+
+              <TypeTag name="PC" />
+
+              <Flex
+                justify="space-between"
+                align="center"
+                bg="#1d1d1d"
+                miw="100%"
+                className="thumb__dates"
+              >
+                <Text className="thumb__dates-start">10/12/2023</Text>
+                <Text className="thumb__dates-duration">5 jours</Text>
+              </Flex>
+            </Flex>
+          </BackgroundImage>
+
           <BackgroundImage
             className="thumb"
             src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
           >
-            <div
-              className="button-favorite"
-              onMouseEnter={handleFavoriteHover}
-              onMouseLeave={handleFavoriteHover}
+            <FavoriteBtn />
+
+            <Box c="white" className="thumb__infos">
+              <Text tt="uppercase">mario kart 8 : deluxe</Text>
+              <Text tt="capitalize" size="2rem">
+                blueME for fun
+              </Text>
+            </Box>
+
+            <TypeTag name="switch" />
+
+            <Flex
+              justify="space-between"
+              align="center"
+              bg="#1d1d1d"
+              miw="100%"
+              className="thumb__dates"
             >
-              <IconHeart
-                stroke={1.5}
-                fill={isHovered ? 'rgb(216, 60, 60)' : '#0c0c0c'}
-                color={isHovered ? 'rgb(216, 60, 60)' : '#929292'}
-              />
-            </div>
-
-            <div className="thumb__infos">
-              <span className="thumb__name-game">league of legend</span>
-              <span className="thumb__name-event">Friendly party</span>
-            </div>
-
-            <div className="thumb__type">
-              <span className="thumb__type-text">tournoi</span>
-            </div>
-
-            <div className="thumb__dates">
-              <p className="thumb__dates-start">10/12/2023</p>
-              <p className="thumb__dates-duration">5 jours</p>
-            </div>
+              <Text className="thumb__dates-start">10/12/2023</Text>
+              <Text className="thumb__dates-duration">8 jours</Text>
+            </Flex>
           </BackgroundImage>
 
           <BackgroundImage
             className="thumb"
             src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
           >
-            <div className="button-favorite">
-              <IconHeart stroke={1.5} fill="#0c0c0c" color="#929292" />
-            </div>
+            <FavoriteBtn />
 
-            <div className="thumb__infos">
-              <span className="thumb__name-game">mario kart 8 : deluxe</span>
-              <span className="thumb__name-event">blueME for fun</span>
-            </div>
+            <Box c="white" className="thumb__infos">
+              <Text tt="uppercase">goldeneye 007</Text>
+              <Text tt="capitalize" size="2rem">
+                old school edition
+              </Text>
+            </Box>
 
-            <div className="thumb__type">
-              <span className="thumb__type-text">speedrun</span>
-            </div>
+            <TypeTag name="retro" />
 
-            <div className="thumb__dates">
-              <p className="thumb__dates-start">10/12/2023</p>
-              <p className="thumb__dates-duration">8 jours</p>
-            </div>
+            <Flex
+              justify="space-between"
+              align="center"
+              bg="#1d1d1d"
+              miw="100%"
+              className="thumb__dates"
+            >
+              <Text className="thumb__dates-start">10/12/2023</Text>
+              <Text className="thumb__dates-duration">10 jours</Text>
+            </Flex>
           </BackgroundImage>
-
-          <BackgroundImage
-            className="thumb"
-            src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-          >
-            <div className="button-favorite">
-              <IconHeart stroke={1.5} fill="#0c0c0c" color="#929292" />
-            </div>
-
-            <div className="thumb__infos">
-              <span className="thumb__name-game">goldeneye 007</span>
-              <span className="thumb__name-event">old school edition</span>
-            </div>
-
-            <div className="thumb__type">
-              <span className="thumb__type-text">retro</span>
-            </div>
-
-            <div className="thumb__dates">
-              <p className="thumb__dates-start">10/12/2023</p>
-              <p className="thumb__dates-duration">10 jours</p>
-            </div>
-          </BackgroundImage>
-        </div>
+        </SimpleGrid>
       </Box>
 
-      <Box className="favorites-games container">
-        <div className="games__title container__title">
-          <h2 className="games__title-name container__title-name">
-            vos jeux préférés
-          </h2>
-        </div>
+      <Box className="container">
+        <Box className="title">
+          <Title tt="capitalize">vos jeux préférés</Title>
+        </Box>
 
-        <div className="games__grid grid">
-          <BackgroundImage
+        <SimpleGrid cols={4} className="games__grid">
+          <Image
             src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
             className="thumb"
           >
-            {/* <p>Heartstone</p> */}
-          </BackgroundImage>
+            {/* <Text>Heartstone</Text> */}
+          </Image>
 
-          <BackgroundImage
+          <Image
             src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
             className="thumb"
           >
-            {/* <p>Heartstone</p> */}
-          </BackgroundImage>
+            {/* <Text>Heartstone</Text> */}
+          </Image>
 
-          <BackgroundImage
+          <Image
             src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
             className="thumb"
           >
-            {/* <p>Heartstone</p> */}
-          </BackgroundImage>
+            {/* <Text>Heartstone</Text> */}
+          </Image>
 
-          <BackgroundImage
+          <Image
             src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
             className="thumb"
           >
-            {/* <p>Heartstone</p> */}
-          </BackgroundImage>
-        </div>
+            {/* <Text>Heartstone</Text> */}
+          </Image>
+        </SimpleGrid>
       </Box>
     </>
   );

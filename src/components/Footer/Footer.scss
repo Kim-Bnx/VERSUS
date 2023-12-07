@@ -1,6 +1,7 @@
 @use '../../styles/variables' as v;
 
 .footer {
+  margin-top: 10rem;
   background-color: var(--mantine-color-dark-filled);
   padding: var(--mantine-spacing-xl) 0;
 }
