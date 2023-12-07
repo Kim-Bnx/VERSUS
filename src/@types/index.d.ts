@@ -1,11 +1,15 @@
 export type LoginState = {
-  isConnected: boolean;
   credentials: {
     email: string;
     password: string;
   };
-  error: null | string;
+  auth: {
+    userId: number | null;
+    token: string;
+  };
+  isConnected: boolean;
   isLoading: boolean;
+  error: null | string;
 };
 
 export type LoginCredentials = {
