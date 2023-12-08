@@ -1,1 +1,29 @@
 @use '../../styles/variables' as v;
+
+.wrapper {
+  width: 60%;
+  margin: 0 auto;
+
+  .title {
+    margin-top: 2rem;
+  }
+
+  .section {
+    margin-top: 1rem;
+    border-radius: 0.05rem;
+    padding: 2rem 0;
+    width: 100%;
+
+    &-title {
+      margin-bottom: 1rem;
+    }
+
+    .wrapper-left {
+      width: 20%;
+    }
+
+    .wrapper-right {
+      width: 80%;
+    }
+  }
+}

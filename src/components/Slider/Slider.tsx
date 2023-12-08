@@ -1,12 +1,4 @@
-import {
-  Anchor,
-  BackgroundImage,
-  Box,
-  Button,
-  Flex,
-  Text,
-  Title,
-} from '@mantine/core';
+import { Anchor, BackgroundImage, Box, Flex, Text, Title } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 import TypeTag from '../Element/TypeTag';
 import FavoriteBtn from '../Element/FavoriteBtn';
