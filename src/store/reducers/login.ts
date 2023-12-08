@@ -1,7 +1,9 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { LoginCredentials, LoginState } from '../../@types';
+import { axiosInstance } from '../../utils/axios';
+import { LocalStorage } from '../../utils/LocalStorage';
 
+const userData = LocalStorage.getItem('user');
 const initialState: LoginState = {
   isConnected: false,
   credentials: {
@@ -14,15 +16,18 @@ const initialState: LoginState = {
   },
   isLoading: false,
   error: null,
+  ...userData,
 };
 
 export const login = createAsyncThunk(
   'login',
   async (credentials: LoginCredentials) => {
-    const { data } = await axios.post(
+    const { data } = await axiosInstance.post(
       'http://localhost:3000/login',
       credentials
     );
+
+    LocalStorage.setItem('user', data);
 
     return data;
   }
@@ -42,6 +47,13 @@ const loginSlice = createSlice({
       const { fieldName, value } = action.payload;
       state.credentials[fieldName] = value;
     },
+    logout(state) {
+      LocalStorage.removeItem('user');
+      console.log(localStorage);
+      state.isConnected = false;
+      state.auth.token = '';
+      state.auth.userId = null;
+    },
   },
   extraReducers(builder) {
     builder
@@ -56,7 +68,7 @@ const loginSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         const responseData = action.payload;
 
-        state.isConnected = true;
+        state.isConnected = responseData.isConnected;
         state.isLoading = false;
         state.auth = {
           userId: responseData.userId,
@@ -66,5 +78,5 @@ const loginSlice = createSlice({
   },
 });
 
-export const { changeInputLoginValue } = loginSlice.actions;
+export const { changeInputLoginValue, logout } = loginSlice.actions;
 export default loginSlice.reducer;
