@@ -1,8 +1,9 @@
-import { FormEvent, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Button,
   Grid,
+  Input,
   Space,
   TextInput,
   Title,
@@ -25,7 +26,7 @@ function CreateEvent() {
       title: useAppSelector((state) => state.event.title),
       start_date: useAppSelector((state) => state.event.start_date),
       end_date: useAppSelector((state) => state.event.end_date),
-      status: 'draft',
+      user_id: 1,
     },
     transformValues: (values) => ({
       ...values,
@@ -34,8 +35,6 @@ function CreateEvent() {
     }),
   });
 
-  console.log(form.getTransformedValues().start_date);
-
   useEffect(() => {
     dispatch(
       changeInputEventValue({ fieldName: 'title', value: form.values.title })
@@ -43,19 +42,21 @@ function CreateEvent() {
   }, [dispatch, form.values.title]);
 
   useEffect(() => {
+    const startDate = form.values.start_date.toString();
     dispatch(
       changeInputEventValue({
         fieldName: 'start_date',
-        value: form.values.start_date,
+        value: startDate,
       })
     );
   }, [dispatch, form.values.start_date]);
 
   useEffect(() => {
+    const endDate = form.values.end_date.toString();
     dispatch(
       changeInputEventValue({
         fieldName: 'end_date',
-        value: form.values.end_date,
+        value: endDate,
       })
     );
   }, [dispatch, form.values.end_date]);
@@ -112,6 +113,11 @@ function CreateEvent() {
               />
             </Grid.Col>
           </DatesProvider>
+          <VisuallyHidden>
+            <Grid.Col span={12}>
+              <Input type="number" {...form.getInputProps('end_date')} />
+            </Grid.Col>
+          </VisuallyHidden>
         </Grid>
 
         <Space h="lg" />
