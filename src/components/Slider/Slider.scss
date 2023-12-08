@@ -2,11 +2,20 @@
 
 .slider {
   display: flex;
-  height: 450px;
+  height: 465px;
+
+  .type-tag {
+    bottom: 1rem;
+  }
+
+  .button--favorite {
+    right: 2rem;
+    top: 1rem;
+  }
 
   .carousel {
     .mantine-Carousel-indicators {
-      margin-top: 2rem;
+      bottom: -2rem;
 
       button {
         width: 2rem;
@@ -25,7 +34,6 @@
 
     .slide {
       display: flex;
-      width: 100%;
       border-right: 5px solid transparent;
 
       &-image {
@@ -33,25 +41,6 @@
         background-size: cover;
         background-position: bottom;
         position: relative;
-
-        .type {
-          position: absolute;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          bottom: 1.5rem;
-          right: 2rem;
-          background-color: #1d1d1d;
-          padding: 0.5rem 1.5rem;
-          border-radius: 0.8rem;
-
-          &-text {
-            font-size: 0.8rem;
-            line-height: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05rem;
-          }
-        }
       }
 
       &-content {
@@ -69,38 +58,24 @@
 
           &-title {
             &__name {
-              font-size: 2rem;
-              line-height: 2rem;
-              font-weight: 400;
               padding-bottom: 0.5rem;
-            }
-
-            &__game {
-              text-transform: uppercase;
-              line-height: 0.9rem;
             }
           }
 
           &__date {
-            font-size: 0.9rem;
             padding: 2rem 0;
-            text-transform: uppercase;
           }
 
           &__description {
             text-align: justify;
             overflow: hidden;
-            max-height: 7.5rem;
+            max-height: 12rem;
           }
 
           &-link {
             position: absolute;
-            bottom: 2rem;
-            right: 1rem;
-
-            .button {
-              float: right;
-            }
+            bottom: 3rem;
+            right: 4rem;
           }
         }
       }
