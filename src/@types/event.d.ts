@@ -22,7 +22,7 @@ export type EventState = {
   end_date: string;
   banner: string;
   thumbnail: string;
-  localhost: string;
+  location: string;
   status: string;
   description: string;
   rules: string;

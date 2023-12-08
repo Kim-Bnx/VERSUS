@@ -10,7 +10,7 @@ const initialState: EventState = {
   end_date: '',
   banner: '',
   thumbnail: '',
-  localhost: '',
+  location: '',
   status: '',
   description: '',
   rules: '',
