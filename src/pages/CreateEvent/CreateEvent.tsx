@@ -1,66 +1,74 @@
-import { ChangeEvent, FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Grid, Space, TextInput, Title } from '@mantine/core';
-import { DateTimePicker, DateValue, DatesProvider } from '@mantine/dates';
+import {
+  Button,
+  Grid,
+  Space,
+  TextInput,
+  Title,
+  VisuallyHidden,
+} from '@mantine/core';
+import { TransformedValues, useForm } from '@mantine/form';
+import { DateTimePicker, DatesProvider } from '@mantine/dates';
 import 'dayjs/locale/fr';
 import slugify from 'slugify';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import {
-  changeInputEventValue,
-  changeEventDateEventValue,
-  createEvent,
-} from '../../store/reducers/event';
+import { changeInputEventValue, createEvent } from '../../store/reducers/event';
 
 function CreateEvent() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const titleValue = useAppSelector((state) => state.event.title);
-  const startDate = useAppSelector((state) => state.event.start_date);
-  const endDate = useAppSelector((state) => state.event.end_date);
 
-  const handleChangeTitleValue = (event: ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
-    dispatch(changeInputEventValue(newValue));
-  };
+  const form = useForm({
+    initialValues: {
+      title: useAppSelector((state) => state.event.title),
+      start_date: useAppSelector((state) => state.event.start_date),
+      end_date: useAppSelector((state) => state.event.end_date),
+      status: 'draft',
+    },
+    transformValues: (values) => ({
+      ...values,
+      start_date: values.start_date.toString(),
+      end_date: values.end_date.toString(),
+    }),
+  });
 
-  const handleChangeStartDateValue = (value: DateValue): void => {
-    if (value) {
-      const newDate = value.toISOString();
+  console.log(form.getTransformedValues().start_date);
 
-      dispatch(
-        changeEventDateEventValue({ fieldDate: 'start_date', date: newDate })
-      );
-    }
-  };
+  useEffect(() => {
+    dispatch(
+      changeInputEventValue({ fieldName: 'title', value: form.values.title })
+    );
+  }, [dispatch, form.values.title]);
 
-  const handleChangeEndDateValue = (value: DateValue): void => {
-    if (value) {
-      const newDate = value.toISOString();
+  useEffect(() => {
+    dispatch(
+      changeInputEventValue({
+        fieldName: 'start_date',
+        value: form.values.start_date,
+      })
+    );
+  }, [dispatch, form.values.start_date]);
 
-      dispatch(
-        changeEventDateEventValue({ fieldDate: 'end_date', date: newDate })
-      );
-    }
-  };
+  useEffect(() => {
+    dispatch(
+      changeInputEventValue({
+        fieldName: 'end_date',
+        value: form.values.end_date,
+      })
+    );
+  }, [dispatch, form.values.end_date]);
 
   // SUBMIT FORM TO CREATE EVENT
-  const handleSubmitCreateEvent = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // Send the data form to the createEvent reducer
-    dispatch(
-      createEvent({
-        title: titleValue,
-        start_date: startDate,
-        end_date: endDate,
-        status: 'draft',
-      })
-    )
+
+  const handleSubmitCreateEvent = (values: TransformedValues<typeof form>) => {
+    dispatch(createEvent(values))
       // Catch the asyncThunk result
       // https://redux-toolkit.js.org/api/createAsyncThunk#unwrapping-result-actions
       .unwrap()
       .then(() => {
-        navigate(`/event/${slugify(titleValue)}/settings`);
+        navigate(`/event/${slugify(values.title, { lower: true })}/settings`);
       })
       .catch(() => {
         console.log('error');
@@ -70,16 +78,14 @@ function CreateEvent() {
   return (
     <>
       <Title order={1}>Créer un évènement</Title>
-      <Box component="form" onSubmit={handleSubmitCreateEvent}>
+      <form onSubmit={form.onSubmit(handleSubmitCreateEvent)}>
         <Grid>
           <Grid.Col span={12}>
             <TextInput
               required
-              name="title"
               label="Titre de l'évènement"
               placeholder="Titre de l'évènement"
-              value={titleValue}
-              onChange={handleChangeTitleValue}
+              {...form.getInputProps('title')}
             />
           </Grid.Col>
           <DatesProvider settings={{ locale: 'fr', timezone: 'CET' }}>
@@ -91,7 +97,7 @@ function CreateEvent() {
                 label="Commence le"
                 placeholder="Choisir une date de début"
                 minDate={new Date()}
-                onChange={handleChangeStartDateValue}
+                {...form.getInputProps('start_date')}
               />
             </Grid.Col>
             <Grid.Col span={6}>
@@ -102,14 +108,15 @@ function CreateEvent() {
                 label="Termine le"
                 placeholder="Choisir une date de fin"
                 minDate={new Date()}
-                onChange={handleChangeEndDateValue}
+                {...form.getInputProps('end_date')}
               />
             </Grid.Col>
           </DatesProvider>
         </Grid>
+
         <Space h="lg" />
         <Button type="submit">Créer l&apos;évènement</Button>
-      </Box>
+      </form>
     </>
   );
 }

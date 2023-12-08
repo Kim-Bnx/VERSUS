@@ -1,5 +1,4 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { NewEvent, NewEventState } from '../../@types';
 
@@ -24,18 +23,15 @@ const eventSlice = createSlice({
   name: 'event',
   initialState,
   reducers: {
-    changeInputEventValue(state, action: PayloadAction<string>) {
-      state.title = action.payload;
-    },
-    changeEventDateEventValue(
+    changeInputEventValue(
       state,
       action: PayloadAction<{
-        fieldDate: 'start_date' | 'end_date';
-        date: string;
+        fieldName: keyof NewEventState;
+        value: string;
       }>
     ) {
-      const { fieldDate, date } = action.payload;
-      state[fieldDate] = date;
+      const { fieldName, value } = action.payload;
+      state[fieldName] = value;
     },
   },
   extraReducers(builder) {
@@ -54,6 +50,5 @@ const eventSlice = createSlice({
   },
 });
 
-export const { changeInputEventValue, changeEventDateEventValue } =
-  eventSlice.actions;
+export const { changeInputEventValue } = eventSlice.actions;
 export default eventSlice.reducer;
