@@ -1,9 +1,10 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { NewEvent, NewEventState } from '../../@types';
+import { NewEventState, NewEvent } from '../../@types/event';
 
 const initialState: NewEventState = {
   title: '',
+  title_slug: '',
   start_date: '',
   end_date: '',
   isLoading: false,
@@ -11,16 +12,15 @@ const initialState: NewEventState = {
 };
 
 export const createEvent = createAsyncThunk(
-  'event',
+  'event/create',
   async (event: NewEvent) => {
     const { data } = await axios.post('http://localhost:3000/event', event);
-
     return data;
   }
 );
 
-const eventSlice = createSlice({
-  name: 'event',
+const createEventSlice = createSlice({
+  name: 'createEvent',
   initialState,
   reducers: {
     changeInputEventValue(
@@ -50,5 +50,5 @@ const eventSlice = createSlice({
   },
 });
 
-export const { changeInputEventValue } = eventSlice.actions;
-export default eventSlice.reducer;
+export const { changeInputEventValue } = createEventSlice.actions;
+export default createEventSlice.reducer;

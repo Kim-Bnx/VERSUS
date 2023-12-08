@@ -15,7 +15,10 @@ import 'dayjs/locale/fr';
 import slugify from 'slugify';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { changeInputEventValue, createEvent } from '../../store/reducers/event';
+import {
+  changeInputEventValue,
+  createEvent,
+} from '../../store/reducers/createEvent';
 
 function CreateEvent() {
   const navigate = useNavigate();
