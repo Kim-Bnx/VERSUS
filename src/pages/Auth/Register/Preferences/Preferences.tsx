@@ -1,5 +1,6 @@
 import { Anchor, Box, Button, Flex, Grid, Group, Title } from '@mantine/core';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
+import PlatformSquare from '../../../../components/Element/PlatformSquare';
 
 function Preferences() {
   return (
@@ -57,23 +58,7 @@ function Preferences() {
       <Box className="profile-platforms section">
         <p className="form-title">vos plateformes</p>
 
-        <Grid gutter={15} className="platforms">
-          <Grid.Col span={3}>
-            <div className="platform">PC</div>
-          </Grid.Col>
-          <Grid.Col span={3}>
-            <div className="platform">Switch</div>
-          </Grid.Col>
-          <Grid.Col span={3}>
-            <div className="platform">PS5</div>
-          </Grid.Col>
-          <Grid.Col span={3}>
-            <div className="platform">XBOX</div>
-          </Grid.Col>
-          <Grid.Col span={3}>
-            <div className="platform">RETRO</div>
-          </Grid.Col>
-        </Grid>
+        <PlatformSquare />
       </Box>
 
       <Flex

@@ -9,14 +9,11 @@
   }
 
   .section {
-    margin-top: 1rem;
+    margin-top: 1.5em;
     border-radius: 0.05rem;
     padding: 2rem 0;
     width: 100%;
-
-    &-title {
-      margin-bottom: 1rem;
-    }
+    background-color: rgb(29 31 35);
 
     .wrapper-left {
       width: 20%;
@@ -24,6 +21,29 @@
 
     .wrapper-right {
       width: 80%;
+    }
+
+    &-full {
+      padding: 2rem;
+    }
+
+    .bg-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    &-title {
+      margin-bottom: 2rem;
+    }
+
+    .game {
+      background-color: #333333;
+      border-radius: 0.5rem;
+      text-align: center;
+      padding: 0.1rem 1rem;
+      text-transform: capitalize;
+
+      letter-spacing: 0.05rem;
     }
   }
 }
