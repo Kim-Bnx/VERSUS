@@ -1,15 +1,42 @@
-import { Avatar, Box, Flex, Title, Text, Grid, GridCol } from '@mantine/core';
-import { IconKey } from '@tabler/icons-react';
+import { useState } from 'react';
+import {
+  Avatar,
+  Box,
+  Flex,
+  Title,
+  Text,
+  Grid,
+  GridCol,
+  FileButton,
+  Button,
+  TextInput,
+} from '@mantine/core';
+import { IconKey, IconSettingsFilled, IconUpload } from '@tabler/icons-react';
 import PlatformSquare from '../../components/Element/PlatformSquare';
 
 import './Profile.scss';
 
 function Profile() {
+  const [toggleEditProfile, seTtoggleEditProfile] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+
+  const handleEditProfile = () => {
+    seTtoggleEditProfile(!toggleEditProfile);
+  };
+
   return (
     <Box className="wrapper">
-      <Title size="2rem" order={2}>
-        Votre profil
-      </Title>
+      <Flex justify="space-between" align="center">
+        <Title size="2rem" order={2}>
+          {toggleEditProfile ? 'Modifier votre profil' : 'Votre Profil'}
+        </Title>
+
+        <Flex justify="space-between" align="center">
+          <Button mr="1rem" onClick={handleEditProfile}>
+            <IconSettingsFilled />
+          </Button>
+        </Flex>
+      </Flex>
 
       <Box mt="2rem">
         <Title className="title" order={3}>
@@ -18,12 +45,43 @@ function Profile() {
 
         <Flex className="section" align="center">
           <Flex justify="center" className="wrapper-left">
-            <Avatar size="xl" />
+            {file && toggleEditProfile && (
+              <Text
+                unstyled
+                className="file_name"
+                size="sm"
+                ta="center"
+                mt="sm"
+              >
+                {file.name}
+              </Text>
+            )}
+            {!toggleEditProfile ? (
+              <Avatar
+                size="xl"
+                src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+              />
+            ) : (
+              <Box className="upload">
+                <Button className="upload-button">
+                  <FileButton onChange={setFile} accept="image/png,image/jpeg">
+                    {(props) => <IconUpload {...props} />}
+                  </FileButton>
+                </Button>
+                <Avatar size="xl" />
+              </Box>
+            )}
           </Flex>
 
           <Box className="wrapper-right" c="white">
-            <Text mb="0.2rem" size="1.2rem" fw="bold">
-              Machin Truc
+            <Text className="input-label">pseudonyme</Text>
+            {!toggleEditProfile ? (
+              <Text fw="bold">Machin Truc</Text>
+            ) : (
+              <TextInput mb="1rem" maw="30rem" placeholder="Machin Truc" />
+            )}
+            <Text mt="1.5rem" className="input-label">
+              adresse email
             </Text>
             <Text>mmboudot@gmail.com</Text>
           </Box>
@@ -35,18 +93,20 @@ function Profile() {
           </Flex>
 
           <Box className="wrapper-right">
-            <Text
-              size="0.8rem"
-              tt="uppercase"
-              c="rgb(74 79 93)"
-              mb="0.2rem"
-              lts="0.02rem"
-            >
-              Mot de passe
-            </Text>
-            <Text lts="0.2rem" c="white">
-              ********
-            </Text>
+            <Text className="input-label">Mot de passe</Text>
+            {!toggleEditProfile ? (
+              <Text lts="0.2rem" c="white">
+                ********
+              </Text>
+            ) : (
+              <Box>
+                <TextInput mb="1rem" maw="30rem" placeholder="********" />
+                <Text mt="1.5rem" className="input-label">
+                  confirmation de mot de passe
+                </Text>
+                <TextInput mb="1rem" maw="30rem" placeholder="" />
+              </Box>
+            )}
           </Box>
         </Flex>
       </Box>
@@ -102,6 +162,14 @@ function Profile() {
             </GridCol>
           </Grid>
         </Box>
+
+        {toggleEditProfile && (
+          <Flex w="100%" mt="5rem" justify="flex-end" align="center">
+            <Button mr="1rem" bg="green" onClick={handleEditProfile}>
+              Valider les modifications
+            </Button>
+          </Flex>
+        )}
       </Box>
     </Box>
   );
