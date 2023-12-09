@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, Text } from '@mantine/core';
+import { Flex, Grid, Text } from '@mantine/core';
 
 import './index.scss';
 

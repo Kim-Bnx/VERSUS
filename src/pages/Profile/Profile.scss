@@ -1,8 +1,13 @@
-@use '../../styles/variables' as v;
-
 .wrapper {
-  width: 60%;
   margin: 0 auto;
+
+  &.profile {
+    width: 60%;
+  }
+
+  &.myprofile {
+    width: 100%;
+  }
 
   .title {
     margin-top: 2rem;
