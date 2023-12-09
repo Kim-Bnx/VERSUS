@@ -4,7 +4,7 @@ import Root from './pages/Root/Root';
 import Error from './pages/Error/Error';
 import Home from './pages/Home/Home';
 import Event from './pages/Event/Event';
-import MyProfile from './pages/Profile/MyProfile/MyProfile';
+import Profile from './pages/Profile/Profile';
 import Auth from './pages/Auth/Auth';
 import Register from './pages/Auth/Register/Register';
 import Login from './pages/Auth/Login/Login';
@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
         // route for the connected user to see researched user's profile or his own
         path: 'profile/:username',
         // ! EDIT CahierDesCharge
-        element: <MyProfile />,
+        element: <Profile />,
       },
       {
         path: 'about',

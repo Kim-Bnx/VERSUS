@@ -3,19 +3,28 @@ import {
   Box,
   Flex,
   Title,
-  Text,
   Grid,
   GridCol,
   Button,
   SimpleGrid,
 } from '@mantine/core';
-import { IconKey, IconHeartFilled, IconStarFilled } from '@tabler/icons-react';
+import { IconHeartFilled, IconStarFilled } from '@tabler/icons-react';
+import EventThumb from '../../../components/Element/Thumb/Event';
+import TeamThumb from '../../../components/Element/Thumb/Team';
 import PlatformSquare from '../../../components/Element/PlatformSquare';
 
 import '../Profile.scss';
-import EventThumb from '../../../components/Element/EventThumb';
 
 function MyProfile() {
+  const membersList = [
+    'RubisIron',
+    'EpicNever',
+    'KillMonsieur',
+    'AnotherMember',
+    'MonsieurCloud',
+    'MemberSix',
+  ];
+
   return (
     <Box className="wrapper myprofile">
       <Flex justify="space-between" align="center">
@@ -37,7 +46,7 @@ function MyProfile() {
         </Box>
       </Flex>
 
-      <Box mt="2rem">
+      <Box mt="4rem">
         <Title className="title" order={3}>
           Evénements
         </Title>
@@ -77,13 +86,43 @@ function MyProfile() {
           Equipes
         </Title>
 
-        <Box className="section section-full">
-          <Title className="section-title" order={4}>
-            Mes plateformes
-          </Title>
+        <SimpleGrid cols={4} mt="1rem">
+          <TeamThumb
+            name="Ekipe de la mort ki tue"
+            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+            members={membersList}
+          />
 
-          <PlatformSquare span={2} />
-        </Box>
+          <TeamThumb
+            name="Ekipe de la mort ki tue"
+            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+            members={membersList}
+          />
+
+          <TeamThumb
+            name="Ekipe de la mort ki tue"
+            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+            members={membersList}
+          />
+
+          <TeamThumb
+            name="Ekipe de la mort ki tue"
+            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+            members={membersList}
+          />
+
+          <TeamThumb
+            name="Ekipe de la mort ki tue"
+            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+            members={membersList}
+          />
+
+          <TeamThumb
+            name="Ekipe de la mort ki tue"
+            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+            members={membersList}
+          />
+        </SimpleGrid>
       </Box>
 
       <Box mt="4rem">

@@ -14,7 +14,7 @@ import FavoriteBtn from '../../components/Element/FavoriteBtn';
 
 import './Home.scss';
 import TypeTag from '../../components/Element/TypeTag';
-import EventThumb from '../../components/Element/EventThumb';
+import EventThumb from '../../components/Element/Thumb/Event';
 
 function Home() {
   return (

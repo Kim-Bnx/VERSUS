@@ -7,6 +7,21 @@
 
   &.myprofile {
     width: 100%;
+
+    .team {
+      background-color: rgb(29, 31, 35);
+      padding: 2rem 1rem;
+
+      &-image {
+        width: 40%;
+        height: 100%;
+        max-height: 130px;
+      }
+
+      &-member {
+        width: 60%;
+      }
+    }
   }
 
   .title {

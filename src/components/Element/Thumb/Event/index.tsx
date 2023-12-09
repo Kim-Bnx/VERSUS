@@ -1,10 +1,10 @@
 import { BackgroundImage, Box, Flex, Text } from '@mantine/core';
-import TypeTag from '../TypeTag';
-import FavoriteBtn from '../FavoriteBtn';
+import TypeTag from '../../TypeTag';
+import FavoriteBtn from '../../FavoriteBtn';
 
 import './index.scss';
 
-type PlatformSquareProps = {
+type EventThumbProps = {
   image: string;
   game: string;
   name: string;
@@ -20,7 +20,7 @@ function EventThumb({
   type,
   date,
   countdown,
-}: PlatformSquareProps) {
+}: EventThumbProps) {
   return (
     <BackgroundImage src={image}>
       <Flex className="thumb" direction="column">
