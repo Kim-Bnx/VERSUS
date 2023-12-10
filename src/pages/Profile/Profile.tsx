@@ -1,24 +1,93 @@
 import { useState } from 'react';
+import { useDisclosure } from '@mantine/hooks';
 import {
   Avatar,
   Box,
   Flex,
   Title,
   Text,
-  Grid,
-  GridCol,
   FileButton,
   Button,
   TextInput,
+  PasswordInput,
+  Stack,
 } from '@mantine/core';
 import { IconKey, IconSettingsFilled, IconUpload } from '@tabler/icons-react';
-import PlatformSquare from '../../components/Element/PlatformSquare';
+import PlatformSquare from '../../components/Element/PlatformsSquares';
+import GamesLabels from '../../components/Element/GamesLabels';
 
 import './Profile.scss';
 
-function Profile() {
+const GAMES = [
+  {
+    id: 0,
+    name: 'test',
+  },
+  {
+    id: 1,
+    name: 'testtest',
+  },
+  {
+    id: 2,
+    name: 'testtesttest',
+  },
+  {
+    id: 3,
+    name: 'testtest',
+  },
+  {
+    id: 4,
+    name: 'testtesttesttest',
+  },
+  {
+    id: 5,
+    name: 'testtesttesttesttesttest',
+  },
+  {
+    id: 6,
+    name: 'testtesttest',
+  },
+  {
+    id: 7,
+    name: 'testtesttesttest',
+  },
+];
+
+const PLATFORMS = [
+  {
+    id: 0,
+    name: 'PC',
+  },
+  {
+    id: 1,
+    name: 'Switch',
+  },
+  {
+    id: 2,
+    name: 'PS5',
+  },
+  {
+    id: 3,
+    name: 'XBOX',
+  },
+  {
+    id: 4,
+    name: 'Retro',
+  },
+];
+
+type ProfileProps = {
+  avatar: string;
+  email: string;
+  pseudo: string;
+  platforms: { id: number; name: string }[];
+  games: { id: number; name: string }[];
+};
+
+function Profile({ avatar, pseudo, email, games, platforms }: ProfileProps) {
   const [toggleEditProfile, seTtoggleEditProfile] = useState(false);
   const [file, setFile] = useState<File | null>(null);
+  const [visible, { toggle }] = useDisclosure(false);
 
   const handleEditProfile = () => {
     seTtoggleEditProfile(!toggleEditProfile);
@@ -78,7 +147,13 @@ function Profile() {
             {!toggleEditProfile ? (
               <Text fw="bold">Machin Truc</Text>
             ) : (
-              <TextInput mb="1rem" maw="30rem" placeholder="Machin Truc" />
+              <TextInput
+                mb="1rem"
+                maw="30rem"
+                value={pseudo}
+                aria-label="pseudo"
+                placeholder="Machin Truc"
+              />
             )}
             <Text mt="1.5rem" className="input-label">
               adresse email
@@ -99,13 +174,29 @@ function Profile() {
                 ********
               </Text>
             ) : (
-              <Box>
-                <TextInput mb="1rem" maw="30rem" placeholder="********" />
+              <Stack>
+                <PasswordInput
+                  mb="1rem"
+                  maw="30rem"
+                  aria-label="password"
+                  placeholder="Mot de passe"
+                  defaultValue="********"
+                  visible={visible}
+                  onVisibilityChange={toggle}
+                />
                 <Text mt="1.5rem" className="input-label">
                   confirmation de mot de passe
                 </Text>
-                <TextInput mb="1rem" maw="30rem" placeholder="" />
-              </Box>
+                <PasswordInput
+                  mb="1rem"
+                  maw="30rem"
+                  aria-label="password-confirmation"
+                  placeholder="Confirmation du mot de passe"
+                  defaultValue="********"
+                  visible={visible}
+                  onVisibilityChange={toggle}
+                />
+              </Stack>
             )}
           </Box>
         </Flex>
@@ -121,7 +212,7 @@ function Profile() {
             Mes plateformes
           </Title>
 
-          <PlatformSquare span={2} />
+          <PlatformSquare span={2} data={PLATFORMS} />
         </Box>
 
         <Box className="section section-full">
@@ -129,43 +220,12 @@ function Profile() {
             Mes jeux
           </Title>
 
-          <Grid gutter={15}>
-            <GridCol span="content">
-              <Box className="game">testtesttesttesttest</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">testtest</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">test</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">testtesttest</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">testtest</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">testtesttest</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">testtest</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">test</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">testtest</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">testtest</Box>
-            </GridCol>
-          </Grid>
+          <GamesLabels data={GAMES} />
         </Box>
 
         {toggleEditProfile && (
           <Flex w="100%" mt="5rem" justify="flex-end" align="center">
-            <Button mr="1rem" bg="green" onClick={handleEditProfile}>
+            <Button bg="green" onClick={handleEditProfile}>
               Valider les modifications
             </Button>
           </Flex>

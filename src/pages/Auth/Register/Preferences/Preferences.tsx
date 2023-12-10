@@ -9,7 +9,30 @@ import {
   Title,
 } from '@mantine/core';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
-import PlatformSquare from '../../../../components/Element/PlatformSquare';
+import PlatformSquares from '../../../../components/Element/PlatformsSquares';
+
+const PLATFORMS = [
+  {
+    id: 0,
+    name: 'PC',
+  },
+  {
+    id: 1,
+    name: 'Switch',
+  },
+  {
+    id: 2,
+    name: 'PS5',
+  },
+  {
+    id: 3,
+    name: 'XBOX',
+  },
+  {
+    id: 4,
+    name: 'Retro',
+  },
+];
 
 function Preferences() {
   return (
@@ -67,7 +90,7 @@ function Preferences() {
       <Box className="profile-platforms section">
         <p className="form-title">vos plateformes</p>
 
-        <PlatformSquare span={3} />
+        <PlatformSquares span={3} data={PLATFORMS} />
       </Box>
 
       <Flex

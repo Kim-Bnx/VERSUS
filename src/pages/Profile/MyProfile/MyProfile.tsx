@@ -11,7 +11,7 @@ import {
 import { IconHeartFilled, IconStarFilled } from '@tabler/icons-react';
 import EventThumb from '../../../components/Element/Thumb/Event';
 import TeamThumb from '../../../components/Element/Thumb/Team';
-import PlatformSquare from '../../../components/Element/PlatformSquare';
+import PlatformSquare from '../../../components/Element/PlatformsSquares';
 
 import '../Profile.scss';
 

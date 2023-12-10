@@ -1,20 +1,8 @@
-import {
-  Anchor,
-  BackgroundImage,
-  Image,
-  Box,
-  Flex,
-  Title,
-  Text,
-  SimpleGrid,
-} from '@mantine/core';
-
+import { Anchor, Image, Box, Flex, Title, SimpleGrid } from '@mantine/core';
 import Slider from '../../components/Slider/Slider';
-import FavoriteBtn from '../../components/Element/FavoriteBtn';
+import EventThumb from '../../components/Element/Thumb/Event';
 
 import './Home.scss';
-import TypeTag from '../../components/Element/TypeTag';
-import EventThumb from '../../components/Element/Thumb/Event';
 
 function Home() {
   return (
