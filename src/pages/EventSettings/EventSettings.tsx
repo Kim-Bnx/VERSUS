@@ -1,12 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useParams } from 'react-router-dom';
-import { useCallback, useEffect, useMemo } from 'react';
-import { TextInput, Title } from '@mantine/core';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Button, Input, TextInput, Title, VisuallyHidden } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { fetchEvent } from '../../store/reducers/eventSettings';
+import slugify from 'slugify';
+import { fetchEvent } from '../../store/reducers/event';
+import { updateEvent } from '../../store/reducers/updateEvent';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { Event } from '../../@types/event';
 
 function EventSettings() {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { slug } = useParams();
   if (!slug) throw new Error('Invalid slug');
@@ -14,6 +18,7 @@ function EventSettings() {
 
   const form = useForm({
     initialValues: {
+      id: 0,
       title: '',
     },
   });
@@ -24,20 +29,35 @@ function EventSettings() {
 
   useEffect(() => {
     form.setValues({
+      id: eventData.id,
       title: eventData.title,
     });
   }, [eventData]);
 
+  const handleSubmitUpdateEvent = (values: Event) => {
+    dispatch(updateEvent(values))
+      .unwrap()
+      .then((response) => {
+        navigate(`/event/${response.title_slug}/settings`);
+      })
+      .catch(() => {
+        console.log('error update');
+      });
+  };
+
   return (
     <>
       <Title order={1}>Configurer son évènement</Title>
-      <form>
+      <form onSubmit={form.onSubmit(handleSubmitUpdateEvent)}>
+        <VisuallyHidden>
+          <Input type="number" {...form.getInputProps('id')} />
+        </VisuallyHidden>
         <TextInput
           type="text"
           placeholder="Titre de l'évènement"
           {...form.getInputProps('title')}
         />
-        <p>{eventData.title}</p>
+        <Button type="submit">Modifier</Button>
       </form>
     </>
   );

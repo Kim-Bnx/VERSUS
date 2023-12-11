@@ -36,7 +36,7 @@ const eventSlice = createSlice({
   name: 'event',
   initialState,
   reducers: {},
-  extraReducers(builder) {
+  extraReducers: (builder) => {
     builder
       .addCase(fetchEvent.pending, (state) => {
         state.isLoading = true;

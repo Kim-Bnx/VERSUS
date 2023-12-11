@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import loginReducer from './reducers/login';
-import eventReducer from './reducers/eventSettings';
+import eventReducer from './reducers/event';
 import newEventReducer from './reducers/createEvent';
+import updateEventReducer from './reducers/updateEvent';
 
 const store = configureStore({
   reducer: {
     login: loginReducer,
     event: eventReducer,
     newEvent: newEventReducer,
+    updatedEvent: updateEventReducer,
   },
 });
 
