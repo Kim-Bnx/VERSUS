@@ -26,9 +26,9 @@ function CreateEvent() {
 
   const form = useForm({
     initialValues: {
-      title: useAppSelector((state) => state.event.title),
-      start_date: useAppSelector((state) => state.event.start_date),
-      end_date: useAppSelector((state) => state.event.end_date),
+      title: useAppSelector((state) => state.newEvent.title),
+      start_date: useAppSelector((state) => state.newEvent.start_date),
+      end_date: useAppSelector((state) => state.newEvent.end_date),
       user_id: 1,
     },
     transformValues: (values) => ({

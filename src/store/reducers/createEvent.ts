@@ -19,8 +19,8 @@ export const createEvent = createAsyncThunk(
   }
 );
 
-const createEventSlice = createSlice({
-  name: 'createEvent',
+const newEventSlice = createSlice({
+  name: 'newEvent',
   initialState,
   reducers: {
     changeInputEventValue(
@@ -50,5 +50,5 @@ const createEventSlice = createSlice({
   },
 });
 
-export const { changeInputEventValue } = createEventSlice.actions;
-export default createEventSlice.reducer;
+export const { changeInputEventValue } = newEventSlice.actions;
+export default newEventSlice.reducer;

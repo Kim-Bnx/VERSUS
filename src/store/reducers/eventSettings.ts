@@ -1,4 +1,4 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { EventState } from '../../@types/event';
 
@@ -18,7 +18,7 @@ const initialState: EventState = {
   type_event: 0,
   game_id: 0,
   user_id: 0,
-  isLoading: false,
+  isLoading: true,
   error: null,
 };
 
@@ -35,11 +35,15 @@ const eventSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers(builder) {
-    builder.addCase(fetchEvent.fulfilled, (state, action) => {
-      Object.assign(state, action.payload);
-    });
+    builder
+      .addCase(fetchEvent.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchEvent.fulfilled, (state, action) => {
+        Object.assign(state, action.payload);
+        state.isLoading = false;
+      });
   },
 });
 
-export const {} = eventSlice.actions;
 export default eventSlice.reducer;
