@@ -1,13 +1,5 @@
-import {
-  Anchor,
-  Text,
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Group,
-  Title,
-} from '@mantine/core';
+import { useCallback, useState } from 'react';
+import { Anchor, Text, Box, Button, Flex, Group, Title } from '@mantine/core';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 import PlatformSquares from '../../../../components/Element/PlatformsSquares';
 import GamesLabels from '../../../../components/Element/GamesLabels';
@@ -79,6 +71,24 @@ type PreferencesProps = {
 };
 
 function Preferences({ onChangeView }: PreferencesProps) {
+  const [selectedGames, setSelectedGames] = useState<{
+    [key: number]: boolean;
+  }>({});
+
+  const handleGameSelection = useCallback(
+    (id: number) => {
+      setSelectedGames((prevSelected) => ({
+        ...prevSelected,
+        [id]: !prevSelected[id],
+      }));
+    },
+    [setSelectedGames]
+  );
+
+  const selectedGameIds = Object.keys(selectedGames)
+    .filter((key) => selectedGames[parseInt(key, 10)])
+    .map((key) => parseInt(key, 10));
+
   return (
     <Flex align="center" justify="center" direction="column">
       <Box className="title">
@@ -86,6 +96,7 @@ function Preferences({ onChangeView }: PreferencesProps) {
           Vos préférences
         </Title>
         <Text>Etape 2 sur 2</Text>
+        <Text>{selectedGameIds}</Text>
       </Box>
 
       <Box className="profile-games section">
@@ -93,7 +104,11 @@ function Preferences({ onChangeView }: PreferencesProps) {
           vos jeux
         </Title>
 
-        <GamesLabels data={GAMES} />
+        <GamesLabels
+          data={GAMES}
+          selectedGames={selectedGames}
+          onSelectGame={handleGameSelection}
+        />
       </Box>
 
       <Box className="profile-platforms section">

@@ -9,6 +9,7 @@ import {
   Group,
   TextInput,
   Title,
+  Avatar,
 } from '@mantine/core';
 
 import { IconChevronRight } from '@tabler/icons-react';
@@ -71,7 +72,7 @@ function Profile({ onChangeView }: ProfileProps) {
             Avatar
           </Title>
           {!selectedAvatar ? (
-            <Box className="circle" />
+            <Avatar className="circle" />
           ) : (
             <CreateAvatar hw="5rem" seed={selectedAvatar} />
           )}
