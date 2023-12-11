@@ -6,7 +6,7 @@ import Home from './pages/Home/Home';
 import Event from './pages/Event/Event';
 import Profile from './pages/Profile/Profile';
 import Auth from './pages/Auth/Auth';
-import Register from './pages/Auth/Register/Register';
+import Signup from './pages/Auth/Signup/Signup';
 import Login from './pages/Auth/Login/Login';
 import CreateEvent from './pages/CreateEvent/CreateEvent';
 import About from './pages/Footer/About/Abouts';
@@ -55,8 +55,8 @@ export const router = createBrowserRouter([
     element: <Auth />,
     children: [
       {
-        path: '/register',
-        element: <Register />,
+        path: '/sign-up',
+        element: <Signup />,
       },
       {
         path: '/sign-in',

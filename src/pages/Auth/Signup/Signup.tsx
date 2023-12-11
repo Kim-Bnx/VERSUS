@@ -4,7 +4,7 @@ import Default from './Default';
 import Profile from './Profile';
 import Preferences from './Preferences';
 
-function Register() {
+function Signup() {
   const [activeStep, setActiveStep] = useState('default');
 
   const handleViewChange = (newStep: string) => {
@@ -26,4 +26,4 @@ function Register() {
   return <Box className="right-content">{registerStep}</Box>;
 }
 
-export default Register;
+export default Signup;

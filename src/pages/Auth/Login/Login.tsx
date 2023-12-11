@@ -19,7 +19,6 @@ import { changeInputLoginValue, login } from '../../../store/reducers/login';
 
 function Login() {
   const navigate = useNavigate();
-
   const dispatch = useAppDispatch();
 
   const emailValue = useAppSelector((state) => state.login.credentials.email);
@@ -106,7 +105,7 @@ function Login() {
           </Text>
 
           <Button variant="outline" fullWidth>
-            <Anchor href="/register">Inscrivez-vous</Anchor>
+            <Anchor href="/sign-up">Inscrivez-vous</Anchor>
           </Button>
 
           <Anchor href="/" underline="always" c="#FFF" fz="0.9rem">

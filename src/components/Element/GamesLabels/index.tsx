@@ -8,7 +8,7 @@ type TypeTagProps = {
 
 function GamesLabels({ data }: TypeTagProps) {
   return (
-    <Grid className="games-list" gutter={15}>
+    <Grid justify="center" align="center" className="games-list" gutter={15}>
       {data.map((game) => (
         <GridCol key={game.id} span="content">
           <Box className="game">{game.name}</Box>

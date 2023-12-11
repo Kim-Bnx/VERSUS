@@ -9,7 +9,7 @@ type PlatformSquareProps = {
 
 function PlatformsSquares({ span, data }: PlatformSquareProps) {
   return (
-    <Grid justify="center" align="center" gutter={15}>
+    <Grid justify="flex-start" align="center" gutter={15}>
       {data.map((platform) => (
         <Grid.Col span={span} key={platform.id}>
           <Flex justify="center" align="center" className="platform">

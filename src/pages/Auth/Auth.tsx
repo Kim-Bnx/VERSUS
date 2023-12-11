@@ -1,4 +1,4 @@
-import { AppShell, Box, Container, Text } from '@mantine/core';
+import { AppShell, Container, Text } from '@mantine/core';
 import { Outlet } from 'react-router-dom';
 
 import './Auth.scss';

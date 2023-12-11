@@ -82,26 +82,24 @@ function Preferences({ onChangeView }: PreferencesProps) {
   return (
     <Flex align="center" justify="center" direction="column">
       <Box className="title">
-        <Title size="1.5rem">Vos préférences</Title>
-        <Text>Etape 2</Text>
+        <Title order={2} size="1.5rem">
+          Vos préférences
+        </Title>
+        <Text>Etape 2 sur 2</Text>
       </Box>
 
       <Box className="profile-games section">
-        <p className="form-title">vos jeux</p>
+        <Title order={2} size="1rem" className="form-title">
+          vos jeux
+        </Title>
 
-        <Grid
-          className="games"
-          gutter={10}
-          grow
-          justify="space-around"
-          align="space-between"
-        >
-          <GamesLabels data={GAMES} />
-        </Grid>
+        <GamesLabels data={GAMES} />
       </Box>
 
       <Box className="profile-platforms section">
-        <p className="form-title">vos plateformes</p>
+        <Title order={2} size="1rem" className="form-title">
+          vos plateformes
+        </Title>
 
         <PlatformSquares span={3} data={PLATFORMS} />
       </Box>

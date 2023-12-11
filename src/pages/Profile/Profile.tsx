@@ -80,15 +80,7 @@ const PLATFORMS = [
   },
 ];
 
-type ProfileProps = {
-  avatar: string;
-  email: string;
-  pseudo: string;
-  platforms: { id: number; name: string }[];
-  games: { id: number; name: string }[];
-};
-
-function Profile({ avatar, pseudo, email, games, platforms }: ProfileProps) {
+function Profile() {
   const [toggleEditProfile, seTtoggleEditProfile] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [visible, { toggle }] = useDisclosure(false);
