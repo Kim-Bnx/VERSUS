@@ -1,5 +1,38 @@
-import { Anchor, Box, Button, Flex, Grid, Group, Title } from '@mantine/core';
+import {
+  Anchor,
+  Text,
+  Box,
+  Button,
+  Flex,
+  Grid,
+  Group,
+  Title,
+} from '@mantine/core';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
+import PlatformSquares from '../../../../components/Element/PlatformsSquares';
+
+const PLATFORMS = [
+  {
+    id: 0,
+    name: 'PC',
+  },
+  {
+    id: 1,
+    name: 'Switch',
+  },
+  {
+    id: 2,
+    name: 'PS5',
+  },
+  {
+    id: 3,
+    name: 'XBOX',
+  },
+  {
+    id: 4,
+    name: 'Retro',
+  },
+];
 
 function Preferences() {
   return (
@@ -11,7 +44,7 @@ function Preferences() {
     >
       <Box className="title">
         <Title size="1.5rem">Vos préférences</Title>
-        <span>Etape 2</span>
+        <Text>Etape 2</Text>
       </Box>
 
       <Box className="profile-games section">
@@ -25,31 +58,31 @@ function Preferences() {
           align="space-between"
         >
           <Grid.Col span="content">
-            <span className="game">League Of Legend</span>
+            <Text className="game">League Of Legend</Text>
           </Grid.Col>
           <Grid.Col span="content">
-            <span className="game">Super Smash Bros.</span>
+            <Text className="game">Super Smash Bros.</Text>
           </Grid.Col>
           <Grid.Col span="content">
-            <span className="game">Valorant</span>
+            <Text className="game">Valorant</Text>
           </Grid.Col>
           <Grid.Col span="content">
-            <span className="game">Overwatch</span>
+            <Text className="game">Overwatch</Text>
           </Grid.Col>
           <Grid.Col span="content">
-            <span className="game">Minecraft</span>
+            <Text className="game">Minecraft</Text>
           </Grid.Col>
           <Grid.Col span="content">
-            <span className="game">GTA V</span>
+            <Text className="game">GTA V</Text>
           </Grid.Col>
           <Grid.Col span="content">
-            <span className="game">Fall Guys</span>
+            <Text className="game">Fall Guys</Text>
           </Grid.Col>
           <Grid.Col span="content">
-            <span className="game">Call Of Duty</span>
+            <Text className="game">Call Of Duty</Text>
           </Grid.Col>
           <Grid.Col span="auto">
-            <span className="game">Demineur</span>
+            <Text className="game">Demineur</Text>
           </Grid.Col>
         </Grid>
       </Box>
@@ -57,23 +90,7 @@ function Preferences() {
       <Box className="profile-platforms section">
         <p className="form-title">vos plateformes</p>
 
-        <Grid gutter={15} className="platforms">
-          <Grid.Col span={3}>
-            <div className="platform">PC</div>
-          </Grid.Col>
-          <Grid.Col span={3}>
-            <div className="platform">Switch</div>
-          </Grid.Col>
-          <Grid.Col span={3}>
-            <div className="platform">PS5</div>
-          </Grid.Col>
-          <Grid.Col span={3}>
-            <div className="platform">XBOX</div>
-          </Grid.Col>
-          <Grid.Col span={3}>
-            <div className="platform">RETRO</div>
-          </Grid.Col>
-        </Grid>
+        <PlatformSquares span={3} data={PLATFORMS} />
       </Box>
 
       <Flex
