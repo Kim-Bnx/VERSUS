@@ -4,7 +4,6 @@ import {
   Flex,
   Title,
   Grid,
-  GridCol,
   Button,
   SimpleGrid,
 } from '@mantine/core';
@@ -12,10 +11,69 @@ import { IconHeartFilled, IconStarFilled } from '@tabler/icons-react';
 import EventThumb from '../../../components/Element/Thumb/Event';
 import TeamThumb from '../../../components/Element/Thumb/Team';
 import PlatformSquare from '../../../components/Element/PlatformsSquares';
+import GamesLabels from '../../../components/Element/GamesLabels';
 
 import '../Profile.scss';
 
 function MyProfile() {
+  const GAMES = [
+    {
+      id: 0,
+      name: 'test',
+    },
+    {
+      id: 1,
+      name: 'testtest',
+    },
+    {
+      id: 2,
+      name: 'testtesttest',
+    },
+    {
+      id: 3,
+      name: 'testtest',
+    },
+    {
+      id: 4,
+      name: 'testtesttesttest',
+    },
+    {
+      id: 5,
+      name: 'testtesttesttesttesttest',
+    },
+    {
+      id: 6,
+      name: 'testtesttest',
+    },
+    {
+      id: 7,
+      name: 'testtesttesttest',
+    },
+  ];
+
+  const PLATFORMS = [
+    {
+      id: 0,
+      name: 'PC',
+    },
+    {
+      id: 1,
+      name: 'Switch',
+    },
+    {
+      id: 2,
+      name: 'PS5',
+    },
+    {
+      id: 3,
+      name: 'XBOX',
+    },
+    {
+      id: 4,
+      name: 'Retro',
+    },
+  ];
+
   const membersList = [
     'RubisIron',
     'EpicNever',
@@ -135,7 +193,7 @@ function MyProfile() {
             Platformes
           </Title>
 
-          <PlatformSquare span={2} />
+          <PlatformSquare span={2} data={PLATFORMS} />
         </Box>
 
         <Box className="section section-full">
@@ -144,36 +202,7 @@ function MyProfile() {
           </Title>
 
           <Grid gutter={15}>
-            <GridCol span="content">
-              <Box className="game">testtesttesttesttest</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">testtest</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">test</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">testtesttest</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">testtest</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">testtesttest</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">testtest</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">test</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">testtest</Box>
-            </GridCol>
-            <GridCol span="content">
-              <Box className="game">testtest</Box>
-            </GridCol>
+            <GamesLabels data={GAMES} />
           </Grid>
         </Box>
       </Box>
