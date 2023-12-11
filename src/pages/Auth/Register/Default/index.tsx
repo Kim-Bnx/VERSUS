@@ -10,7 +10,11 @@ import {
   Flex,
 } from '@mantine/core';
 
-function Default() {
+type DefaultProps = {
+  onChangeView: (step: string) => void;
+};
+
+function Default({ onChangeView }: DefaultProps) {
   return (
     <Box className="right-content">
       <Title className="title" size="2.25rem" c="#FFF">
@@ -41,7 +45,9 @@ function Default() {
           />
 
           <Group justify="flex-end">
-            <Button variant="outline">S&apos;inscrire</Button>
+            <Button onClick={() => onChangeView('profile')} variant="outline">
+              S&apos;inscrire
+            </Button>
           </Group>
         </Box>
 

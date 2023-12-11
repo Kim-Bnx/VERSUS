@@ -4,13 +4,18 @@ import {
   Button,
   Flex,
   Grid,
+  Text,
   Group,
   TextInput,
   Title,
 } from '@mantine/core';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 
-function Profile() {
+type ProfileProps = {
+  onChangeView: (step: string) => void;
+};
+
+function Profile({ onChangeView }: ProfileProps) {
   return (
     <Flex
       align="center"
@@ -20,7 +25,7 @@ function Profile() {
     >
       <Box className="title">
         <Title size="1.5rem">Configuration de votre profil</Title>
-        <span>Etape 1 sur 2</span>
+        <Text>Etape 1 sur 2</Text>
       </Box>
 
       <TextInput
@@ -32,33 +37,33 @@ function Profile() {
 
       <Flex className="profile-avatar section">
         <Box className="avatar-selected">
-          <p className="form-title">Avatar</p>
-          <div className="circle" />
+          <Text className="form-title">Avatar</Text>
+          <Box className="circle" />
         </Box>
 
-        <div className="avatar-selection">
-          <p className="form-title">Importer une image ou choisis</p>
+        <Box>
+          <Text className="form-title">Importer une image ou choisir</Text>
           <Grid gutter={{ base: 0, xs: 'md', md: 10, xl: 10 }}>
             <Grid.Col span={4}>
-              <div className="circle" />
+              <Box className="circle" />
             </Grid.Col>
             <Grid.Col span={4}>
-              <div className="circle" />
+              <Box className="circle" />
             </Grid.Col>
             <Grid.Col span={4}>
-              <div className="circle" />
+              <Box className="circle" />
             </Grid.Col>
             <Grid.Col span={4}>
-              <div className="circle" />
+              <Box className="circle" />
             </Grid.Col>
             <Grid.Col span={4}>
-              <div className="circle" />
+              <Box className="circle" />
             </Grid.Col>
             <Grid.Col span={4}>
-              <div className="circle" />
+              <Box className="circle" />
             </Grid.Col>
           </Grid>
-        </div>
+        </Box>
       </Flex>
 
       <Flex
@@ -66,10 +71,20 @@ function Profile() {
         align="center"
         justify="space-between"
       >
-        <Anchor>Passer</Anchor>
+        <Anchor onClick={() => onChangeView('preferences')}>Passer</Anchor>
         <Group>
-          <Button leftSection={<IconChevronLeft size={14} />}>Retour</Button>
-          <Button rightSection={<IconChevronRight size={14} />}>Suivant</Button>
+          <Button
+            onClick={() => onChangeView('default')}
+            leftSection={<IconChevronLeft size={14} />}
+          >
+            Retour
+          </Button>
+          <Button
+            onClick={() => onChangeView('preferences')}
+            rightSection={<IconChevronRight size={14} />}
+          >
+            Suivant
+          </Button>
         </Group>
       </Flex>
     </Flex>

@@ -10,6 +10,7 @@ import {
 } from '@mantine/core';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 import PlatformSquares from '../../../../components/Element/PlatformsSquares';
+import GamesLabels from '../../../../components/Element/GamesLabels';
 
 const PLATFORMS = [
   {
@@ -34,7 +35,50 @@ const PLATFORMS = [
   },
 ];
 
-function Preferences() {
+const GAMES = [
+  {
+    id: 0,
+    name: 'League Of Legend',
+  },
+  {
+    id: 1,
+    name: 'Super Smash Bros.',
+  },
+  {
+    id: 2,
+    name: 'Valorant',
+  },
+  {
+    id: 3,
+    name: 'Minecraft',
+  },
+  {
+    id: 4,
+    name: 'Overwatch',
+  },
+  {
+    id: 5,
+    name: 'GTA V',
+  },
+  {
+    id: 6,
+    name: 'Fall Guys',
+  },
+  {
+    id: 7,
+    name: 'Call Of Duty',
+  },
+  {
+    id: 8,
+    name: 'Demineur',
+  },
+];
+
+type PreferencesProps = {
+  onChangeView: (step: string) => void;
+};
+
+function Preferences({ onChangeView }: PreferencesProps) {
   return (
     <Flex
       align="center"
@@ -57,33 +101,7 @@ function Preferences() {
           justify="space-around"
           align="space-between"
         >
-          <Grid.Col span="content">
-            <Text className="game">League Of Legend</Text>
-          </Grid.Col>
-          <Grid.Col span="content">
-            <Text className="game">Super Smash Bros.</Text>
-          </Grid.Col>
-          <Grid.Col span="content">
-            <Text className="game">Valorant</Text>
-          </Grid.Col>
-          <Grid.Col span="content">
-            <Text className="game">Overwatch</Text>
-          </Grid.Col>
-          <Grid.Col span="content">
-            <Text className="game">Minecraft</Text>
-          </Grid.Col>
-          <Grid.Col span="content">
-            <Text className="game">GTA V</Text>
-          </Grid.Col>
-          <Grid.Col span="content">
-            <Text className="game">Fall Guys</Text>
-          </Grid.Col>
-          <Grid.Col span="content">
-            <Text className="game">Call Of Duty</Text>
-          </Grid.Col>
-          <Grid.Col span="auto">
-            <Text className="game">Demineur</Text>
-          </Grid.Col>
+          <GamesLabels data={GAMES} />
         </Grid>
       </Box>
 
@@ -100,8 +118,15 @@ function Preferences() {
       >
         <Anchor>Passer</Anchor>
         <Group>
-          <Button leftSection={<IconChevronLeft size={14} />}>Retour</Button>
-          <Button rightSection={<IconChevronRight size={14} />}>Suivant</Button>
+          <Button
+            onClick={() => onChangeView('profile')}
+            leftSection={<IconChevronLeft size={14} />}
+          >
+            Retour
+          </Button>
+          <Button rightSection={<IconChevronRight size={14} />}>
+            Terminer
+          </Button>
         </Group>
       </Flex>
     </Flex>
