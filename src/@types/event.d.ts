@@ -14,7 +14,7 @@ export type NewEvent = {
   user_id: number;
 };
 
-export type EventState = {
+export type Event = {
   id: number;
   title: string;
   title_slug: string;
@@ -30,6 +30,10 @@ export type EventState = {
   type_event: number;
   game_id: number;
   user_id: number;
+};
+
+export type EventState = {
+  event: Event;
   isLoading: boolean;
   error: string | null;
 };
