@@ -11,18 +11,10 @@ function Auth() {
       transitionDuration={500}
       transitionTimingFunction="ease"
     >
-      <Container fluid className="login">
-        <Box>
-          <Text
-            className="left-logo"
-            tt="uppercase"
-            fw={400}
-            fz="4rem"
-            c="#FFF"
-          >
-            versus
-          </Text>
-        </Box>
+      <Container fluid className="auth">
+        <Text className="left-logo" tt="uppercase" fw={400} fz="4rem" c="#FFF">
+          versus
+        </Text>
 
         <Outlet />
       </Container>

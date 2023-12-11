@@ -16,7 +16,7 @@ type DefaultProps = {
 
 function Default({ onChangeView }: DefaultProps) {
   return (
-    <Box className="right-content">
+    <Box>
       <Title className="title" size="2.25rem" c="#FFF">
         Inscription
       </Title>

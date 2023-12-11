@@ -17,12 +17,7 @@ type ProfileProps = {
 
 function Profile({ onChangeView }: ProfileProps) {
   return (
-    <Flex
-      align="center"
-      justify="center"
-      direction="column"
-      className="right-content"
-    >
+    <Flex align="center" justify="center" direction="column">
       <Box className="title">
         <Title size="1.5rem">Configuration de votre profil</Title>
         <Text>Etape 1 sur 2</Text>

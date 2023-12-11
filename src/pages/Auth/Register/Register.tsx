@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Container } from '@mantine/core';
+import { Box } from '@mantine/core';
 import Default from './Default';
 import Profile from './Profile';
 import Preferences from './Preferences';
@@ -23,7 +23,7 @@ function Register() {
     default:
       registerStep = <Default onChangeView={handleViewChange} />;
   }
-  return <Container fluid>{registerStep}</Container>;
+  return <Box className="right-content">{registerStep}</Box>;
 }
 
 export default Register;

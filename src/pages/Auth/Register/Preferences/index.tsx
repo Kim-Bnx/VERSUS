@@ -80,12 +80,7 @@ type PreferencesProps = {
 
 function Preferences({ onChangeView }: PreferencesProps) {
   return (
-    <Flex
-      align="center"
-      justify="center"
-      direction="column"
-      className="right-content"
-    >
+    <Flex align="center" justify="center" direction="column">
       <Box className="title">
         <Title size="1.5rem">Vos préférences</Title>
         <Text>Etape 2</Text>
