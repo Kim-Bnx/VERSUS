@@ -1,3 +1,4 @@
+// Login States
 export type LoginState = {
   credentials: {
     email: string;
@@ -15,4 +16,26 @@ export type LoginState = {
 export type LoginCredentials = {
   email: string;
   password: string;
+};
+
+// Signup States
+export type SignupState = {
+  userValues: SignupValues;
+  isLoading: boolean;
+};
+
+export type SignupValues = {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  pseudo: string;
+  avatar: string;
+  games: {
+    id: number | null;
+    name: string;
+  };
+  platforms: {
+    id: number | null;
+    name: string;
+  };
 };
