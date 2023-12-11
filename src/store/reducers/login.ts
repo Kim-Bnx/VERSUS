@@ -26,9 +26,15 @@ export const login = createAsyncThunk(
       'http://localhost:3000/login',
       credentials
     );
-
-    LocalStorage.setItem('user', data);
-
+    const authentification = {
+      auth: {
+        userId: data.userId,
+        token: data.token,
+      },
+      isConnected: data.isConnected,
+    };
+    LocalStorage.setItem('user', authentification);
+    console.log(localStorage);
     return data;
   }
 );
