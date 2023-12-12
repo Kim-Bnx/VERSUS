@@ -97,7 +97,7 @@ function Login() {
           </Group>
         </Box>
 
-        {errorMsg && <Box>{errorMsg}</Box>}
+        {errorMsg && <Text>{errorMsg}</Text>}
 
         <Flex direction="row" wrap="wrap" className="form-bottom">
           <Text c="#FFF" fz="0.9rem">

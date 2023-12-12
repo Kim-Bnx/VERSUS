@@ -17,28 +17,8 @@ function useAvatarUri(seed: Seed) {
   return newAvatar.toDataUriSync();
 }
 
-// function useState(defaultState) {
-//   let state = defaultState;
-
-//   const setStage = (n) => {
-//     state = n;
-//   };
-
-//   return [state, setStage];
-// }
-
 function CreateAvatar({ seed, hw }: CreateAvatarProps) {
   const avatar = useAvatarUri(seed);
-
-  // const [avatar, setAvatar] = useState<string | null>(null);
-  // useEffect(() => {
-  //   const generateAvatar = async () => {
-  //     const svg = await newAvatar.toDataUriSync();
-  //     setAvatar(svg);
-  //   };
-
-  //   generateAvatar();
-  // }, [seed]);
 
   return (
     <Image

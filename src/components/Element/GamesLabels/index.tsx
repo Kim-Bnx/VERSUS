@@ -1,4 +1,4 @@
-import { Box, Grid, GridCol } from '@mantine/core';
+import { Box, Grid, GridCol, Text } from '@mantine/core';
 
 import './index.scss';
 
@@ -17,7 +17,7 @@ function GamesLabels({ data, selectedGames, onSelectGame }: TypeTagProps) {
             className={`game ${selectedGames[game.id] ? 'selected' : ''}`}
             onClick={() => onSelectGame(game.id)}
           >
-            {game.name}
+            <Text>{game.name}</Text>
           </Box>
         </GridCol>
       ))}

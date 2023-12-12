@@ -1,9 +1,6 @@
 // Login States
 export type LoginState = {
-  credentials: {
-    email: string;
-    password: string;
-  };
+  credentials: LoginCredentials;
   auth: {
     userId: number | null;
     token: string;
@@ -20,22 +17,22 @@ export type LoginCredentials = {
 
 // Signup States
 export type SignupState = {
-  userValues: SignupValues;
+  credentials: SignupCredentials;
+  accountInfos: NewUserData;
   isLoading: boolean;
+  error: null | string;
+  isSuccess: boolean;
 };
 
-export type SignupValues = {
+export type SignupCredentials = {
   email: string;
   password: string;
-  confirmPassword: string;
-  pseudo: string;
+  confirmation: string;
+};
+
+export type NewUserData = {
+  username: string;
   avatar: string;
-  games: {
-    id: number | null;
-    name: string;
-  };
-  platforms: {
-    id: number | null;
-    name: string;
-  };
+  games: number[];
+  platforms: number[];
 };

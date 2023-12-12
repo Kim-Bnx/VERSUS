@@ -8,8 +8,11 @@ import {
   Title,
   Flex,
 } from '@mantine/core';
-import { useAppDispatch } from '../../../../hooks/redux';
-import { changeInputSignupValue } from '../../../../store/reducers/signup';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+import {
+  changeInputSignupValue,
+  signup,
+} from '../../../../store/reducers/signup';
 
 type DefaultProps = {
   onChangeView: (step: string) => void;
@@ -17,6 +20,17 @@ type DefaultProps = {
 
 function Default({ onChangeView }: DefaultProps) {
   const dispatch = useAppDispatch();
+  const isSuccess = useAppSelector((state) => state.signup.isSuccess);
+
+  const emailValue = useAppSelector((state) => state.signup.credentials.email);
+  const passwordValue = useAppSelector(
+    (state) => state.signup.credentials.password
+  );
+  const confirmPasswordValue = useAppSelector(
+    (state) => state.signup.credentials.confirmation
+  );
+
+  const errorMsg = useAppSelector((state) => state.signup.error);
 
   const handleChangeEmailValue = (event: ChangeEvent<HTMLInputElement>) => {
     const email = event.target.value;
@@ -32,18 +46,32 @@ function Default({ onChangeView }: DefaultProps) {
     );
   };
 
-  const handleChangePasswordConfirmValue = (
+  const handleChangeConfirmPasswordValue = (
     event: ChangeEvent<HTMLInputElement>
   ) => {
-    const passwordConfirm = event.target.value;
+    const confirmPassword = event.target.value;
 
     dispatch(
       changeInputSignupValue({
-        fieldName: 'confirmPassword',
-        value: passwordConfirm,
+        fieldName: 'confirmation',
+        value: confirmPassword,
       })
     );
   };
+
+  const handleSubmit = () => {
+    dispatch(
+      signup({
+        email: emailValue,
+        password: passwordValue,
+        confirmation: confirmPasswordValue,
+      })
+    );
+  };
+
+  if (isSuccess) {
+    onChangeView('profile');
+  }
 
   return (
     <Box>
@@ -68,17 +96,17 @@ function Default({ onChangeView }: DefaultProps) {
         />
 
         <TextInput
-          onChange={handleChangePasswordConfirmValue}
+          onChange={handleChangeConfirmPasswordValue}
           label="Confirmation de mot de passe"
           placeholder="Saisissez votre mot de passe"
           c="#FFF"
           mt="1rem"
         />
 
+        {errorMsg && <Text>{errorMsg}</Text>}
+
         <Flex mt="2rem" justify="flex-end">
-          <Button onClick={() => onChangeView('profile')} variant="outline">
-            S&apos;inscrire
-          </Button>
+          <Button onClick={handleSubmit}>S&apos;inscrire</Button>
         </Flex>
       </Box>
 

@@ -1,32 +1,46 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { SignupState, SignupValues } from '../../@types';
+import {
+  SignupState,
+  SignupCredentials,
+  NewUserData,
+  GamesPlatformsArray,
+} from '../../@types';
 
 const initialState: SignupState = {
-  userValues: {
+  credentials: {
     email: '',
     password: '',
-    confirmPassword: '',
-    pseudo: '',
+    confirmation: '',
+  },
+  accountInfos: {
+    username: '',
     avatar: '',
-    games: {
-      id: null,
-      name: '',
-    },
-    platforms: {
-      id: null,
-      name: ',',
-    },
+    gamesPlatformsList: { games: [], platforms: [] },
   },
   isLoading: false,
+  isSuccess: false,
+  error: null,
 };
 
 export const signup = createAsyncThunk(
-  'Signup',
-  async (userValues: SignupValues) => {
+  'signup',
+  async (credentials: SignupCredentials) => {
     const { data } = await axios.post(
       'http://localhost:3000/signup',
-      userValues
+      credentials
+    );
+
+    return data;
+  }
+);
+
+export const addAccountData = createAsyncThunk(
+  'addAccountData',
+  async (accountInfos: NewUserData) => {
+    const { data } = await axios.patch(
+      'http://localhost:3000/user/',
+      accountInfos
     );
 
     return data;
@@ -40,23 +54,31 @@ const signupSlice = createSlice({
     changeInputSignupValue(
       state,
       action: PayloadAction<{
-        fieldName: keyof SignupValues;
+        fieldName: keyof SignupState['credentials'];
         value: string;
       }>
     ) {
       const { fieldName, value } = action.payload;
+      state.credentials[fieldName] = value;
+    },
 
-      const updatedUserValues = {
-        ...state.userValues,
-        [fieldName]:
-          fieldName === 'games' || fieldName === 'platforms'
-            ? { ...state.userValues[fieldName], name: value }
-            : value,
+    changeInfosUserValue(
+      state,
+      action: PayloadAction<{
+        fieldName: keyof NewUserData;
+        value: string | number[];
+      }>
+    ) {
+      const { fieldName, value } = action.payload;
+
+      const updatedAccountValues = {
+        ...state.accountInfos,
+        [fieldName]: value,
       };
 
       return {
         ...state,
-        userValues: updatedUserValues,
+        accountInfos: updatedAccountValues,
       };
     },
   },
@@ -64,15 +86,22 @@ const signupSlice = createSlice({
     builder
       .addCase(signup.pending, (state) => {
         state.isLoading = true;
+        state.isSuccess = false;
+        state.error = null;
       })
       .addCase(signup.rejected, (state) => {
         state.isLoading = false;
+        state.isSuccess = false;
+        state.error = 'Enregistrement rejeté';
       })
       .addCase(signup.fulfilled, (state) => {
         state.isLoading = false;
+        state.isSuccess = true;
+        state.error = null;
       });
   },
 });
 
-export const { changeInputSignupValue } = signupSlice.actions;
+export const { changeInputSignupValue, changeInfosUserValue } =
+  signupSlice.actions;
 export default signupSlice.reducer;

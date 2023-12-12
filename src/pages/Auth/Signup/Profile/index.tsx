@@ -14,7 +14,7 @@ import {
 
 import { IconChevronRight } from '@tabler/icons-react';
 import { useAppDispatch } from '../../../../hooks/redux';
-import { changeInputSignupValue } from '../../../../store/reducers/signup';
+import { changeInfosUserValue } from '../../../../store/reducers/signup';
 import CreateAvatar from '../../../../components/Element/CreateAvatar';
 
 type ProfileProps = {
@@ -22,7 +22,7 @@ type ProfileProps = {
 };
 
 function Profile({ onChangeView }: ProfileProps) {
-  const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null);
+  const [selectedAvatar, setSelectedAvatar] = useState<string>('');
 
   const avatars = [
     'avatar1',
@@ -35,14 +35,18 @@ function Profile({ onChangeView }: ProfileProps) {
 
   const dispatch = useAppDispatch();
 
-  const handleChangePseudoValue = (event: ChangeEvent<HTMLInputElement>) => {
-    const email = event.target.value;
+  const handleChangeUsernameValue = (event: ChangeEvent<HTMLInputElement>) => {
+    const username = event.target.value;
 
-    dispatch(changeInputSignupValue({ fieldName: 'email', value: email }));
+    dispatch(changeInfosUserValue({ fieldName: 'username', value: username }));
   };
 
   const handleClickAvatarValue = (seed: string) => {
     setSelectedAvatar(seed);
+
+    dispatch(
+      changeInfosUserValue({ fieldName: 'avatar', value: selectedAvatar })
+    );
   };
 
   return (
@@ -59,7 +63,7 @@ function Profile({ onChangeView }: ProfileProps) {
         </Title>
 
         <TextInput
-          onChange={handleChangePseudoValue}
+          onChange={handleChangeUsernameValue}
           placeholder="pseudonyme"
           c="#FFF"
           className="section"
@@ -79,7 +83,7 @@ function Profile({ onChangeView }: ProfileProps) {
         </Box>
 
         <Box mt="1rem" w="15rem">
-          <Text className="form-title">Avatars disponible :</Text>
+          <Text mb="1rem">Sélectionnez un avatar</Text>
 
           <Grid gutter={{ base: 0, xs: 'md', md: 10, xl: 10 }}>
             {avatars.map((avatar) => (

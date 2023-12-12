@@ -1,6 +1,12 @@
 import { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Anchor, Text, Box, Button, Flex, Group, Title } from '@mantine/core';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+import {
+  changeInfosUserValue,
+  addAccountData,
+} from '../../../../store/reducers/signup';
 import PlatformSquares from '../../../../components/Element/PlatformsSquares';
 import GamesLabels from '../../../../components/Element/GamesLabels';
 
@@ -69,25 +75,91 @@ const GAMES = [
 type PreferencesProps = {
   onChangeView: (step: string) => void;
 };
+type SelectedItems = { [key: number]: boolean };
 
 function Preferences({ onChangeView }: PreferencesProps) {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const usernameValue = useAppSelector(
+    (state) => state.signup.accountInfos.username
+  );
+  const avatarValue = useAppSelector(
+    (state) => state.signup.accountInfos.avatar
+  );
+  const gamesValue = useAppSelector((state) => state.signup.accountInfos.games);
+  const platformValue = useAppSelector(
+    (state) => state.signup.accountInfos.platforms
+  );
+
   const [selectedGames, setSelectedGames] = useState<{
     [key: number]: boolean;
   }>({});
 
-  const handleGameSelection = useCallback(
-    (id: number) => {
-      setSelectedGames((prevSelected) => ({
+  const [selectedPlatforms, setSelectedPlatforms] = useState<{
+    [key: number]: boolean;
+  }>({});
+
+  const handleSelection = useCallback(
+    (
+      setId: React.Dispatch<React.SetStateAction<SelectedItems>>,
+      id: number
+    ) => {
+      setId((prevSelected) => ({
         ...prevSelected,
         [id]: !prevSelected[id],
       }));
     },
-    [setSelectedGames]
+    []
   );
 
-  const selectedGameIds = Object.keys(selectedGames)
-    .filter((key) => selectedGames[parseInt(key, 10)])
-    .map((key) => parseInt(key, 10));
+  const handlePlatformSelection = useCallback(
+    (id: number) => {
+      handleSelection(setSelectedPlatforms, id);
+    },
+    [handleSelection]
+  );
+
+  const handleGameSelection = useCallback(
+    (id: number) => {
+      handleSelection(setSelectedGames, id);
+    },
+    [handleSelection]
+  );
+
+  const handleAddAccountData = () => {
+    const selectedGameIds = Object.keys(selectedGames)
+      .filter((key) => selectedGames[parseInt(key, 10)])
+      .map((key) => parseInt(key, 10));
+
+    const selectedPlatformIds = Object.keys(selectedPlatforms)
+      .filter((key) => selectedPlatforms[parseInt(key, 10)])
+      .map((key) => parseInt(key, 10));
+
+    dispatch(
+      changeInfosUserValue({ fieldName: 'games', value: selectedGameIds })
+    );
+
+    dispatch(
+      changeInfosUserValue({
+        fieldName: 'platforms',
+        value: selectedPlatformIds,
+      })
+    );
+
+    console.log(usernameValue, avatarValue, gamesValue, platformValue);
+
+    // dispatch(
+    //   addAccountData({
+    //     username: usernameValue,
+    //     avatar: avatarValue,
+    //     games: gamesValue,
+    //     platforms: platformValue,
+    //   })
+    // );
+
+    // navigate('/');
+  };
 
   return (
     <Flex align="center" justify="center" direction="column">
@@ -95,8 +167,8 @@ function Preferences({ onChangeView }: PreferencesProps) {
         <Title order={2} size="1.5rem">
           Vos préférences
         </Title>
+
         <Text>Etape 2 sur 2</Text>
-        <Text>{selectedGameIds}</Text>
       </Box>
 
       <Box className="profile-games section">
@@ -116,7 +188,12 @@ function Preferences({ onChangeView }: PreferencesProps) {
           vos plateformes
         </Title>
 
-        <PlatformSquares span={3} data={PLATFORMS} />
+        <PlatformSquares
+          span={3}
+          data={PLATFORMS}
+          selectedPlatforms={selectedPlatforms}
+          onSelectPlatform={handlePlatformSelection}
+        />
       </Box>
 
       <Flex
@@ -124,7 +201,8 @@ function Preferences({ onChangeView }: PreferencesProps) {
         align="center"
         justify="space-between"
       >
-        <Anchor>Passer</Anchor>
+        <Anchor href="/">Passer</Anchor>
+
         <Group>
           <Button
             onClick={() => onChangeView('profile')}
@@ -132,7 +210,11 @@ function Preferences({ onChangeView }: PreferencesProps) {
           >
             Retour
           </Button>
-          <Button rightSection={<IconChevronRight size={14} />}>
+
+          <Button
+            onClick={handleAddAccountData}
+            rightSection={<IconChevronRight size={14} />}
+          >
             Terminer
           </Button>
         </Group>
