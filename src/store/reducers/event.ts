@@ -43,7 +43,14 @@ const eventSlice = createSlice({
       })
       .addCase(fetchEvent.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.event = action.payload;
+
+        const payloadKeys = Object.keys(action.payload);
+
+        payloadKeys.forEach((key) => {
+          if (action.payload[key] !== null) {
+            state.event[key] = action.payload[key];
+          }
+        });
       });
   },
 });

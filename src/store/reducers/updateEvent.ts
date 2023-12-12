@@ -13,7 +13,7 @@ const initialState: EventState = {
     thumbnail: '',
     location: '',
     status: '',
-    description: '',
+    description: 'a',
     rules: '',
     contact: '',
     type_event: 0,

@@ -19,8 +19,8 @@ export type Event = {
   id: number;
   title: string;
   title_slug?: string;
-  start_date?: string;
-  end_date?: string;
+  start_date?: string | Date;
+  end_date?: string | Date;
   banner?: string;
   thumbnail?: string;
   location?: string;
