@@ -5,6 +5,7 @@ import {
   Autocomplete,
   Button,
   Grid,
+  Image,
   Input,
   TextInput,
   Title,
@@ -43,6 +44,8 @@ function EventSettings() {
       start_date: new Date(eventData.start_date),
       end_date: new Date(eventData.end_date),
       location: eventData.location,
+      banner: eventData.banner,
+      thumbnail: eventData.thumbnail,
     });
   }, [eventData]);
 
@@ -66,10 +69,34 @@ function EventSettings() {
         </VisuallyHidden>
         <TextInput
           type="text"
+          label="Tire de l'évènement"
           placeholder="Titre de l'évènement"
           {...form.getInputProps('title')}
         />
         <TextInput label="Description" {...form.getInputProps('description')} />
+
+        <Image radius="md" h={300} src={form.values.banner} />
+        <TextInput
+          type="url"
+          label="URL de la bannière"
+          placeholder={eventData.banner}
+          {...form.getInputProps('banner')}
+        />
+
+        <Image
+          radius="md"
+          h={200}
+          w={200}
+          fit="cover"
+          src={form.values.thumbnail}
+        />
+        <TextInput
+          type="url"
+          label="URL du thumbnail"
+          placeholder={eventData.thumbnail}
+          {...form.getInputProps('thumbnail')}
+        />
+
         <Grid>
           <DatesProvider settings={{ locale: 'fr', timezone: 'CET' }}>
             <Grid.Col span={6}>
