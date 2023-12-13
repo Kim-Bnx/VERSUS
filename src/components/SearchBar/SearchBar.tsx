@@ -1,7 +1,6 @@
-import { Autocomplete, Box, TextInput } from '@mantine/core';
+import { Autocomplete, Box } from '@mantine/core';
 import './SearchBar.scss';
 import { IconSearch } from '@tabler/icons-react';
-import { ChangeEvent, FormEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { changeSearchInputValue, search } from '../../store/reducers/search';
 
@@ -11,26 +10,31 @@ function SearchBar() {
 
   const searchTerm = useAppSelector((state) => state.search.searchTerm);
   const errorMsg = useAppSelector((state) => state.search.error);
+  const data = useAppSelector((state) => state.search.searchResults);
+
+  const events = data.events[0] ? [data.events[0].title] : [];
+  const users = data.users[0] ? [data.users[0].username] : [];
+  const teams = data.teams[0] ? [data.teams[0].name] : [];
 
   const handleChangeSearchValue = (newValue: string) => {
     dispatch(changeSearchInputValue(newValue));
-  };
-
-  const handleSubmitSearchForm = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    dispatch(search(searchTerm));
+    dispatch(search(newValue));
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmitSearchForm}>
+    <Box>
       <Autocomplete
         className="search-bar"
-        placeholder="Recherche un évent, team, joueur ..."
+        placeholder="Recherche un event, team, joueur ..."
         aria-label="Barre de recherche"
         rightSection={icon}
         value={searchTerm}
         onChange={handleChangeSearchValue}
+        data={[
+          { group: 'Events', items: events },
+          { group: 'Utilisateurs', items: users },
+          { group: 'Teams', items: teams },
+        ]}
       />
       {errorMsg && <Box>{errorMsg}</Box>}
     </Box>
