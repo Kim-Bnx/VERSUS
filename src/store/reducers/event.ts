@@ -16,11 +16,16 @@ const initialState: EventState = {
     description: '',
     rules: '',
     contact: '',
-    type_event: 0,
+    type_event: '',
+    type_event_id: 0,
+    game: '',
     game_id: 0,
+    plateform: '',
+    plateform_id: 0,
     user_id: 0,
   },
   isLoading: true,
+  modified: false,
   error: null,
 };
 
