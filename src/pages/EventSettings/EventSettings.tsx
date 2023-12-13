@@ -82,7 +82,7 @@ function EventSettings() {
       game: getItem(eventData.game_id, gamesData),
       plateform: getItem(eventData.plateform_id, plateformData),
     });
-  }, [eventData, eventState]);
+  }, [eventData]);
 
   const handleSubmitUpdateEvent = (values: Event) => {
     const newValues = {
@@ -124,7 +124,7 @@ function EventSettings() {
           <img
             alt="Bannière"
             className="full-width settings_banner-image"
-            src={eventData.banner}
+            src={form.values.banner}
           />
           <Button
             className="settings_banner-button"
@@ -157,7 +157,13 @@ function EventSettings() {
               <Title order={1}>Configurer son évènement</Title>
               <Text>{eventData.title}</Text>
             </Box>
-            <Button variant="outline">Voir la page</Button>
+            <Button
+              component="a"
+              variant="outline"
+              href={`/event/${slugify(eventData.title, { lower: true })}`}
+            >
+              Voir la page
+            </Button>
           </Flex>
         </div>
         <Fieldset
@@ -171,7 +177,7 @@ function EventSettings() {
               h={200}
               w={200}
               fit="cover"
-              src={eventData.thumbnail}
+              src={form.values.thumbnail}
             />
 
             <Button
