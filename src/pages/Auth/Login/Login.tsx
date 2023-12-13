@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Text,
@@ -18,26 +18,24 @@ import { changeInputLoginValue, login } from '../../../store/reducers/login';
 // use mantine form validators (https://mantine.dev/form/validators/) ?
 
 function Login() {
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const isConnected = useAppSelector((state) => state.login.isConnected);
   const errorMsg = useAppSelector((state) => state.login.error);
-  const emailValue = useAppSelector((state) => state.login.credentials.email);
-  const passwordValue = useAppSelector(
-    (state) => state.login.credentials.password
-  );
 
   const handleChangeEmailValue = (event: ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
+    const email = event.target.value;
 
-    dispatch(changeInputLoginValue({ fieldName: 'email', value: newValue }));
+    setEmailValue(email);
   };
 
   const handleChangePasswordValue = (event: ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
+    const password = event.target.value;
 
-    dispatch(changeInputLoginValue({ fieldName: 'password', value: newValue }));
+    setPasswordValue(password);
   };
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
