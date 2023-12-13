@@ -37,9 +37,9 @@ export type ProfileState = {
 };
 
 export type UserData = {
-  email: string;
-  password: string;
-  confirmPassword: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
   username: string;
   avatar: string;
   games: number[];

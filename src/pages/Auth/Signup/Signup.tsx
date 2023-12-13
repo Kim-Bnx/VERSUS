@@ -11,19 +11,24 @@ function Signup() {
     setActiveStep(newStep);
   };
 
-  let registerStep;
+  let RegisterStep;
 
   switch (activeStep) {
     case 'profile':
-      registerStep = <Profile onChangeView={handleViewChange} />;
+      RegisterStep = Profile;
       break;
     case 'preferences':
-      registerStep = <Preferences onChangeView={handleViewChange} />;
+      RegisterStep = Preferences;
       break;
     default:
-      registerStep = <Default onChangeView={handleViewChange} />;
+      RegisterStep = Default;
   }
-  return <Box className="right-content">{registerStep}</Box>;
+
+  return (
+    <Box className="right-content">
+      <RegisterStep onChangeView={handleViewChange} />
+    </Box>
+  );
 }
 
 export default Signup;

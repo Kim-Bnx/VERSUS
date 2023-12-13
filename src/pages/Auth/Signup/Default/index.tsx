@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import {
   Anchor,
   Text,
@@ -13,7 +13,7 @@ import {
   changeInputSignupValue,
   signup,
 } from '../../../../store/reducers/signup';
-import { changeInputLoginValue, login } from '../../../../store/reducers/login';
+import { login } from '../../../../store/reducers/login';
 
 type DefaultProps = {
   onChangeView: (step: string) => void;
@@ -69,22 +69,20 @@ function Default({ onChangeView }: DefaultProps) {
     );
   };
 
-  if (isSuccess) {
-    dispatch(changeInputLoginValue({ fieldName: 'email', value: emailValue }));
+  // To prevent double rendering
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(
+        login({
+          email: emailValue,
+          password: passwordValue,
+        })
+      );
 
-    dispatch(
-      changeInputLoginValue({ fieldName: 'password', value: passwordValue })
-    );
-
-    dispatch(
-      login({
-        email: emailValue,
-        password: passwordValue,
-      })
-    );
-
-    onChangeView('profile');
-  }
+      onChangeView('profile');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess]);
 
   return (
     <Box>

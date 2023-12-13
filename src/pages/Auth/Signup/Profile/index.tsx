@@ -22,7 +22,7 @@ type ProfileProps = {
 };
 
 function Profile({ onChangeView }: ProfileProps) {
-  const [selectedAvatar, setSelectedAvatar] = useState<string>('');
+  const [selectedAvatar, setSelectedAvatar] = useState('');
 
   const avatars = [
     'avatar1',
