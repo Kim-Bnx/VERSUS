@@ -14,7 +14,7 @@ import {
 
 import { IconChevronRight } from '@tabler/icons-react';
 import { useAppDispatch } from '../../../../hooks/redux';
-import { changeInfosUserValue } from '../../../../store/reducers/signup';
+import { changeInputUserValue } from '../../../../store/reducers/profile';
 import CreateAvatar from '../../../../components/Element/CreateAvatar';
 
 type ProfileProps = {
@@ -38,14 +38,14 @@ function Profile({ onChangeView }: ProfileProps) {
   const handleChangeUsernameValue = (event: ChangeEvent<HTMLInputElement>) => {
     const username = event.target.value;
 
-    dispatch(changeInfosUserValue({ fieldName: 'username', value: username }));
+    dispatch(changeInputUserValue({ fieldName: 'username', value: username }));
   };
 
   const handleClickAvatarValue = (seed: string) => {
     setSelectedAvatar(seed);
 
     dispatch(
-      changeInfosUserValue({ fieldName: 'avatar', value: selectedAvatar })
+      changeInputUserValue({ fieldName: 'avatar', value: selectedAvatar })
     );
   };
 

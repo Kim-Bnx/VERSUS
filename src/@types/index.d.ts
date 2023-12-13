@@ -18,7 +18,6 @@ export type LoginCredentials = {
 // Signup States
 export type SignupState = {
   credentials: SignupCredentials;
-  accountInfos: NewUserData;
   isLoading: boolean;
   error: null | string;
   isSuccess: boolean;
@@ -30,7 +29,17 @@ export type SignupCredentials = {
   confirmation: string;
 };
 
-export type NewUserData = {
+// Profile States
+export type ProfileState = {
+  data: UserData;
+  isSuccess: boolean;
+  error: null | string;
+};
+
+export type UserData = {
+  email: string;
+  password: string;
+  confirmPassword: string;
   username: string;
   avatar: string;
   games: number[];

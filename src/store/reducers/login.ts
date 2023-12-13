@@ -3,7 +3,6 @@ import axios from 'axios';
 import { LoginCredentials, LoginState } from '../../@types';
 
 const initialState: LoginState = {
-  isConnected: false,
   credentials: {
     email: '',
     password: '',
@@ -12,6 +11,7 @@ const initialState: LoginState = {
     userId: null,
     token: '',
   },
+  isConnected: false,
   isLoading: false,
   error: null,
 };

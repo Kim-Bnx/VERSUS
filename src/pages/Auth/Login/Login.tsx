@@ -21,13 +21,12 @@ function Login() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const emailValue = useAppSelector((state) => state.login.credentials.email);
   const isConnected = useAppSelector((state) => state.login.isConnected);
-
+  const errorMsg = useAppSelector((state) => state.login.error);
+  const emailValue = useAppSelector((state) => state.login.credentials.email);
   const passwordValue = useAppSelector(
     (state) => state.login.credentials.password
   );
-  const errorMsg = useAppSelector((state) => state.login.error);
 
   const handleChangeEmailValue = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;

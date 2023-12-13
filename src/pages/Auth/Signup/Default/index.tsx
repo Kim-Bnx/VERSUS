@@ -13,6 +13,7 @@ import {
   changeInputSignupValue,
   signup,
 } from '../../../../store/reducers/signup';
+import { changeInputLoginValue, login } from '../../../../store/reducers/login';
 
 type DefaultProps = {
   onChangeView: (step: string) => void;
@@ -20,8 +21,9 @@ type DefaultProps = {
 
 function Default({ onChangeView }: DefaultProps) {
   const dispatch = useAppDispatch();
-  const isSuccess = useAppSelector((state) => state.signup.isSuccess);
 
+  const isSuccess = useAppSelector((state) => state.signup.isSuccess);
+  const errorMsg = useAppSelector((state) => state.signup.error);
   const emailValue = useAppSelector((state) => state.signup.credentials.email);
   const passwordValue = useAppSelector(
     (state) => state.signup.credentials.password
@@ -29,8 +31,6 @@ function Default({ onChangeView }: DefaultProps) {
   const confirmPasswordValue = useAppSelector(
     (state) => state.signup.credentials.confirmation
   );
-
-  const errorMsg = useAppSelector((state) => state.signup.error);
 
   const handleChangeEmailValue = (event: ChangeEvent<HTMLInputElement>) => {
     const email = event.target.value;
@@ -70,6 +70,19 @@ function Default({ onChangeView }: DefaultProps) {
   };
 
   if (isSuccess) {
+    dispatch(changeInputLoginValue({ fieldName: 'email', value: emailValue }));
+
+    dispatch(
+      changeInputLoginValue({ fieldName: 'password', value: passwordValue })
+    );
+
+    dispatch(
+      login({
+        email: emailValue,
+        password: passwordValue,
+      })
+    );
+
     onChangeView('profile');
   }
 

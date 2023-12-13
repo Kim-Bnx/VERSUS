@@ -1,22 +1,12 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import {
-  SignupState,
-  SignupCredentials,
-  NewUserData,
-  GamesPlatformsArray,
-} from '../../@types';
+import { SignupState, SignupCredentials } from '../../@types';
 
 const initialState: SignupState = {
   credentials: {
     email: '',
     password: '',
     confirmation: '',
-  },
-  accountInfos: {
-    username: '',
-    avatar: '',
-    gamesPlatformsList: { games: [], platforms: [] },
   },
   isLoading: false,
   isSuccess: false,
@@ -29,18 +19,6 @@ export const signup = createAsyncThunk(
     const { data } = await axios.post(
       'http://localhost:3000/signup',
       credentials
-    );
-
-    return data;
-  }
-);
-
-export const addAccountData = createAsyncThunk(
-  'addAccountData',
-  async (accountInfos: NewUserData) => {
-    const { data } = await axios.patch(
-      'http://localhost:3000/user/',
-      accountInfos
     );
 
     return data;
@@ -60,26 +38,6 @@ const signupSlice = createSlice({
     ) {
       const { fieldName, value } = action.payload;
       state.credentials[fieldName] = value;
-    },
-
-    changeInfosUserValue(
-      state,
-      action: PayloadAction<{
-        fieldName: keyof NewUserData;
-        value: string | number[];
-      }>
-    ) {
-      const { fieldName, value } = action.payload;
-
-      const updatedAccountValues = {
-        ...state.accountInfos,
-        [fieldName]: value,
-      };
-
-      return {
-        ...state,
-        accountInfos: updatedAccountValues,
-      };
     },
   },
   extraReducers(builder) {
@@ -102,6 +60,5 @@ const signupSlice = createSlice({
   },
 });
 
-export const { changeInputSignupValue, changeInfosUserValue } =
-  signupSlice.actions;
+export const { changeInputSignupValue } = signupSlice.actions;
 export default signupSlice.reducer;

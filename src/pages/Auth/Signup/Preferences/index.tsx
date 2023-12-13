@@ -3,10 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Anchor, Text, Box, Button, Flex, Group, Title } from '@mantine/core';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import {
-  changeInfosUserValue,
-  addAccountData,
-} from '../../../../store/reducers/signup';
+import { changeInputUserValue } from '../../../../store/reducers/profile';
 import PlatformSquares from '../../../../components/Element/PlatformsSquares';
 import GamesLabels from '../../../../components/Element/GamesLabels';
 
@@ -81,16 +78,11 @@ function Preferences({ onChangeView }: PreferencesProps) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const usernameValue = useAppSelector(
-    (state) => state.signup.accountInfos.username
-  );
-  const avatarValue = useAppSelector(
-    (state) => state.signup.accountInfos.avatar
-  );
-  const gamesValue = useAppSelector((state) => state.signup.accountInfos.games);
-  const platformValue = useAppSelector(
-    (state) => state.signup.accountInfos.platforms
-  );
+  const usernameValue = useAppSelector((state) => state.profile.data.username);
+  const avatarValue = useAppSelector((state) => state.profile.data.avatar);
+  const gamesValue = useAppSelector((state) => state.profile.data.games);
+  const platformValue = useAppSelector((state) => state.profile.data.platforms);
+  const isSuccess = useAppSelector((state) => state.profile.isSuccess);
 
   const [selectedGames, setSelectedGames] = useState<{
     [key: number]: boolean;
@@ -137,11 +129,11 @@ function Preferences({ onChangeView }: PreferencesProps) {
       .map((key) => parseInt(key, 10));
 
     dispatch(
-      changeInfosUserValue({ fieldName: 'games', value: selectedGameIds })
+      changeInputUserValue({ fieldName: 'games', value: selectedGameIds })
     );
 
     dispatch(
-      changeInfosUserValue({
+      changeInputUserValue({
         fieldName: 'platforms',
         value: selectedPlatformIds,
       })
@@ -150,16 +142,18 @@ function Preferences({ onChangeView }: PreferencesProps) {
     console.log(usernameValue, avatarValue, gamesValue, platformValue);
 
     // dispatch(
-    //   addAccountData({
+    //   profile({
     //     username: usernameValue,
     //     avatar: avatarValue,
     //     games: gamesValue,
     //     platforms: platformValue,
     //   })
     // );
-
-    // navigate('/');
   };
+
+  if (isSuccess) {
+    navigate('/');
+  }
 
   return (
     <Flex align="center" justify="center" direction="column">
