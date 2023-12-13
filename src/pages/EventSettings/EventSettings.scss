@@ -1,0 +1,106 @@
+@use '../../styles/variables' as v;
+
+.fieldset-settings {
+  margin: var(--mantine-spacing-md) 0;
+
+  & .mantine-Fieldset-legend {
+    font-size: var(--mantine-font-size-lg);
+    color: var(--mantine-color-white-light);
+    font-weight: bold;
+    width: 100%;
+    display: grid;
+    column-gap: var(--mantine-spacing-md);
+    grid-template-columns: max-content 1fr;
+    align-items: center;
+
+    &:after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 100%;
+      background-color: var(--mantine-color-white);
+      opacity: 0.1;
+    }
+  }
+
+  & .mantine-InputWrapper-root {
+    margin-bottom: var(--mantine-spacing-sm);
+  }
+}
+
+.settings_banner {
+  align-items: end;
+
+  &-image {
+    grid-row: 1;
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 300px;
+  }
+
+  &-button {
+    justify-self: end;
+    grid-row: 1;
+    margin-bottom: var(--mantine-spacing-md);
+  }
+}
+
+.settings_header {
+  margin-top: -1rem;
+  padding: var(--mantine-spacing-lg) 0;
+  background-color: var(--mantine-color-blue-light);
+}
+
+.settings_actions {
+  padding: var(--mantine-spacing-lg) 0;
+}
+
+.settings_informations {
+  display: flex;
+  gap: var(--mantine-spacing-md);
+
+  &-thumbnail {
+    position: relative;
+
+    & button {
+      position: absolute;
+      right: var(--mantine-spacing-md);
+      bottom: var(--mantine-spacing-md);
+    }
+  }
+
+  &-inputs {
+    flex-grow: 2;
+  }
+}
+
+.settings_dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mantine-spacing-md);
+
+  & > * {
+    flex-grow: 1;
+  }
+}
+
+.settings_organization {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, 1fr));
+  column-gap: var(--mantine-spacing-md);
+}
+
+.settings_games {
+  grid-column: 1 / span 2;
+}
+
+.modal-url .mantine-Modal-body {
+  display: flex;
+  align-items: end;
+  gap: var(--mantine-spacing-sm);
+
+  & > :first-child {
+    flex-grow: 2;
+  }
+}
