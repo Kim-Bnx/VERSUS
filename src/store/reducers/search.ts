@@ -1,55 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { SearchState } from '../../@types';
+import { SearchState } from '../../@types/search';
 
 const initialState: SearchState = {
   isLoading: false,
   error: null,
   searchTerm: '',
-  searchResults: [
-    {
-      id: null,
-      title: '',
-      title_slug: null,
-      start_date: '',
-      end_date: '',
-      banner: null,
-      thumbnail: null,
-      location: '',
-      status: '',
-      description: '',
-      rules: null,
-      contact: '',
-      createdAt: '',
-      updatedAt: null,
-      type_event_id: null,
-      game_id: null,
-      user_id: null,
-      game: {
-        id: null,
-        name: '',
-        thumbnail: '',
-        createdAt: '',
-        updatedAt: null,
-      },
-      organizer: {
-        id: null,
-        username: '',
-        email: '',
-        password: '',
-        avatar: null,
-        createdAt: '',
-        updatedAt: null,
-        role_id: null,
-      },
-      type_event: {
-        id: null,
-        name: '',
-        createdAt: '',
-        updatedAt: null,
-      },
-    },
-  ],
+  searchResults: {
+    events: [],
+    users: [],
+    teams: [],
+  },
 };
 
 export const search = createAsyncThunk('search', async (searchTerm: string) => {
