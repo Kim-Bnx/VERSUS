@@ -7,40 +7,64 @@ import {
   Button,
   Fieldset,
   Flex,
-  Grid,
   Image,
   Input,
   Modal,
+  Select,
   Text,
   TextInput,
   Textarea,
   Title,
   VisuallyHidden,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import slugify from 'slugify';
 import { DateTimePicker, DatesProvider } from '@mantine/dates';
 import { IoCheckmarkSharp } from 'react-icons/io5';
-import event, { fetchEvent } from '../../store/reducers/event';
+import { fetchEvent } from '../../store/reducers/event';
 import { updateEvent } from '../../store/reducers/updateEvent';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { Event } from '../../@types/event';
 
+import eventTypeData from './typeEventData';
+import gamesData from './gamesData';
+
 import './EventSettings.scss';
+
+function getTypeEvent(param: string | number) {
+  if (typeof param === 'string') {
+    const eventTypeFound = eventTypeData.find((event) => event.name === param);
+    return eventTypeFound ? eventTypeFound.id : 0;
+  }
+  const eventTypeFound = eventTypeData.find((event) => event.id === param);
+  return eventTypeFound ? eventTypeFound.name : '';
+}
+
+function getGames(param: string | number) {
+  if (typeof param === 'string') {
+    const gameFound = gamesData.find((event) => event.name === param);
+    return gameFound ? gameFound.id : 0;
+  }
+  const gameFound = gamesData.find((event) => event.id === param);
+  return gameFound ? gameFound.name : '';
+}
 
 function EventSettings() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { slug } = useParams();
   if (!slug) throw new Error('Invalid slug');
+  const typeNameData = eventTypeData.map((event) => event.name);
+  const gamesNameData = gamesData.map((game) => game.name);
   const eventData = useAppSelector((state) => state.event.event);
 
   const form = useForm({
-    initialValues: { ...eventData },
+    initialValues: {
+      ...eventData,
+      type_event: '',
+      game: '',
+    },
   });
-
-  // console.log(new Date(eventData.start_date));
 
   useEffect(() => {
     dispatch(fetchEvent(slug));
@@ -56,11 +80,21 @@ function EventSettings() {
       location: eventData.location,
       banner: eventData.banner,
       thumbnail: eventData.thumbnail,
+      type_event: getTypeEvent(eventData.type_event_id),
+      game: getGames(eventData.game_id),
     });
   }, [eventData]);
 
   const handleSubmitUpdateEvent = (values: Event) => {
-    dispatch(updateEvent(values))
+    const newValues = {
+      ...values,
+      type_event_id: getTypeEvent(values.type_event),
+      game_id: getGames(values.game),
+    };
+
+    console.log(newValues);
+
+    dispatch(updateEvent(newValues))
       .unwrap()
       .then((response) => {
         navigate(`/event/${response.title_slug}/settings`);
@@ -86,7 +120,7 @@ function EventSettings() {
         <img
           alt="Bannière"
           className="full-width settings_banner-image"
-          src={form.values.banner}
+          src={eventData.banner}
         />
         <Button className="settings_banner-button" onClick={toggleBannerModal}>
           Changer la bannière
@@ -130,7 +164,7 @@ function EventSettings() {
             h={200}
             w={200}
             fit="cover"
-            src={form.values.thumbnail}
+            src={eventData.thumbnail}
           />
 
           <Button
@@ -208,18 +242,13 @@ function EventSettings() {
           className="settings_games"
           label="Choisir le jeu"
           placeholder="Sélectionner le jeu sur lequel se déroule l'événement"
-          data={[
-            'Smash Bros',
-            'League Of Legends',
-            'Minecraft',
-            'Call of Duty',
-          ]}
-          {...form.getInputProps('game_id')}
+          data={gamesNameData}
+          {...form.getInputProps('game')}
         />
-        <Autocomplete
+        <Select
           label="Type d'événement"
           placeholder="Choisir le type d'événement"
-          data={['Tournois', 'Concours', 'Roleplay', 'Speedrun']}
+          data={typeNameData}
           {...form.getInputProps('type_event')}
         />
         <TextInput label="Lieu" {...form.getInputProps('location')} />

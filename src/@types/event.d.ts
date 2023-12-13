@@ -28,7 +28,9 @@ export type Event = {
   description?: string;
   rules?: string;
   contact?: string;
-  type_event?: number;
+  type_event: string;
+  type_event_id?: number;
+  game: string;
   game_id?: number;
   user_id?: number;
 };
