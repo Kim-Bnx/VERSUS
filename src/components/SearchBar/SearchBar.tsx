@@ -1,4 +1,4 @@
-import { Box, TextInput } from '@mantine/core';
+import { Autocomplete, Box, TextInput } from '@mantine/core';
 import './SearchBar.scss';
 import { IconSearch } from '@tabler/icons-react';
 import { ChangeEvent, FormEvent } from 'react';
@@ -12,8 +12,7 @@ function SearchBar() {
   const searchTerm = useAppSelector((state) => state.search.searchTerm);
   const errorMsg = useAppSelector((state) => state.search.error);
 
-  const handleChangeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
+  const handleChangeSearchValue = (newValue: string) => {
     dispatch(changeSearchInputValue(newValue));
   };
 
@@ -25,7 +24,7 @@ function SearchBar() {
 
   return (
     <Box component="form" onSubmit={handleSubmitSearchForm}>
-      <TextInput
+      <Autocomplete
         className="search-bar"
         placeholder="Recherche un évent, team, joueur ..."
         aria-label="Barre de recherche"
