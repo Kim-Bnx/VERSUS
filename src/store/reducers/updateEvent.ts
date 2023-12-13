@@ -20,9 +20,12 @@ const initialState: EventState = {
     type_event_id: 0,
     game: '',
     game_id: 0,
+    plateform: '',
+    plateform_id: 0,
     user_id: 0,
   },
   isLoading: true,
+  modified: false,
   error: null,
 };
 
@@ -45,6 +48,7 @@ const updateEventSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(updateEvent.fulfilled, (state) => {
       state.isLoading = false;
+      state.modified = true;
       console.log('event updated');
     });
   },

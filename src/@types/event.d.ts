@@ -28,15 +28,18 @@ export type Event = {
   description?: string;
   rules?: string;
   contact?: string;
-  type_event: string;
+  type_event?: string;
   type_event_id?: number;
-  game: string;
+  game?: string;
   game_id?: number;
+  plateform?: string;
+  plateform_id?: number;
   user_id?: number;
 };
 
 export type EventState = {
   event: Event;
   isLoading: boolean;
+  modified: boolean;
   error: string | null;
 };

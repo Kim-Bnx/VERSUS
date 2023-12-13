@@ -58,10 +58,11 @@
 
 .settings_informations {
   display: flex;
-  gap: var(--mantine-spacing-md);
+  gap: var(--mantine-spacing-lg);
 
   &-thumbnail {
     position: relative;
+    align-self: flex-start;
 
     & button {
       position: absolute;
@@ -102,5 +103,18 @@
 
   & > :first-child {
     flex-grow: 2;
+  }
+}
+
+.notification_modified {
+  position: fixed !important;
+  top: 100px;
+  right: 30px;
+  transform: translateX(150%);
+  transition: 0.5s;
+
+  &.active {
+    transform: translateX(0%);
+    transition: 0.5s;
   }
 }
