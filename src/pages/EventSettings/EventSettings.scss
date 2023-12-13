@@ -30,6 +30,7 @@
 
 .settings_banner {
   align-items: end;
+  background-color: var(--mantine-color-dark-6);
 
   &-image {
     grid-row: 1;
@@ -63,6 +64,7 @@
   &-thumbnail {
     position: relative;
     align-self: flex-start;
+    background-color: var(--mantine-color-dark-6);
 
     & button {
       position: absolute;

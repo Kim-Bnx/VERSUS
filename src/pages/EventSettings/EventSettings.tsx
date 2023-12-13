@@ -34,31 +34,13 @@ import plateformData from './plateformData';
 
 import './EventSettings.scss';
 
-function getTypeEvent(param: string | number) {
+function getItem(param: any, data: any[]) {
   if (typeof param === 'string') {
-    const eventTypeFound = eventTypeData.find((event) => event.name === param);
-    return eventTypeFound ? eventTypeFound.id : 0;
+    const itemFound = data.find((item) => item.name === param);
+    return itemFound ? itemFound.id : 0;
   }
-  const eventTypeFound = eventTypeData.find((event) => event.id === param);
-  return eventTypeFound ? eventTypeFound.name : '';
-}
-
-function getGames(param: string | number) {
-  if (typeof param === 'string') {
-    const gameFound = gamesData.find((event) => event.name === param);
-    return gameFound ? gameFound.id : 0;
-  }
-  const gameFound = gamesData.find((event) => event.id === param);
-  return gameFound ? gameFound.name : '';
-}
-
-function getPlateform(param: string | number) {
-  if (typeof param === 'string') {
-    const plateformFound = gamesData.find((event) => event.name === param);
-    return plateformFound ? plateformFound.id : 0;
-  }
-  const plateformFound = gamesData.find((event) => event.id === param);
-  return plateformFound ? plateformFound.name : '';
+  const itemFound = data.find((item) => item.id === param);
+  return itemFound ? itemFound.name : '';
 }
 
 function EventSettings() {
@@ -79,12 +61,7 @@ function EventSettings() {
   );
 
   const form = useForm({
-    initialValues: {
-      ...eventData,
-      type_event: '',
-      game: '',
-      plateform: '',
-    },
+    initialValues: { ...eventData },
   });
 
   useEffect(() => {
@@ -101,18 +78,18 @@ function EventSettings() {
       location: eventData.location,
       banner: eventData.banner,
       thumbnail: eventData.thumbnail,
-      type_event: getTypeEvent(eventData.type_event_id),
-      game: getGames(eventData.game_id),
-      plateform: getPlateform(eventData.plateform_id),
+      type_event: getItem(eventData.type_event_id, eventTypeData),
+      game: getItem(eventData.game_id, gamesData),
+      plateform: getItem(eventData.plateform_id, plateformData),
     });
   }, [eventData, eventState]);
 
   const handleSubmitUpdateEvent = (values: Event) => {
     const newValues = {
       ...values,
-      type_event_id: getTypeEvent(values.type_event),
-      game_id: getGames(values.game),
-      plateform_id: getPlateform(values.plateform),
+      type_event_id: getItem(values.type_event, eventTypeData),
+      game_id: getItem(values.game, gamesData),
+      plateform_id: getItem(values.plateform, plateformData),
     };
 
     dispatch(updateEvent(newValues))
