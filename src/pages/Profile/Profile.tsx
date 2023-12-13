@@ -21,35 +21,39 @@ import './Profile.scss';
 const GAMES = [
   {
     id: 0,
-    name: 'test',
+    name: 'League Of Legend',
   },
   {
     id: 1,
-    name: 'testtest',
+    name: 'Super Smash Bros.',
   },
   {
     id: 2,
-    name: 'testtesttest',
+    name: 'Valorant',
   },
   {
     id: 3,
-    name: 'testtest',
+    name: 'Minecraft',
   },
   {
     id: 4,
-    name: 'testtesttesttest',
+    name: 'Overwatch',
   },
   {
     id: 5,
-    name: 'testtesttesttesttesttest',
+    name: 'GTA V',
   },
   {
     id: 6,
-    name: 'testtesttest',
+    name: 'Fall Guys',
   },
   {
     id: 7,
-    name: 'testtesttesttest',
+    name: 'Call Of Duty',
+  },
+  {
+    id: 8,
+    name: 'Demineur',
   },
 ];
 
@@ -76,15 +80,7 @@ const PLATFORMS = [
   },
 ];
 
-type ProfileProps = {
-  avatar: string;
-  email: string;
-  pseudo: string;
-  platforms: { id: number; name: string }[];
-  games: { id: number; name: string }[];
-};
-
-function Profile({ avatar, pseudo, email, games, platforms }: ProfileProps) {
+function Profile() {
   const [toggleEditProfile, seTtoggleEditProfile] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [visible, { toggle }] = useDisclosure(false);

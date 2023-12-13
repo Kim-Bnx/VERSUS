@@ -5,7 +5,6 @@ import { LocalStorage } from '../../utils/LocalStorage';
 
 const userData = LocalStorage.getItem('user');
 const initialState: LoginState = {
-  isConnected: false,
   credentials: {
     email: '',
     password: '',
@@ -14,6 +13,7 @@ const initialState: LoginState = {
     userId: null,
     token: '',
   },
+  isConnected: false,
   isLoading: false,
   error: null,
   ...userData,
