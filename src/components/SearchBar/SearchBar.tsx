@@ -12,9 +12,9 @@ function SearchBar() {
   const errorMsg = useAppSelector((state) => state.search.error);
   const data = useAppSelector((state) => state.search.searchResults);
 
-  const events = data.events[0] ? [data.events[0].title] : [];
-  const users = data.users[0] ? [data.users[0].username] : [];
-  const teams = data.teams[0] ? [data.teams[0].name] : [];
+  const events = data.events.map((event) => event.title);
+  const users = data.users.map((user) => user.username);
+  const teams = data.teams.map((team) => team.name);
 
   const handleChangeSearchValue = (newValue: string) => {
     dispatch(changeSearchInputValue(newValue));
