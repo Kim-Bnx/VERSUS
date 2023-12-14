@@ -7,6 +7,7 @@ import {
   TextInput,
   Title,
   Flex,
+  PasswordInput,
 } from '@mantine/core';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { signup } from '../../../../store/reducers/signup';
@@ -86,7 +87,7 @@ function Default({ onChangeView }: DefaultProps) {
           c="#FFF"
         />
 
-        <TextInput
+        <PasswordInput
           onChange={handleChangePasswordValue}
           label="Mot de passe"
           placeholder="Saisissez votre mot de passe"
@@ -94,7 +95,7 @@ function Default({ onChangeView }: DefaultProps) {
           mt="1rem"
         />
 
-        <TextInput
+        <PasswordInput
           onChange={handleChangeConfirmPasswordValue}
           label="Confirmation de mot de passe"
           placeholder="Saisissez votre mot de passe"
