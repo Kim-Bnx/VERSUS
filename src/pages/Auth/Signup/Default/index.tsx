@@ -8,7 +8,6 @@ import {
   Title,
   Flex,
 } from '@mantine/core';
-import { Form } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { signup } from '../../../../store/reducers/signup';
 import { login } from '../../../../store/reducers/login';
@@ -79,7 +78,7 @@ function Default({ onChangeView }: DefaultProps) {
         Inscription
       </Title>
 
-      <Form className="section" onSubmit={handleFormSubmit}>
+      <Box component="form" className="section" onSubmit={handleFormSubmit}>
         <TextInput
           onChange={handleChangeEmailValue}
           label="Email"
@@ -108,7 +107,7 @@ function Default({ onChangeView }: DefaultProps) {
         <Flex mt="2rem" justify="flex-end">
           <Button type="submit">S&apos;inscrire</Button>
         </Flex>
-      </Form>
+      </Box>
 
       <Flex direction="row" wrap="wrap" className="form-bottom">
         <Text c="#FFF" fz="0.9rem">

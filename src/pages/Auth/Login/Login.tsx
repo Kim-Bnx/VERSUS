@@ -13,7 +13,7 @@ import {
   PasswordInput,
 } from '@mantine/core';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { changeInputLoginValue, login } from '../../../store/reducers/login';
+import { login } from '../../../store/reducers/login';
 
 // use mantine form validators (https://mantine.dev/form/validators/) ?
 
@@ -86,11 +86,7 @@ function Login() {
               Mot de passe oublié ?
             </Anchor>
 
-            <Button
-              onClick={() => handleSubmitForm}
-              type="submit"
-              variant="outline"
-            >
+            <Button type="submit" variant="outline">
               Se connecter
             </Button>
           </Group>
