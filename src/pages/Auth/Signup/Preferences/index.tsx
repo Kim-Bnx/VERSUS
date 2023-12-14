@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { Anchor, Text, Box, Button, Flex, Group, Title } from '@mantine/core';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { changeInputUserValue } from '../../../../store/reducers/profile';
+import { profile } from '../../../../store/reducers/profile';
+import { profileGames } from '../../../../store/reducers/profileGames';
+import { profilePlatforms } from '../../../../store/reducers/profilePlatforms';
 import PlatformSquares from '../../../../components/Element/PlatformsSquares';
 import GamesLabels from '../../../../components/Element/GamesLabels';
 
@@ -80,9 +82,8 @@ function Preferences({ onChangeView }: PreferencesProps) {
 
   const usernameValue = useAppSelector((state) => state.profile.data.username);
   const avatarValue = useAppSelector((state) => state.profile.data.avatar);
-  const gamesValue = useAppSelector((state) => state.profile.data.games);
-  const platformValue = useAppSelector((state) => state.profile.data.platforms);
   const isSuccess = useAppSelector((state) => state.profile.isSuccess);
+  const loggedUserId = useAppSelector((state) => state.login.auth.userId);
 
   const [selectedGames, setSelectedGames] = useState<{
     [key: number]: boolean;
@@ -120,34 +121,23 @@ function Preferences({ onChangeView }: PreferencesProps) {
   );
 
   const handleAddAccountData = () => {
-    const selectedGameIds = Object.keys(selectedGames)
-      .filter((key) => selectedGames[parseInt(key, 10)])
-      .map((key) => parseInt(key, 10));
+    const updatedData = {
+      username: usernameValue,
+      avatar: avatarValue,
+    };
 
-    const selectedPlatformIds = Object.keys(selectedPlatforms)
-      .filter((key) => selectedPlatforms[parseInt(key, 10)])
-      .map((key) => parseInt(key, 10));
+    // const selectedGameIds = Object.keys(selectedGames)
+    //   .filter((key) => selectedGames[parseInt(key, 10)])
+    //   .map((key) => parseInt(key, 10));
 
-    dispatch(
-      changeInputUserValue({ fieldName: 'games', value: selectedGameIds })
-    );
+    // const selectedPlatformIds = Object.keys(selectedPlatforms)
+    //   .filter((key) => selectedPlatforms[parseInt(key, 10)])
+    //   .map((key) => parseInt(key, 10));
 
-    dispatch(
-      changeInputUserValue({
-        fieldName: 'platforms',
-        value: selectedPlatformIds,
-      })
-    );
-
-    console.log(usernameValue, avatarValue, gamesValue, platformValue);
-
+    dispatch(profile({ accountInfos: updatedData, userId: loggedUserId }));
+    // dispatch(profileGames({ games: selectedGameIds, userId: loggedUserId }));
     // dispatch(
-    //   profile({
-    //     username: usernameValue,
-    //     avatar: avatarValue,
-    //     games: gamesValue,
-    //     platforms: platformValue,
-    //   })
+    //   profilePlatforms({ platforms: selectedPlatformIds, userId: loggedUserId })
     // );
   };
 

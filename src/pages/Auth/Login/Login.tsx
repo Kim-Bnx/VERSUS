@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Text,
@@ -13,31 +13,29 @@ import {
   PasswordInput,
 } from '@mantine/core';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { changeInputLoginValue, login } from '../../../store/reducers/login';
+import { login } from '../../../store/reducers/login';
 
 // use mantine form validators (https://mantine.dev/form/validators/) ?
 
 function Login() {
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const isConnected = useAppSelector((state) => state.login.isConnected);
   const errorMsg = useAppSelector((state) => state.login.error);
-  const emailValue = useAppSelector((state) => state.login.credentials.email);
-  const passwordValue = useAppSelector(
-    (state) => state.login.credentials.password
-  );
 
   const handleChangeEmailValue = (event: ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
+    const email = event.target.value;
 
-    dispatch(changeInputLoginValue({ fieldName: 'email', value: newValue }));
+    setEmailValue(email);
   };
 
   const handleChangePasswordValue = (event: ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
+    const password = event.target.value;
 
-    dispatch(changeInputLoginValue({ fieldName: 'password', value: newValue }));
+    setPasswordValue(password);
   };
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
@@ -51,11 +49,9 @@ function Login() {
     );
   };
 
-  useEffect(() => {
-    if (isConnected) {
-      navigate('/');
-    }
-  }, [isConnected, navigate]);
+  if (isConnected) {
+    navigate('/');
+  }
 
   return (
     <Box className="right-content">
@@ -70,7 +66,6 @@ function Login() {
             placeholder="Saisissez votre email"
             c="#FFF"
             className="section"
-            value={emailValue}
             onChange={handleChangeEmailValue}
           />
 
@@ -79,7 +74,6 @@ function Login() {
             placeholder="Saisissez votre mot de passe"
             c="#FFF"
             className="section"
-            value={passwordValue}
             onChange={handleChangePasswordValue}
           />
 
@@ -88,11 +82,7 @@ function Login() {
               Mot de passe oublié ?
             </Anchor>
 
-            <Button
-              onClick={() => handleSubmitForm}
-              type="submit"
-              variant="outline"
-            >
+            <Button type="submit" variant="outline">
               Se connecter
             </Button>
           </Group>

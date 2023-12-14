@@ -34,7 +34,6 @@ export const login = createAsyncThunk(
       isConnected: data.isConnected,
     };
     LocalStorage.setItem('user', authentification);
-    console.log(localStorage);
     return data;
   }
 );
@@ -55,7 +54,6 @@ const loginSlice = createSlice({
     },
     logout(state) {
       LocalStorage.removeItem('user');
-      console.log(localStorage);
       state.isConnected = false;
       state.auth.token = '';
       state.auth.userId = null;

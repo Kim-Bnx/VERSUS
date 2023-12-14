@@ -22,7 +22,7 @@ type ProfileProps = {
 };
 
 function Profile({ onChangeView }: ProfileProps) {
-  const [selectedAvatar, setSelectedAvatar] = useState<string>('');
+  const [selectedAvatar, setSelectedAvatar] = useState('');
 
   const avatars = [
     'avatar1',
@@ -44,9 +44,7 @@ function Profile({ onChangeView }: ProfileProps) {
   const handleClickAvatarValue = (seed: string) => {
     setSelectedAvatar(seed);
 
-    dispatch(
-      changeInputUserValue({ fieldName: 'avatar', value: selectedAvatar })
-    );
+    dispatch(changeInputUserValue({ fieldName: 'avatar', value: seed }));
   };
 
   return (
