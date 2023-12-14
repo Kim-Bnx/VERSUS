@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent } from 'react';
+import { ChangeEvent, FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Text,
@@ -19,16 +19,14 @@ import { changeInputLoginValue, login } from '../../../store/reducers/login';
 
 function Login() {
   const navigate = useNavigate();
-
   const dispatch = useAppDispatch();
 
-  const emailValue = useAppSelector((state) => state.login.credentials.email);
   const isConnected = useAppSelector((state) => state.login.isConnected);
-
+  const errorMsg = useAppSelector((state) => state.login.error);
+  const emailValue = useAppSelector((state) => state.login.credentials.email);
   const passwordValue = useAppSelector(
     (state) => state.login.credentials.password
   );
-  const errorMsg = useAppSelector((state) => state.login.error);
 
   const handleChangeEmailValue = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
@@ -53,9 +51,11 @@ function Login() {
     );
   };
 
-  if (isConnected) {
-    navigate('/');
-  }
+  useEffect(() => {
+    if (isConnected) {
+      navigate('/');
+    }
+  }, [isConnected, navigate]);
 
   return (
     <Box className="right-content">
@@ -98,7 +98,7 @@ function Login() {
           </Group>
         </Box>
 
-        {errorMsg && <Box>{errorMsg}</Box>}
+        {errorMsg && <Text>{errorMsg}</Text>}
 
         <Flex direction="row" wrap="wrap" className="form-bottom">
           <Text c="#FFF" fz="0.9rem">
@@ -106,7 +106,7 @@ function Login() {
           </Text>
 
           <Button variant="outline" fullWidth>
-            <Anchor href="/register">Inscrivez-vous</Anchor>
+            <Anchor href="/sign-up">Inscrivez-vous</Anchor>
           </Button>
 
           <Anchor href="/" underline="always" c="#FFF" fz="0.9rem">

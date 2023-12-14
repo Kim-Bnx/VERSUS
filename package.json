@@ -11,6 +11,8 @@
 		"lint:fix": "eslint src/**/*.{js,jsx,ts,tsx} --fix"
 	},
 	"dependencies": {
+		"@dicebear/collection": "^7.0.1",
+		"@dicebear/core": "^7.0.1",
 		"@mantine/carousel": "^7.2.2",
 		"@mantine/core": "^7.2.2",
 		"@mantine/dates": "^7.2.2",

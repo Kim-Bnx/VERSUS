@@ -1,0 +1,19 @@
+.platform {
+  background-color: #333333;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 0.3rem;
+  font-weight: bold;
+  letter-spacing: 0.09rem;
+  user-select: none;
+  cursor: pointer;
+
+  &.selected {
+    background-color: white;
+
+    p {
+      color: black;
+      font-weight: bold;
+    }
+  }
+}

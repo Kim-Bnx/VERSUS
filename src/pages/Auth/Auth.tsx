@@ -1,4 +1,4 @@
-import { AppShell, Box, Container, Text } from '@mantine/core';
+import { AppShell, Container, Text } from '@mantine/core';
 import { Outlet } from 'react-router-dom';
 
 import './Auth.scss';
@@ -11,18 +11,10 @@ function Auth() {
       transitionDuration={500}
       transitionTimingFunction="ease"
     >
-      <Container fluid className="login">
-        <Box>
-          <Text
-            className="left-logo"
-            tt="uppercase"
-            fw={400}
-            fz="4rem"
-            c="#FFF"
-          >
-            versus
-          </Text>
-        </Box>
+      <Container fluid className="auth">
+        <Text className="left-logo" tt="uppercase" fw={400} fz="4rem" c="#FFF">
+          versus
+        </Text>
 
         <Outlet />
       </Container>

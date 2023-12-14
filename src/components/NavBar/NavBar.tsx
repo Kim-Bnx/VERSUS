@@ -12,9 +12,12 @@ import './NavBar.scss';
 import { IoLogOutOutline, IoMoon, IoSunnySharp } from 'react-icons/io5';
 import NavBarUser from './NavBarUser';
 import NavBarGuest from './NavBarGuest';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { logout } from '../../store/reducers/login';
 
 function NavBar() {
+  const dispatch = useAppDispatch();
+
   // SETTINGS OF THE COLOR SCHEME SWITCH
   //
   // setColorScheme() to apply color scheme
@@ -30,6 +33,10 @@ function NavBar() {
 
   // FETCH LOG USER
   const isConnected = useAppSelector((state) => state.login.isConnected);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <AppShell.Navbar p="lg" className="navbar">
@@ -64,7 +71,7 @@ function NavBar() {
 
           {isConnected && (
             <Tooltip label="Se déconnecter">
-              <Button className="logout">
+              <Button className="logout" onClick={handleLogout}>
                 <IoLogOutOutline />
               </Button>
             </Tooltip>

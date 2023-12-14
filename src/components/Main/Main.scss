@@ -2,14 +2,14 @@
 
 .page-content {
   & > :first-child:not(.full-height) {
-    margin-top: 50px;
+    margin-top: 5rem;
   }
 }
 
 // Tutorial from https://www.youtube.com/watch?v=c13gpBrnGEw&t=776s&ab_channel=KevinPowell (the css goat)
 .content-grid {
   --__padding-inline: 1rem;
-  --__content-max-width: 120ch;
+  --__content-max-width: 170ch;
 
   display: grid;
   gap: 1rem;

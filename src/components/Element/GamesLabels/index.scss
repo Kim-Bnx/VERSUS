@@ -1,0 +1,20 @@
+.game {
+  background-color: #333333;
+  border-radius: 0.5rem;
+  text-align: center;
+  padding: 0.1rem 1rem;
+  text-transform: capitalize;
+  letter-spacing: 0.05rem;
+  font-size: 0.9rem;
+  user-select: none;
+  cursor: pointer;
+
+  &.selected {
+    background-color: white;
+
+    p {
+      color: black;
+      font-weight: bold;
+    }
+  }
+}
