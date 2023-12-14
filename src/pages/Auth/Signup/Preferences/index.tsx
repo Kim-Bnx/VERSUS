@@ -4,6 +4,8 @@ import { Anchor, Text, Box, Button, Flex, Group, Title } from '@mantine/core';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { profile } from '../../../../store/reducers/profile';
+import { profileGames } from '../../../../store/reducers/profileGames';
+import { profilePlatforms } from '../../../../store/reducers/profilePlatforms';
 import PlatformSquares from '../../../../components/Element/PlatformsSquares';
 import GamesLabels from '../../../../components/Element/GamesLabels';
 
@@ -119,22 +121,24 @@ function Preferences({ onChangeView }: PreferencesProps) {
   );
 
   const handleAddAccountData = () => {
-    const selectedGameIds = Object.keys(selectedGames)
-      .filter((key) => selectedGames[parseInt(key, 10)])
-      .map((key) => parseInt(key, 10));
-
-    const selectedPlatformIds = Object.keys(selectedPlatforms)
-      .filter((key) => selectedPlatforms[parseInt(key, 10)])
-      .map((key) => parseInt(key, 10));
-
     const updatedData = {
       username: usernameValue,
       avatar: avatarValue,
-      games: selectedGameIds,
-      platforms: selectedPlatformIds,
     };
 
+    // const selectedGameIds = Object.keys(selectedGames)
+    //   .filter((key) => selectedGames[parseInt(key, 10)])
+    //   .map((key) => parseInt(key, 10));
+
+    // const selectedPlatformIds = Object.keys(selectedPlatforms)
+    //   .filter((key) => selectedPlatforms[parseInt(key, 10)])
+    //   .map((key) => parseInt(key, 10));
+
     dispatch(profile({ accountInfos: updatedData, userId: loggedUserId }));
+    // dispatch(profileGames({ games: selectedGameIds, userId: loggedUserId }));
+    // dispatch(
+    //   profilePlatforms({ platforms: selectedPlatformIds, userId: loggedUserId })
+    // );
   };
 
   if (isSuccess) {

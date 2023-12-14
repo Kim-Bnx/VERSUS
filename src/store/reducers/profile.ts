@@ -9,8 +9,6 @@ const initialState: ProfileState = {
     confirmPassword: '',
     username: '',
     avatar: '',
-    games: [],
-    platforms: [],
   },
   isSuccess: false,
   error: null,

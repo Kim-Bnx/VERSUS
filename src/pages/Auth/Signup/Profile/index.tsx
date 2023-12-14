@@ -44,9 +44,7 @@ function Profile({ onChangeView }: ProfileProps) {
   const handleClickAvatarValue = (seed: string) => {
     setSelectedAvatar(seed);
 
-    dispatch(
-      changeInputUserValue({ fieldName: 'avatar', value: selectedAvatar })
-    );
+    dispatch(changeInputUserValue({ fieldName: 'avatar', value: seed }));
   };
 
   return (
