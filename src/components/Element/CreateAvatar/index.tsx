@@ -16,7 +16,6 @@ function useAvatarUri(seed: Seed) {
 
   return newAvatar.toDataUriSync();
 }
-console.log(localStorage);
 
 function CreateAvatar({ seed, hw }: CreateAvatarProps) {
   const avatar = useAvatarUri(seed);
