@@ -34,13 +34,15 @@ function SearchBar() {
     // Combine all items into one array
     const allItems = [...events, ...users, ...teams];
 
-    // Find the item that has this value
     return allItems.find((item) => item.label === value);
   };
 
   const handleChangeSearchValue = (newValue: string) => {
     dispatch(changeSearchInputValue(newValue));
-    dispatch(search(newValue));
+
+    if (newValue.trim() !== '') {
+      dispatch(search(newValue));
+    }
 
     const selectedItem = findItemByUrl(newValue);
     if (selectedItem && selectedItem.url) {
