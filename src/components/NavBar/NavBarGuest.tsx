@@ -10,7 +10,7 @@ function NavBarGuest() {
         Faîtes vivre vos communautés en rassemblant des joueurs.
       </Text>
 
-      <Button component="a" href="/register">
+      <Button component="a" href="/sign-up">
         S&apos;inscrire
       </Button>
     </Box>
