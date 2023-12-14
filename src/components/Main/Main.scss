@@ -22,6 +22,7 @@
     [content-end] // End content
     minmax(var(--__padding-inline), 1fr) // Space around the content (2)
     [full-width-end]; // End grid
+  grid-template-rows: max-content;
 }
 
 .content-grid > * {

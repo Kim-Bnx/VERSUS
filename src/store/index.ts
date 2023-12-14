@@ -1,5 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import loginReducer from './reducers/login';
+import eventReducer from './reducers/event';
+import newEventReducer from './reducers/createEvent';
+import updateEventReducer from './reducers/updateEvent';
 import searchReducer from './reducers/search';
 import signupReducer from './reducers/signup';
 import profileReducer from './reducers/profile';
@@ -7,6 +10,9 @@ import profileReducer from './reducers/profile';
 const store = configureStore({
   reducer: {
     login: loginReducer,
+    event: eventReducer,
+    newEvent: newEventReducer,
+    updatedEvent: updateEventReducer,
     search: searchReducer,
     signup: signupReducer,
     profile: profileReducer,

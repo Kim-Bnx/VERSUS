@@ -12,6 +12,7 @@ import CreateEvent from './pages/CreateEvent/CreateEvent';
 import About from './pages/Footer/About/Abouts';
 import Contact from './pages/Footer/Contact/Contact';
 import Terms from './pages/Footer/Terms/Terms';
+import EventSettings from './pages/EventSettings/EventSettings';
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: 'event/:slug',
         element: <Event />,
+      },
+      {
+        path: 'event/:slug/settings',
+        element: <EventSettings />,
       },
       {
         // route for the connected user to see researched user's profile or his own
