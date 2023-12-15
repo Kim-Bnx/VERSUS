@@ -3,7 +3,6 @@ import { LoginCredentials, LoginState } from '../../@types';
 import { axiosInstance } from '../../utils/axios';
 import { LocalStorage } from '../../utils/LocalStorage';
 
-const userData = LocalStorage.getItem('user');
 const initialState: LoginState = {
   credentials: {
     email: '',
@@ -16,7 +15,6 @@ const initialState: LoginState = {
   isConnected: false,
   isLoading: false,
   error: null,
-  ...userData,
 };
 
 export const login = createAsyncThunk(
@@ -26,14 +24,7 @@ export const login = createAsyncThunk(
       'http://localhost:3000/login',
       credentials
     );
-    const authentification = {
-      auth: {
-        userId: data.userId,
-        token: data.token,
-      },
-      isConnected: data.isConnected,
-    };
-    LocalStorage.setItem('user', authentification);
+
     return data;
   }
 );
@@ -53,7 +44,7 @@ const loginSlice = createSlice({
       state.credentials[fieldName] = value;
     },
     logout(state) {
-      LocalStorage.removeItem('user');
+      LocalStorage.removeItem('auth');
       state.isConnected = false;
       state.auth.token = '';
       state.auth.userId = null;
@@ -78,6 +69,8 @@ const loginSlice = createSlice({
           userId: responseData.userId,
           token: responseData.token,
         };
+
+        localStorage.setItem('auth', JSON.stringify(state.auth));
       });
   },
 });

@@ -14,8 +14,8 @@ const initialState: ProfileState = {
   error: null,
 };
 
-export const profile = createAsyncThunk(
-  'profile',
+export const updateUser = createAsyncThunk(
+  'updateUser',
   async ({
     accountInfos,
     userId,
@@ -32,8 +32,8 @@ export const profile = createAsyncThunk(
   }
 );
 
-const profileSlice = createSlice({
-  name: 'profile',
+const updateUserSlice = createSlice({
+  name: 'updateUser',
   initialState,
   reducers: {
     changeInputUserValue(
@@ -58,20 +58,20 @@ const profileSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(profile.pending, (state) => {
+      .addCase(updateUser.pending, (state) => {
         state.error = null;
         state.isSuccess = false;
       })
-      .addCase(profile.rejected, (state) => {
+      .addCase(updateUser.rejected, (state) => {
         state.error = 'Modification rejeté';
         state.isSuccess = false;
       })
-      .addCase(profile.fulfilled, (state) => {
+      .addCase(updateUser.fulfilled, (state) => {
         state.error = null;
         state.isSuccess = true;
       });
   },
 });
 
-export const { changeInputUserValue } = profileSlice.actions;
-export default profileSlice.reducer;
+export const { changeInputUserValue } = updateUserSlice.actions;
+export default updateUserSlice.reducer;

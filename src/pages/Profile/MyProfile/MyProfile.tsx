@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Avatar,
   Box,
@@ -8,6 +10,8 @@ import {
   SimpleGrid,
 } from '@mantine/core';
 import { IconHeartFilled, IconStarFilled } from '@tabler/icons-react';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { user } from '../../../store/reducers/user';
 import EventThumb from '../../../components/Element/Thumb/Event';
 import TeamThumb from '../../../components/Element/Thumb/Team';
 import PlatformSquare from '../../../components/Element/PlatformsSquares';
@@ -16,6 +20,16 @@ import GamesLabels from '../../../components/Element/GamesLabels';
 import '../Profile.scss';
 
 function MyProfile() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const storedAuth: string | null = localStorage.getItem('auth');
+
+  const emailValue = useAppSelector((state) => state.user.data.email);
+  const usernameValue = useAppSelector((state) => state.user.data.username);
+  const passwordValue = useAppSelector((state) => state.user.data.password);
+  const avatarValue = useAppSelector((state) => state.user.data.avatar);
+
   const GAMES = [
     {
       id: 0,
@@ -82,6 +96,18 @@ function MyProfile() {
     'MonsieurCloud',
     'MemberSix',
   ];
+
+  useEffect(() => {
+    if (storedAuth) {
+      const parsedObject = JSON.parse(storedAuth);
+
+      const { userId } = parsedObject;
+
+      dispatch(user(userId));
+    } else {
+      navigate('/');
+    }
+  }, [storedAuth, dispatch, navigate]);
 
   return (
     <Box className="wrapper myprofile">

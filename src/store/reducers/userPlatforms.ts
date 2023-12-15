@@ -1,30 +1,36 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ProfileGamesState } from '../../@types';
+import { ProfilePlatformsState } from '../../@types';
 
-const initialState: ProfileGamesState = {
-  games: [],
+const initialState: ProfilePlatformsState = {
+  platforms: [],
   error: null,
   isSuccess: false,
 };
 
-export const profileGames = createAsyncThunk(
-  'profileGames',
-  async ({ games, userId }: { games: number[]; userId: number | null }) => {
+export const userPlatforms = createAsyncThunk(
+  'userPlatforms',
+  async ({
+    platforms,
+    userId,
+  }: {
+    platforms: number[];
+    userId: number | null;
+  }) => {
     const { data } = await axios.patch(
       `http://localhost:3000/user/${userId}`,
-      games
+      platforms
     );
 
     return data;
   }
 );
 
-const profileGamesSlice = createSlice({
-  name: 'profileGames',
+const userPlatformsSlice = createSlice({
+  name: 'userPlatforms',
   initialState,
   reducers: {
-    changeSelectedGames(
+    changeSelectedPlatforms(
       state,
       action: PayloadAction<{
         value: number[];
@@ -32,25 +38,25 @@ const profileGamesSlice = createSlice({
     ) {
       const { value } = action.payload;
 
-      state.games = value;
+      state.platforms = value;
     },
   },
   extraReducers(builder) {
     builder
-      .addCase(profileGames.pending, (state) => {
+      .addCase(userPlatforms.pending, (state) => {
         state.error = null;
         state.isSuccess = false;
       })
-      .addCase(profileGames.rejected, (state) => {
+      .addCase(userPlatforms.rejected, (state) => {
         state.error = 'Jeux rejetés';
         state.isSuccess = false;
       })
-      .addCase(profileGames.fulfilled, (state) => {
+      .addCase(userPlatforms.fulfilled, (state) => {
         state.error = null;
         state.isSuccess = true;
       });
   },
 });
 
-export const { changeSelectedGames } = profileGamesSlice.actions;
-export default profileGamesSlice.reducer;
+export const { changeSelectedPlatforms } = userPlatformsSlice.actions;
+export default userPlatformsSlice.reducer;

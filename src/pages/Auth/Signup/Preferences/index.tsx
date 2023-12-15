@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { Anchor, Text, Box, Button, Flex, Group, Title } from '@mantine/core';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { profile } from '../../../../store/reducers/profile';
-import { profileGames } from '../../../../store/reducers/profileGames';
-import { profilePlatforms } from '../../../../store/reducers/profilePlatforms';
+import { profile } from '../../../../store/reducers/updateUser';
+import { profileGames } from '../../../../store/reducers/userGames';
+import { profilePlatforms } from '../../../../store/reducers/userPlatforms';
 import PlatformSquares from '../../../../components/Element/PlatformsSquares';
 import GamesLabels from '../../../../components/Element/GamesLabels';
 

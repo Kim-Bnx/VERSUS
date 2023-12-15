@@ -14,7 +14,7 @@ import {
 
 import { IconChevronRight } from '@tabler/icons-react';
 import { useAppDispatch } from '../../../../hooks/redux';
-import { changeInputUserValue } from '../../../../store/reducers/profile';
+import { changeInputUserValue } from '../../../../store/reducers/updateUser';
 import CreateAvatar from '../../../../components/Element/CreateAvatar';
 
 type ProfileProps = {
