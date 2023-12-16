@@ -1,17 +1,26 @@
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { RichTextEditor } from '@mantine/tiptap';
+import DOMPurify from 'dompurify';
 
 import '@mantine/tiptap/styles.css';
 
-function TextEditor({ setEventRules }) {
+type TextEditorProps = {
+  setEventRules: (html: string) => void;
+  content: string;
+};
+
+function TextEditor({ setEventRules, content }: TextEditorProps) {
   const editor = useEditor({
     extensions: [StarterKit],
+    content,
 
     // eslint-disable-next-line @typescript-eslint/no-shadow
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
-      setEventRules(html);
+
+      const cleanHTML = DOMPurify.sanitize(html);
+      setEventRules(cleanHTML);
     },
   });
 

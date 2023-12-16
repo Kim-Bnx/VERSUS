@@ -55,7 +55,7 @@ function EventSettings() {
   const gamesNameData = gamesData.map((game) => game.name);
   const plateformNameData = plateformData.map((plateform) => plateform.name);
   const eventData = useAppSelector((state) => state.event.event);
-  const [eventRules, setEventRules] = useState('');
+  const [eventRules, setEventRules] = useState(eventData.rules);
 
   useEffect(() => {
     dispatch(changeTextEditorValue(eventRules));
@@ -296,7 +296,7 @@ function EventSettings() {
           className="fieldset-settings settings_presentation"
           variant="unstyled"
         >
-          <TextEditor setEventRules={setEventRules} />
+          <TextEditor setEventRules={setEventRules} content={eventRules} />
         </Fieldset>
 
         <VisuallyHidden>
