@@ -23,7 +23,10 @@ import slugify from 'slugify';
 import { DateTimePicker, DatesProvider } from '@mantine/dates';
 import { IoCheckmarkSharp } from 'react-icons/io5';
 import { fetchEvent } from '../../store/reducers/event';
-import { updateEvent } from '../../store/reducers/updateEvent';
+import {
+  changeTextEditorValue,
+  updateEvent,
+} from '../../store/reducers/updateEvent';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { Event } from '../../@types/event';
 
@@ -53,6 +56,10 @@ function EventSettings() {
   const plateformNameData = plateformData.map((plateform) => plateform.name);
   const eventData = useAppSelector((state) => state.event.event);
   const [eventRules, setEventRules] = useState('');
+
+  useEffect(() => {
+    dispatch(changeTextEditorValue(eventRules));
+  }, [eventRules, setEventRules]);
 
   const [modified, setModified] = useState(false);
 
@@ -90,6 +97,7 @@ function EventSettings() {
       type_event_id: getItem(values.type_event, eventTypeData),
       game_id: getItem(values.game, gamesData),
       plateform_id: getItem(values.plateform, plateformData),
+      rules: eventRules,
     };
 
     dispatch(updateEvent(newValues))

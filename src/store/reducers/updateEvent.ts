@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { EventState, Event } from '../../@types/event';
 
@@ -44,7 +44,12 @@ export const updateEvent = createAsyncThunk(
 const updateEventSlice = createSlice({
   name: 'updatedEvent',
   initialState,
-  reducers: {},
+  reducers: {
+    changeTextEditorValue(state, action: PayloadAction<string>) {
+      state.event.rules = action.payload;
+      console.log(state.event.rules);
+    },
+  },
   extraReducers(builder) {
     builder.addCase(updateEvent.fulfilled, (state) => {
       state.isLoading = false;
@@ -54,4 +59,5 @@ const updateEventSlice = createSlice({
   },
 });
 
+export const { changeTextEditorValue } = updateEventSlice.actions;
 export default updateEventSlice.reducer;
