@@ -14,7 +14,6 @@ import {
   Select,
   Text,
   TextInput,
-  Textarea,
   Title,
   VisuallyHidden,
   rem,
@@ -33,6 +32,7 @@ import gamesData from './gamesData';
 import plateformData from './plateformData';
 
 import './EventSettings.scss';
+import TextEditor from '../../components/TextEditor/TextEditor';
 
 function getItem(param: any, data: any[]) {
   if (typeof param === 'string') {
@@ -52,7 +52,7 @@ function EventSettings() {
   const gamesNameData = gamesData.map((game) => game.name);
   const plateformNameData = plateformData.map((plateform) => plateform.name);
   const eventData = useAppSelector((state) => state.event.event);
-  const eventState = useAppSelector((state) => state.event);
+  const [eventRules, setEventRules] = useState('');
 
   const [modified, setModified] = useState(false);
 
@@ -288,7 +288,7 @@ function EventSettings() {
           className="fieldset-settings settings_presentation"
           variant="unstyled"
         >
-          <Textarea label="Présentation de l'évènement" />
+          <TextEditor setEventRules={setEventRules} />
         </Fieldset>
 
         <VisuallyHidden>
