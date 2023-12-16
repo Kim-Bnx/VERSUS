@@ -3,18 +3,16 @@ import { LoginCredentials, LoginState } from '../../@types';
 import { axiosInstance } from '../../utils/axios';
 import { LocalStorage } from '../../utils/LocalStorage';
 
+const userData = LocalStorage.getItem('user');
 const initialState: LoginState = {
   credentials: {
     email: '',
     password: '',
   },
-  auth: {
-    userId: null,
-    token: '',
-  },
   isConnected: false,
   isLoading: false,
   error: null,
+  ...userData,
 };
 
 export const login = createAsyncThunk(
@@ -44,10 +42,8 @@ const loginSlice = createSlice({
       state.credentials[fieldName] = value;
     },
     logout(state) {
-      LocalStorage.removeItem('auth');
+      LocalStorage.removeItem('user');
       state.isConnected = false;
-      state.auth.token = '';
-      state.auth.userId = null;
     },
   },
   extraReducers(builder) {
@@ -63,14 +59,18 @@ const loginSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         const responseData = action.payload;
 
-        state.isConnected = responseData.isConnected;
+        state.isConnected = true;
         state.isLoading = false;
-        state.auth = {
-          userId: responseData.userId,
-          token: responseData.token,
+
+        const authentification = {
+          auth: {
+            userId: responseData.userId,
+            token: responseData.token,
+          },
+          isConnected: true,
         };
 
-        localStorage.setItem('auth', JSON.stringify(state.auth));
+        LocalStorage.setItem('user', authentification);
       });
   },
 });

@@ -1,10 +1,6 @@
 // Login States
 export type LoginState = {
   credentials: LoginCredentials;
-  auth: {
-    userId: number | null;
-    token: string;
-  };
   isConnected: boolean;
   isLoading: boolean;
   error: null | string;

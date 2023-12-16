@@ -1,18 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Box, Button, Anchor, AppShell, Flex, Avatar } from '@mantine/core';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import SearchBar from '../SearchBar/SearchBar';
-import { useAppSelector } from '../../hooks/redux';
+
 import './Header.scss';
+import { LocalStorage } from '../../utils/LocalStorage';
+import { user } from '../../store/reducers/user';
+import CreateAvatar from '../Element/CreateAvatar';
 
 function Header() {
+  const dispatch = useAppDispatch();
   const isConnected = useAppSelector((state) => state.login.isConnected);
-  const loggedUser = useAppSelector((state) => state.login.auth.userId);
-
-  const [isLogged, setIsLogged] = useState(false);
+  const userData = useAppSelector((state) => state.user.data);
+  const profileUrlValue = `/profile/${userData.id}`;
+  const userNameValue = userData.username;
+  const useAvatarValue = userData.avatar;
 
   useEffect(() => {
-    setIsLogged(isConnected);
-  }, [isConnected]);
+    if (isConnected) {
+      const userAuth = LocalStorage.getItem('user');
+
+      const { userId } = userAuth.auth;
+      dispatch(user(userId));
+    }
+  }, [dispatch, isConnected]);
+
   return (
     <AppShell.Header p="lg" className="header">
       <Flex gap="md" className="actions" visibleFrom="sm">
@@ -27,7 +39,7 @@ function Header() {
         <SearchBar />
       </Flex>
 
-      {!isLogged ? (
+      {!isConnected ? (
         <Box className="connexion">
           <Button component="a" href="/sign-in" className="button button-login">
             Se connecter
@@ -35,8 +47,8 @@ function Header() {
         </Box>
       ) : (
         <Flex className="profile" align="center" gap="md">
-          <Anchor href="#">userId : {loggedUser}</Anchor>
-          <Avatar src="" alt="Avatar" />
+          <Anchor href={profileUrlValue}>{userNameValue}</Anchor>
+          <CreateAvatar hw="2.5rem" seed={useAvatarValue} />
         </Flex>
       )}
     </AppShell.Header>

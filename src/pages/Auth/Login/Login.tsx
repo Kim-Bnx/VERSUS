@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Text,
@@ -49,9 +49,11 @@ function Login() {
     );
   };
 
-  if (isConnected) {
-    navigate('/');
-  }
+  useEffect(() => {
+    if (isConnected) {
+      navigate('/');
+    }
+  }, [isConnected, navigate]);
 
   return (
     <Box className="right-content">

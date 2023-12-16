@@ -9,6 +9,7 @@ import userReducer from './reducers/user';
 import updateUserReducer from './reducers/updateUser';
 import userGamesReducer from './reducers/userGames';
 import userPlatformsReducer from './reducers/userPlatforms';
+import profileReducer from './reducers/profile';
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     updateUser: updateUserReducer,
     userGames: userGamesReducer,
     userPlatforms: userPlatformsReducer,
+    profile: profileReducer,
   },
 });
 
