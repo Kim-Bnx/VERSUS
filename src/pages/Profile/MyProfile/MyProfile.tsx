@@ -1,4 +1,11 @@
 import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import {
   Avatar,
   Box,
   Flex,
@@ -10,7 +17,6 @@ import {
   PasswordInput,
   Stack,
 } from '@mantine/core';
-import { useCallback, useEffect, useState } from 'react';
 import { IconKey, IconSettingsFilled, IconUpload } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
@@ -90,6 +96,9 @@ function MyProfile() {
   const dispatch = useAppDispatch();
   const isConnected = useAppSelector((state) => state.login.isConnected);
   const userData = useAppSelector((state) => state.user.data);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [toggleEditProfile, setToggleEditProfile] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [visible, { toggle }] = useDisclosure(false);
@@ -107,6 +116,26 @@ function MyProfile() {
 
   const handleEditProfile = () => {
     setToggleEditProfile(!toggleEditProfile);
+  };
+
+  const handleChangeUsernameValue = (event: ChangeEvent<HTMLInputElement>) => {
+    const usernameValue = event.target.value;
+
+    setUsername(usernameValue);
+  };
+
+  const handleChangePasswordValue = (event: ChangeEvent<HTMLInputElement>) => {
+    const passwordValue = event.target.value;
+
+    setPassword(passwordValue);
+  };
+
+  const handleChangeConfirmPasswordValue = (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    const confirmPasswordValue = event.target.value;
+
+    setConfirmPassword(confirmPasswordValue);
   };
 
   const handleSelection = useCallback(
@@ -145,8 +174,12 @@ function MyProfile() {
     }
   }, [dispatch, isConnected]);
 
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
+
   return (
-    <Box className="wrapper">
+    <Box component="form" className="wrapper" onSubmit={handleSubmit}>
       <Flex justify="space-between" align="center">
         <Title size="2rem" order={2}>
           {toggleEditProfile ? 'Modifier votre profil' : 'Votre Profil'}
@@ -201,6 +234,7 @@ function MyProfile() {
                 maw="30rem"
                 aria-label="pseudo"
                 placeholder={userNameValue}
+                onChange={handleChangeUsernameValue}
               />
             )}
             <Text mt="1.5rem" className="input-label">
@@ -280,7 +314,7 @@ function MyProfile() {
 
         {toggleEditProfile && (
           <Flex w="100%" mt="5rem" justify="flex-end" align="center">
-            <Button bg="green" onClick={handleEditProfile}>
+            <Button bg="green" type="submit">
               Valider les modifications
             </Button>
           </Flex>

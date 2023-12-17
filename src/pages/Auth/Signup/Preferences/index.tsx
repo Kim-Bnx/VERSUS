@@ -2,11 +2,12 @@ import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Anchor, Text, Box, Button, Flex, Group, Title } from '@mantine/core';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
-import { useAppSelector } from '../../../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { userGames } from '../../../../store/reducers/userGames';
 import { userPlatforms } from '../../../../store/reducers/userPlatforms';
 import PlatformSquares from '../../../../components/Element/PlatformsSquares';
 import GamesLabels from '../../../../components/Element/GamesLabels';
+import { LocalStorage } from '../../../../utils/LocalStorage';
 
 const PLATFORMS = [
   {
@@ -76,6 +77,7 @@ type PreferencesProps = {
 type SelectedItems = { [key: number]: boolean };
 
 function Preferences({ onChangeView }: PreferencesProps) {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isSuccess = useAppSelector((state) => state.signup.isSuccess);
 
@@ -114,17 +116,20 @@ function Preferences({ onChangeView }: PreferencesProps) {
     [handleSelection]
   );
 
-  const handleAddAccountData = () => {
-    // const selectedGameIds = Object.keys(selectedGames)
-    //   .filter((key) => selectedGames[parseInt(key, 10)])
-    //   .map((key) => parseInt(key, 10));
-    // const selectedPlatformIds = Object.keys(selectedPlatforms)
-    //   .filter((key) => selectedPlatforms[parseInt(key, 10)])
-    //   .map((key) => parseInt(key, 10));
-    // dispatch(profileGames({ games: selectedGameIds, userId: loggedUserId }));
-    // dispatch(
-    //   profilePlatforms({ platforms: selectedPlatformIds, userId: loggedUserId })
-    // );
+  const handleSubmitData = () => {
+    const userAuth = LocalStorage.getItem('auth');
+    const { userId } = userAuth;
+
+    const selectedGamesIds = Object.keys(selectedGames)
+      .filter((key) => selectedGames[parseInt(key, 10)])
+      .map((key) => parseInt(key, 10));
+
+    const selectedPlatformsIds = Object.keys(selectedPlatforms)
+      .filter((key) => selectedPlatforms[parseInt(key, 10)])
+      .map((key) => parseInt(key, 10));
+
+    dispatch(userGames({ games: selectedGamesIds, userId }));
+    dispatch(userPlatforms({ platforms: selectedPlatformsIds, userId }));
   };
 
   if (isSuccess) {
@@ -182,7 +187,7 @@ function Preferences({ onChangeView }: PreferencesProps) {
           </Button>
 
           <Button
-            onClick={handleAddAccountData}
+            onClick={handleSubmitData}
             rightSection={<IconChevronRight size={14} />}
           >
             Terminer
