@@ -1,5 +1,13 @@
 import { useParams } from 'react-router-dom';
-import { Box, Flex, Title, Button, Grid, SimpleGrid } from '@mantine/core';
+import {
+  Box,
+  Flex,
+  Title,
+  Button,
+  Grid,
+  SimpleGrid,
+  Text,
+} from '@mantine/core';
 import { IconHeartFilled, IconStarFilled } from '@tabler/icons-react';
 import { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
@@ -150,30 +158,52 @@ function UserProfile() {
   }, [dispatch, username]);
 
   return (
-    <Box className="wrapper myprofile">
-      <Flex justify="space-between" align="center">
-        <Flex justify="center" align="center">
-          <Box mr="1rem">
-            <CreateAvatar hw="5rem" seed={userAvatarValue} />
+    <Box className="wrapper profile-user full-width content-grid">
+      <Box className="header full-width content-grid">
+        <Flex justify="space-between" align="center">
+          <Flex justify="center" align="center">
+            <Box mr="1rem">
+              <CreateAvatar hw="7rem" seed={userAvatarValue} />
+            </Box>
+
+            <Flex ml="1rem" direction="column">
+              <Title tt="capitalize" size="2rem" c="white" order={2}>
+                {userNameValue}
+              </Title>
+
+              <Flex>
+                <Text mr="1rem">
+                  <span className="bold">56</span> partipations
+                </Text>
+                <Text mr="1rem">
+                  <span className="bold">56</span> événements crées
+                </Text>
+                <Text>
+                  Membre depuis le <span className="bold">12/11/2023</span>
+                </Text>
+              </Flex>
+
+              <Flex mt="1rem">
+                <Button mr="1rem">Discord</Button>
+                <Button mr="1rem">Twitch</Button>
+                <Button>Twitter</Button>
+              </Flex>
+            </Flex>
+          </Flex>
+
+          <Box>
+            <Button mr="1rem">
+              <IconStarFilled color="yellow" />
+            </Button>
+
+            <Button>
+              <IconHeartFilled color="red" />
+            </Button>
           </Box>
-
-          <Title size="2rem" order={2}>
-            {userNameValue}
-          </Title>
         </Flex>
+      </Box>
 
-        <Box>
-          <Button mr="1rem">
-            <IconStarFilled color="yellow" />
-          </Button>
-
-          <Button>
-            <IconHeartFilled color="red" />
-          </Button>
-        </Box>
-      </Flex>
-
-      <Box mt="4rem">
+      <Box mt="2rem">
         <Title className="title" order={3}>
           Evénements
         </Title>
@@ -208,7 +238,7 @@ function UserProfile() {
         </SimpleGrid>
       </Box>
 
-      <Box mt="4rem">
+      <Box mt="2rem">
         <Title className="title" order={3}>
           Equipes
         </Title>
@@ -252,7 +282,7 @@ function UserProfile() {
         </SimpleGrid>
       </Box>
 
-      <Box mt="4rem">
+      <Box mt="2rem">
         <Title className="title" order={3}>
           Gaming
         </Title>

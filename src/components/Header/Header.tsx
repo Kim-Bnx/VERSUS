@@ -12,13 +12,12 @@ function Header() {
   const dispatch = useAppDispatch();
   const isConnected = useAppSelector((state) => state.login.isConnected);
   const userData = useAppSelector((state) => state.user.data);
-  const profileUrlValue = `/profile/${userData.id}`;
   const userNameValue = userData.username;
   const useAvatarValue = userData.avatar;
 
   useEffect(() => {
     if (isConnected) {
-      const userAuth = LocalStorage.getItem('user');
+      const userAuth = LocalStorage.getItem('auth');
 
       const { userId } = userAuth.auth;
       dispatch(user(userId));
@@ -47,7 +46,7 @@ function Header() {
         </Box>
       ) : (
         <Flex className="profile" align="center" gap="md">
-          <Anchor href={profileUrlValue}>{userNameValue}</Anchor>
+          <Anchor href="/profile">{userNameValue}</Anchor>
           <CreateAvatar hw="2.5rem" seed={useAvatarValue} />
         </Flex>
       )}

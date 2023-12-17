@@ -138,7 +138,7 @@ function MyProfile() {
 
   useEffect(() => {
     if (isConnected) {
-      const userAuth = LocalStorage.getItem('user');
+      const userAuth = LocalStorage.getItem('auth');
 
       const { userId } = userAuth.auth;
       dispatch(user(userId));

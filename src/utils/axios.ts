@@ -3,11 +3,11 @@ import axios from 'axios';
 import { LocalStorage } from './LocalStorage';
 
 export const axiosInstance = axios.create({
-  baseURL: 'https://orecipes-api.onrender.com/api',
+  baseURL: 'http://localhost:5173/',
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const user = LocalStorage.getItem('user');
+  const user = LocalStorage.getItem('auth');
 
   if (user) {
     // eslint-disable-next-line no-param-reassign
