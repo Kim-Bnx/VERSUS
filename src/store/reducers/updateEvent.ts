@@ -47,7 +47,6 @@ const updateEventSlice = createSlice({
   reducers: {
     changeTextEditorValue(state, action: PayloadAction<string>) {
       state.event.rules = action.payload;
-      console.log(state.event.rules);
     },
   },
   extraReducers(builder) {

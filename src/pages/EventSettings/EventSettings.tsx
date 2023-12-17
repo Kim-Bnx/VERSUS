@@ -55,11 +55,11 @@ function EventSettings() {
   const gamesNameData = gamesData.map((game) => game.name);
   const plateformNameData = plateformData.map((plateform) => plateform.name);
   const eventData = useAppSelector((state) => state.event.event);
-  const [eventRules, setEventRules] = useState(eventData.rules);
+  const [eventRules, setEventRules] = useState('');
 
   useEffect(() => {
-    dispatch(changeTextEditorValue(eventRules));
-  }, [eventRules, setEventRules]);
+    dispatch(fetchEvent(slug));
+  }, [dispatch, slug]);
 
   const [modified, setModified] = useState(false);
 
@@ -70,10 +70,6 @@ function EventSettings() {
   const form = useForm({
     initialValues: { ...eventData },
   });
-
-  useEffect(() => {
-    dispatch(fetchEvent(slug));
-  }, [dispatch, slug]);
 
   useEffect(() => {
     form.setValues({
@@ -89,7 +85,12 @@ function EventSettings() {
       game: getItem(eventData.game_id, gamesData),
       plateform: getItem(eventData.plateform_id, plateformData),
     });
+    setEventRules(eventData.rules);
   }, [eventData]);
+
+  useEffect(() => {
+    dispatch(changeTextEditorValue(eventRules));
+  }, [eventRules]);
 
   const handleSubmitUpdateEvent = (values: Event) => {
     const newValues = {
@@ -296,7 +297,9 @@ function EventSettings() {
           className="fieldset-settings settings_presentation"
           variant="unstyled"
         >
-          <TextEditor setEventRules={setEventRules} content={eventRules} />
+          {eventRules && (
+            <TextEditor setEventRules={setEventRules} content={eventRules} />
+          )}
         </Fieldset>
 
         <VisuallyHidden>
