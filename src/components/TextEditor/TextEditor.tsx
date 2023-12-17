@@ -37,6 +37,10 @@ function TextEditor({ setEventRules, content }: TextEditorProps) {
     },
   });
 
+  useEffect(() => {
+    editor?.commands.setContent(content);
+  }, [content, editor]);
+
   return (
     <RichTextEditor editor={editor}>
       <RichTextEditor.Toolbar>

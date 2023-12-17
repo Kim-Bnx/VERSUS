@@ -55,7 +55,7 @@ function EventSettings() {
   const gamesNameData = gamesData.map((game) => game.name);
   const plateformNameData = plateformData.map((plateform) => plateform.name);
   const eventData = useAppSelector((state) => state.event.event);
-  const [eventRules, setEventRules] = useState('');
+  const [eventRules, setEventRules] = useState(eventData.rules);
 
   useEffect(() => {
     dispatch(fetchEvent(slug));
@@ -85,7 +85,9 @@ function EventSettings() {
       game: getItem(eventData.game_id, gamesData),
       plateform: getItem(eventData.plateform_id, plateformData),
     });
-    setEventRules(eventData.rules);
+    if (eventData.rules) {
+      setEventRules(eventData.rules);
+    }
   }, [eventData]);
 
   useEffect(() => {
@@ -297,9 +299,7 @@ function EventSettings() {
           className="fieldset-settings settings_presentation"
           variant="unstyled"
         >
-          {eventRules && (
-            <TextEditor setEventRules={setEventRules} content={eventRules} />
-          )}
+          <TextEditor setEventRules={setEventRules} content={eventRules} />
         </Fieldset>
 
         <VisuallyHidden>
