@@ -72,19 +72,28 @@ function EventSettings() {
   });
 
   useEffect(() => {
-    form.setValues({
-      id: eventData.id,
-      title: eventData.title,
-      description: eventData.description,
-      start_date: new Date(eventData.start_date),
-      end_date: new Date(eventData.end_date),
-      location: eventData.location,
-      banner: eventData.banner,
-      thumbnail: eventData.thumbnail,
-      type_event: getItem(eventData.type_event_id, eventTypeData),
-      game: getItem(eventData.game_id, gamesData),
-      plateform: getItem(eventData.plateform_id, plateformData),
-    });
+    if (eventData) {
+      const formattedStartDate = eventData.start_date
+        ? new Date(eventData.start_date)
+        : null;
+      const formattedEndDate = eventData.end_date
+        ? new Date(eventData.end_date)
+        : null;
+
+      form.setValues({
+        id: eventData.id,
+        title: eventData.title,
+        description: eventData.description,
+        start_date: formattedStartDate,
+        end_date: formattedEndDate,
+        location: eventData.location,
+        banner: eventData.banner,
+        thumbnail: eventData.thumbnail,
+        type_event: getItem(eventData.type_event_id, eventTypeData),
+        game: getItem(eventData.game_id, gamesData),
+        plateform: getItem(eventData.plateform_id, plateformData),
+      });
+    }
     if (eventData.rules) {
       setEventRules(eventData.rules);
     }

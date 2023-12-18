@@ -14,14 +14,11 @@ const initialState: SearchState = {
 };
 
 export const search = createAsyncThunk('search', async (searchTerm: string) => {
-  const { data } = await axios.get(
-    'https://versus-api.onrender.com/search/all',
-    {
-      params: {
-        q: searchTerm,
-      },
-    }
-  );
+  const { data } = await axios.get('http://localhost:3000/search/all', {
+    params: {
+      q: searchTerm,
+    },
+  });
 
   return data;
 });

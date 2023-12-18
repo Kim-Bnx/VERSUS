@@ -60,9 +60,8 @@ const loginSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         const responseData = action.payload;
-        const { isConnected } = responseData;
 
-        state.isConnected = isConnected;
+        state.isConnected = true;
         state.isLoading = false;
 
         const authentification = {
@@ -70,7 +69,7 @@ const loginSlice = createSlice({
             userId: responseData.userId,
             token: responseData.token,
           },
-          isConnected,
+          isConnected: true,
         };
 
         LocalStorage.setItem('auth', authentification);

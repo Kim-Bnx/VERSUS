@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { UserState } from '../../@types/user';
-import { axiosInstance } from '../../utils/axios';
 
 const initialState: UserState = {
   data: {
@@ -15,9 +15,7 @@ const initialState: UserState = {
 };
 
 export const user = createAsyncThunk('user', async (userId: number) => {
-  const { data } = await axiosInstance.get(
-    `http://localhost:3000/user/${userId}`
-  );
+  const { data } = await axios.get(`http://localhost:3000/user/${userId}`);
 
   return data;
 });
