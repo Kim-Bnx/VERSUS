@@ -1,19 +1,24 @@
-import { MouseEvent, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import {
+  ActionIcon,
+  Anchor,
+  Avatar,
   Box,
   Button,
   Flex,
   Image,
   Pill,
   Stack,
+  Tabs,
   Text,
   Title,
   TypographyStylesProvider,
 } from '@mantine/core';
 import {
   IoCalendarClearOutline,
+  IoCloseOutline,
   IoGameController,
   IoLocationSharp,
   IoTv,
@@ -44,6 +49,12 @@ function Event() {
     return participantFound.includes(userData.id);
   };
 
+  const isEventAdmin = () => {
+    return eventData.organizer.id === userData.id;
+  };
+
+  console.log(isEventAdmin());
+
   const sanitizedEventRules = DOMPurify.sanitize(eventData.rules);
 
   const handleEventRegister = () => {
@@ -65,6 +76,17 @@ function Event() {
       })
     );
     console.log('désinscrit');
+    navigate(0);
+  };
+
+  const handleDeleteAttendee = (user_id: number) => {
+    dispatch(
+      unregisterToEvent({
+        event_id: eventData.id,
+        user_id,
+      })
+    );
+    console.log('participant supprimé');
     navigate(0);
   };
 
@@ -155,18 +177,59 @@ function Event() {
         </div>
       </div>
 
-      <Box>
-        {eventData.participants.map((user) => (
-          <p key={user.id}>{user.username}</p>
-        ))}
-      </Box>
+      <Tabs
+        defaultValue="presentation_tab"
+        className="full-width event__content"
+      >
+        <div className="content__tabs full-width content-grid">
+          <div className="content__tabs-buttons">
+            <Tabs.List>
+              <Tabs.Tab value="presentation_tab">Présentation</Tabs.Tab>
+              <Tabs.Tab value="participant_tab">
+                Participants ({eventData.participants.length})
+              </Tabs.Tab>
+            </Tabs.List>
+          </div>
+        </div>
 
-      <TypographyStylesProvider>
-        <Box
-          className="event__content"
-          dangerouslySetInnerHTML={{ __html: sanitizedEventRules }}
-        />
-      </TypographyStylesProvider>
+        <div className="full-width content-grid">
+          <div className="content__tabs-panels">
+            <Tabs.Panel value="presentation_tab">
+              <TypographyStylesProvider>
+                <Box
+                  className="event__presentation"
+                  dangerouslySetInnerHTML={{ __html: sanitizedEventRules }}
+                />
+              </TypographyStylesProvider>
+            </Tabs.Panel>
+            <Tabs.Panel value="participant_tab">
+              <Box className="event__attendees">
+                {eventData.participants.map((attendee) => (
+                  <Box key={attendee.id} className="attendee">
+                    <Avatar />
+                    <Anchor
+                      className="attendee-username"
+                      href={`/event/profile/${attendee.username}`}
+                    >
+                      {attendee.username}
+                    </Anchor>
+
+                    {isEventAdmin() && (
+                      <ActionIcon
+                        variant="outline"
+                        aria-label="Supprimer participant"
+                        onClick={() => handleDeleteAttendee(attendee.id)}
+                      >
+                        <IoCloseOutline />
+                      </ActionIcon>
+                    )}
+                  </Box>
+                ))}
+              </Box>
+            </Tabs.Panel>
+          </div>
+        </div>
+      </Tabs>
     </>
   );
 }

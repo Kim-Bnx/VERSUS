@@ -37,6 +37,7 @@ export type Event = {
   plateform?: string;
   plateform_id?: number;
   user_id?: number;
+  organizer: UserData;
   participants: UserData[];
 };
 
