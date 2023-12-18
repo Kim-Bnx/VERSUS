@@ -1,17 +1,16 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
+import DOMPurify from 'dompurify';
 import {
   Box,
   Button,
   Flex,
   Image,
-  List,
   Pill,
-  Space,
   Stack,
   Text,
   Title,
+  TypographyStylesProvider,
 } from '@mantine/core';
 import {
   IoCalendarClearOutline,
@@ -33,6 +32,8 @@ function Event() {
   useEffect(() => {
     dispatch(fetchEvent(slug));
   }, [dispatch, slug]);
+
+  const sanitizedEventRules = DOMPurify.sanitize(eventData.rules);
 
   return (
     <>
@@ -108,55 +109,12 @@ function Event() {
         </div>
       </div>
 
-      <div className="event__content">
-        <Title order={1}>Let's fight !</Title>
-        <Text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </Text>
-
-        <Space h="lg" />
-
-        <Title order={2}>Organisation</Title>
-        <Text>
-          Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
-          consectetur, adipisci velit, sed quia non numquam eius modi tempora
-          incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut
-          enim ad minima veniam, quis nostrum exercitationem ullam corporis
-          suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis
-          autem vel eum iure reprehenderit qui in ea voluptate velit esse quam
-          nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo
-          voluptas nulla pariatur?
-        </Text>
-        <Space h="md" />
-        <List>
-          <List.Item>Clone or download repository from GitHub</List.Item>
-          <List.Item>Install dependencies with yarn</List.Item>
-          <List.Item>
-            To start development server run npm start command
-          </List.Item>
-          <List.Item>
-            Run tests to make sure your changes do not break the build
-          </List.Item>
-          <List.Item>Submit a pull request once you are done</List.Item>
-        </List>
-
-        <Space h="lg" />
-
-        <Title order={2}>Rules</Title>
-        <Text>
-          Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
-          consectetur, adipisci velit, sed quia non numquam eius modi tempora
-          incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut
-          enim ad minima veniam, quis nostrum exercitationem ullam corporis
-          suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis
-          autem vel eum iure reprehenderit qui in ea voluptate velit esse quam
-          nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo
-          voluptas nulla pariatur?
-        </Text>
-
-        <Space h="lg" />
-      </div>
+      <TypographyStylesProvider>
+        <Box
+          className="event__content"
+          dangerouslySetInnerHTML={{ __html: sanitizedEventRules }}
+        />
+      </TypographyStylesProvider>
     </>
   );
 }
