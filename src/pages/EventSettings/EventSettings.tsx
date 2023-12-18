@@ -27,6 +27,7 @@ import {
   changeTextEditorValue,
   updateEvent,
 } from '../../store/reducers/updateEvent';
+import { deleteEvent } from '../../store/reducers/deleteEvent';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { Event } from '../../@types/event';
 
@@ -124,6 +125,14 @@ function EventSettings() {
       })
       .catch(() => {
         console.log('error update');
+      });
+  };
+
+  const handleDeleteEvent = () => {
+    dispatch(deleteEvent(eventData.id))
+      .unwrap()
+      .then(() => {
+        navigate('/');
       });
   };
 
@@ -317,7 +326,7 @@ function EventSettings() {
 
         <div className="settings_actions">
           <Flex align="center" justify="space-between" gap="md">
-            <Button variant="outline" color="red">
+            <Button variant="outline" color="red" onClick={handleDeleteEvent}>
               Supprimer
             </Button>
             <Flex gap="md">

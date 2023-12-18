@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import loginReducer from './reducers/login';
 import eventReducer from './reducers/event';
 import newEventReducer from './reducers/createEvent';
+import deleteEventReducer from './reducers/deleteEvent';
 import updateEventReducer from './reducers/updateEvent';
 import registerEventReducer from './reducers/registerEvent';
 import unregisterEventReducer from './reducers/unregisterEvent';
@@ -19,6 +20,7 @@ const store = configureStore({
     event: eventReducer,
     newEvent: newEventReducer,
     updatedEvent: updateEventReducer,
+    deleteEvent: deleteEventReducer,
     registerEvent: registerEventReducer,
     unregisterEvent: unregisterEventReducer,
     search: searchReducer,
