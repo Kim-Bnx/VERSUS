@@ -23,6 +23,9 @@ function Default({ onChangeView }: DefaultProps) {
   const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
 
   const dispatch = useAppDispatch();
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
+  const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
 
   const isSuccess = useAppSelector((state) => state.signup.isSuccess);
   const errorMsg = useAppSelector((state) => state.signup.error);
@@ -58,7 +61,6 @@ function Default({ onChangeView }: DefaultProps) {
     );
   };
 
-  // To prevent double rendering
   useEffect(() => {
     if (isSuccess) {
       dispatch(

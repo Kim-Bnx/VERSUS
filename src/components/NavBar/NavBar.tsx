@@ -4,6 +4,7 @@ import {
   Button,
   Flex,
   Text,
+  Anchor,
   Tooltip,
   useComputedColorScheme,
   useMantineColorScheme,
@@ -40,7 +41,9 @@ function NavBar() {
 
   return (
     <AppShell.Navbar p="lg" className="navbar">
-      <Box className="logo">Versus</Box>
+      <Anchor unstyled c="white" href="/" className="logo">
+        Versus
+      </Anchor>
 
       {isConnected && <NavBarUser />}
 

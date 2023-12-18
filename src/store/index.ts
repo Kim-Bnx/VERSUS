@@ -5,6 +5,10 @@ import newEventReducer from './reducers/createEvent';
 import updateEventReducer from './reducers/updateEvent';
 import searchReducer from './reducers/search';
 import signupReducer from './reducers/signup';
+import userReducer from './reducers/user';
+import updateUserReducer from './reducers/updateUser';
+import userGamesReducer from './reducers/userGames';
+import userPlatformsReducer from './reducers/userPlatforms';
 import profileReducer from './reducers/profile';
 
 const store = configureStore({
@@ -15,6 +19,10 @@ const store = configureStore({
     updatedEvent: updateEventReducer,
     search: searchReducer,
     signup: signupReducer,
+    user: userReducer,
+    updateUser: updateUserReducer,
+    userGames: userGamesReducer,
+    userPlatforms: userPlatformsReducer,
     profile: profileReducer,
   },
 });

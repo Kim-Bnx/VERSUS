@@ -1,17 +1,20 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ProfileState } from '../../@types/user';
+import { UserState } from '../../@types/user';
 import { axiosInstance } from '../../utils/axios';
 
-const initialState: ProfileState = {
+const initialState: UserState = {
   data: {
     id: 0,
+    email: '',
+    password: '',
+    confirmPassword: '',
     username: '',
     avatar: '',
   },
   error: null,
 };
 
-export const profile = createAsyncThunk('profile', async (userId: number) => {
+export const user = createAsyncThunk('user', async (userId: number) => {
   const { data } = await axiosInstance.get(
     `http://localhost:3000/user/${userId}`
   );
@@ -19,19 +22,19 @@ export const profile = createAsyncThunk('profile', async (userId: number) => {
   return data;
 });
 
-const profileSlice = createSlice({
-  name: 'profile',
+const userSlice = createSlice({
+  name: 'user',
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(profile.pending, (state) => {
+      .addCase(user.pending, (state) => {
         state.error = null;
       })
-      .addCase(profile.rejected, (state) => {
+      .addCase(user.rejected, (state) => {
         state.error = 'id incorrect';
       })
-      .addCase(profile.fulfilled, (state, action) => {
+      .addCase(user.fulfilled, (state, action) => {
         const payloadKeys = Object.keys(action.payload);
 
         payloadKeys.forEach((key) => {
@@ -43,5 +46,5 @@ const profileSlice = createSlice({
   },
 });
 
-// export const {  } = profileSlice.actions;
-export default profileSlice.reducer;
+// export const {  } = userSlice.actions;
+export default userSlice.reducer;

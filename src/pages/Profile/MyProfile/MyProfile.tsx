@@ -1,210 +1,324 @@
 import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import {
   Avatar,
   Box,
   Flex,
   Title,
-  Grid,
+  Text,
+  FileButton,
   Button,
-  SimpleGrid,
+  TextInput,
+  PasswordInput,
+  Stack,
 } from '@mantine/core';
-import { IconHeartFilled, IconStarFilled } from '@tabler/icons-react';
-import EventThumb from '../../../components/Element/Thumb/Event';
-import TeamThumb from '../../../components/Element/Thumb/Team';
+import { IconKey, IconSettingsFilled, IconUpload } from '@tabler/icons-react';
+import { useDisclosure } from '@mantine/hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { user } from '../../../store/reducers/user';
 import PlatformSquare from '../../../components/Element/PlatformsSquares';
 import GamesLabels from '../../../components/Element/GamesLabels';
+import CreateAvatar from '../../../components/Element/CreateAvatar';
+import { LocalStorage } from '../../../utils/LocalStorage';
 
 import '../Profile.scss';
 
+const GAMES = [
+  {
+    id: 0,
+    name: 'League Of Legend',
+  },
+  {
+    id: 1,
+    name: 'Super Smash Bros.',
+  },
+  {
+    id: 2,
+    name: 'Valorant',
+  },
+  {
+    id: 3,
+    name: 'Minecraft',
+  },
+  {
+    id: 4,
+    name: 'Overwatch',
+  },
+  {
+    id: 5,
+    name: 'GTA V',
+  },
+  {
+    id: 6,
+    name: 'Fall Guys',
+  },
+  {
+    id: 7,
+    name: 'Call Of Duty',
+  },
+  {
+    id: 8,
+    name: 'Demineur',
+  },
+];
+
+const PLATFORMS = [
+  {
+    id: 0,
+    name: 'PC',
+  },
+  {
+    id: 1,
+    name: 'Switch',
+  },
+  {
+    id: 2,
+    name: 'PS5',
+  },
+  {
+    id: 3,
+    name: 'XBOX',
+  },
+  {
+    id: 4,
+    name: 'Retro',
+  },
+];
+
+type SelectedItems = { [key: number]: boolean };
+
 function MyProfile() {
-  const GAMES = [
-    {
-      id: 0,
-      name: 'test',
-    },
-    {
-      id: 1,
-      name: 'testtest',
-    },
-    {
-      id: 2,
-      name: 'testtesttest',
-    },
-    {
-      id: 3,
-      name: 'testtest',
-    },
-    {
-      id: 4,
-      name: 'testtesttesttest',
-    },
-    {
-      id: 5,
-      name: 'testtesttesttesttesttest',
-    },
-    {
-      id: 6,
-      name: 'testtesttest',
-    },
-    {
-      id: 7,
-      name: 'testtesttesttest',
-    },
-  ];
+  const dispatch = useAppDispatch();
+  const isConnected = useAppSelector((state) => state.login.isConnected);
+  const userData = useAppSelector((state) => state.user.data);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [toggleEditProfile, setToggleEditProfile] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+  const [visible, { toggle }] = useDisclosure(false);
+  const [selectedGames, setSelectedGames] = useState<{
+    [key: number]: boolean;
+  }>({});
+  const [selectedPlatforms, setSelectedPlatforms] = useState<{
+    [key: number]: boolean;
+  }>({});
 
-  const PLATFORMS = [
-    {
-      id: 0,
-      name: 'PC',
-    },
-    {
-      id: 1,
-      name: 'Switch',
-    },
-    {
-      id: 2,
-      name: 'PS5',
-    },
-    {
-      id: 3,
-      name: 'XBOX',
-    },
-    {
-      id: 4,
-      name: 'Retro',
-    },
-  ];
+  const userEmailValue = userData.email;
+  const userNameValue = userData.username;
+  const userPasswordValue = '******';
+  const useAvatarValue = userData.avatar;
 
-  const membersList = [
-    'RubisIron',
-    'EpicNever',
-    'KillMonsieur',
-    'AnotherMember',
-    'MonsieurCloud',
-    'MemberSix',
-  ];
+  const handleEditProfile = () => {
+    setToggleEditProfile(!toggleEditProfile);
+  };
+
+  const handleChangeUsernameValue = (event: ChangeEvent<HTMLInputElement>) => {
+    const usernameValue = event.target.value;
+
+    setUsername(usernameValue);
+  };
+
+  const handleChangePasswordValue = (event: ChangeEvent<HTMLInputElement>) => {
+    const passwordValue = event.target.value;
+
+    setPassword(passwordValue);
+  };
+
+  const handleChangeConfirmPasswordValue = (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    const confirmPasswordValue = event.target.value;
+
+    setConfirmPassword(confirmPasswordValue);
+  };
+
+  const handleSelection = useCallback(
+    (
+      setId: React.Dispatch<React.SetStateAction<SelectedItems>>,
+      id: number
+    ) => {
+      setId((prevSelected) => ({
+        ...prevSelected,
+        [id]: !prevSelected[id],
+      }));
+    },
+    []
+  );
+
+  const handlePlatformSelection = useCallback(
+    (id: number) => {
+      handleSelection(setSelectedPlatforms, id);
+    },
+    [handleSelection]
+  );
+
+  const handleGameSelection = useCallback(
+    (id: number) => {
+      handleSelection(setSelectedGames, id);
+    },
+    [handleSelection]
+  );
+
+  useEffect(() => {
+    if (isConnected) {
+      const userAuth = LocalStorage.getItem('auth');
+
+      const { userId } = userAuth.auth;
+      dispatch(user(userId));
+    }
+  }, [dispatch, isConnected]);
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
 
   return (
-    <Box className="wrapper myprofile">
+    <Box component="form" className="wrapper" onSubmit={handleSubmit}>
       <Flex justify="space-between" align="center">
-        <Flex justify="center" align="center">
-          <Avatar size="xl" mr="1rem" />
-          <Title size="2rem" order={2}>
-            xXSwagBoy92Xx
-          </Title>
+        <Title size="2rem" order={2}>
+          {toggleEditProfile ? 'Modifier votre profil' : 'Votre Profil'}
+        </Title>
+
+        <Flex justify="space-between" align="center">
+          <Button mr="1rem" onClick={handleEditProfile}>
+            <IconSettingsFilled />
+          </Button>
         </Flex>
-
-        <Box>
-          <Button mr="1rem">
-            <IconStarFilled color="yellow" />
-          </Button>
-
-          <Button>
-            <IconHeartFilled color="red" />
-          </Button>
-        </Box>
       </Flex>
 
-      <Box mt="4rem">
+      <Box mt="2rem">
         <Title className="title" order={3}>
-          Evénements
+          Votre compte
         </Title>
 
-        <SimpleGrid cols={3} mt="1rem" className="categories-grid">
-          <EventThumb
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            game="league of legend"
-            name="Friendly party"
-            type="PC"
-            date="10/12/2023"
-            countdown={5}
-          />
+        <Flex className="section" align="center">
+          <Flex justify="center" className="wrapper-left">
+            {file && toggleEditProfile && (
+              <Text
+                unstyled
+                className="file_name"
+                size="sm"
+                ta="center"
+                mt="sm"
+              >
+                {file.name}
+              </Text>
+            )}
+            {!toggleEditProfile ? (
+              <CreateAvatar hw="5rem" seed={useAvatarValue} />
+            ) : (
+              <Box className="upload">
+                <Button className="upload-button">
+                  <FileButton onChange={setFile} accept="image/png,image/jpeg">
+                    {(props) => <IconUpload {...props} />}
+                  </FileButton>
+                </Button>
+                <Avatar size="xl" />
+              </Box>
+            )}
+          </Flex>
 
-          <EventThumb
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            game="mario kart 8 : deluxe"
-            name="blueME for fun"
-            type="switch"
-            date="10/12/2023"
-            countdown={8}
-          />
+          <Box className="wrapper-right" c="white">
+            <Text className="input-label">pseudonyme</Text>
+            {!toggleEditProfile ? (
+              <Text fw="bold">{userNameValue}</Text>
+            ) : (
+              <TextInput
+                mb="1rem"
+                maw="30rem"
+                aria-label="pseudo"
+                placeholder={userNameValue}
+                onChange={handleChangeUsernameValue}
+              />
+            )}
+            <Text mt="1.5rem" className="input-label">
+              adresse email
+            </Text>
+            <Text>{userEmailValue}</Text>
+          </Box>
+        </Flex>
 
-          <EventThumb
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            game="goldeneye 007"
-            name="old school edition"
-            type="retro"
-            date="8/12/2023"
-            countdown={1}
-          />
-        </SimpleGrid>
+        <Flex className="section" align="center">
+          <Flex justify="center" className="wrapper-left">
+            <IconKey className="bg-icon" color="#2d3037" />
+          </Flex>
+
+          <Box className="wrapper-right">
+            <Text className="input-label">Mot de passe</Text>
+            {!toggleEditProfile ? (
+              <Text lts="0.2rem" c="white">
+                {userPasswordValue}
+              </Text>
+            ) : (
+              <Stack>
+                <PasswordInput
+                  mb="1rem"
+                  maw="30rem"
+                  aria-label="password"
+                  placeholder="Mot de passe"
+                  visible={visible}
+                  onVisibilityChange={toggle}
+                />
+                <Text mt="1.5rem" className="input-label">
+                  confirmation de mot de passe
+                </Text>
+                <PasswordInput
+                  mb="1rem"
+                  maw="30rem"
+                  aria-label="password-confirmation"
+                  placeholder="Confirmation du mot de passe"
+                  visible={visible}
+                  onVisibilityChange={toggle}
+                />
+              </Stack>
+            )}
+          </Box>
+        </Flex>
       </Box>
 
       <Box mt="4rem">
         <Title className="title" order={3}>
-          Equipes
-        </Title>
-
-        <SimpleGrid cols={4} mt="1rem">
-          <TeamThumb
-            name="Ekipe de la mort ki tue"
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            members={membersList}
-          />
-
-          <TeamThumb
-            name="Ekipe de la mort ki tue"
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            members={membersList}
-          />
-
-          <TeamThumb
-            name="Ekipe de la mort ki tue"
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            members={membersList}
-          />
-
-          <TeamThumb
-            name="Ekipe de la mort ki tue"
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            members={membersList}
-          />
-
-          <TeamThumb
-            name="Ekipe de la mort ki tue"
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            members={membersList}
-          />
-
-          <TeamThumb
-            name="Ekipe de la mort ki tue"
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            members={membersList}
-          />
-        </SimpleGrid>
-      </Box>
-
-      <Box mt="4rem">
-        <Title className="title" order={3}>
-          Gaming
+          Vos préférences
         </Title>
 
         <Box className="section section-full">
           <Title className="section-title" order={4}>
-            Platformes
+            Mes plateformes
           </Title>
 
-          <PlatformSquare span={2} data={PLATFORMS} />
+          <PlatformSquare
+            span={2}
+            data={PLATFORMS}
+            selectedPlatforms={selectedPlatforms}
+            onSelectPlatform={handlePlatformSelection}
+          />
         </Box>
 
         <Box className="section section-full">
           <Title className="section-title" order={4}>
-            Jeux
+            Mes jeux
           </Title>
 
-          <Grid gutter={15}>
-            <GamesLabels data={GAMES} />
-          </Grid>
+          <GamesLabels
+            data={GAMES}
+            selectedGames={selectedGames}
+            onSelectGame={handleGameSelection}
+          />
         </Box>
+
+        {toggleEditProfile && (
+          <Flex w="100%" mt="5rem" justify="flex-end" align="center">
+            <Button bg="green" type="submit">
+              Valider les modifications
+            </Button>
+          </Flex>
+        )}
       </Box>
     </Box>
   );

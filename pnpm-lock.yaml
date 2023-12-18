@@ -11,11 +11,19 @@ dependencies:
   '@dicebear/core':
     specifier: ^7.0.1
     version: 7.0.1
+  '@dicebear/collection':
+    specifier: ^7.0.1
+    version: 7.0.1(@dicebear/core@7.0.1)
+  '@dicebear/core':
+    specifier: ^7.0.1
+    version: 7.0.1
   '@mantine/carousel':
     specifier: ^7.2.2
     version: 7.3.2(@mantine/core@7.3.2)(@mantine/hooks@7.3.2)(embla-carousel-react@7.1.0)(react-dom@18.2.0)(react@18.2.0)
+    version: 7.3.2(@mantine/core@7.3.2)(@mantine/hooks@7.3.2)(embla-carousel-react@7.1.0)(react-dom@18.2.0)(react@18.2.0)
   '@mantine/core':
     specifier: ^7.2.2
+    version: 7.3.2(@mantine/hooks@7.3.2)(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)
     version: 7.3.2(@mantine/hooks@7.3.2)(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)
   '@mantine/dates':
     specifier: ^7.2.2

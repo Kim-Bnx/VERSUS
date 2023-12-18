@@ -5,8 +5,18 @@
     width: 60%;
   }
 
-  &.myprofile {
+  &.profile-user {
     width: 100%;
+    margin-top: 0 !important;
+
+    .header {
+      padding: 4rem 0;
+      background-color: var(--mantine-color-blue-light);
+    }
+
+    .bold {
+      font-weight: bold;
+    }
 
     .team {
       background-color: rgb(29, 31, 35);

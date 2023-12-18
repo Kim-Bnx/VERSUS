@@ -11,18 +11,24 @@ import {
   Title,
   Avatar,
 } from '@mantine/core';
-
 import { IconChevronRight } from '@tabler/icons-react';
-import { useAppDispatch } from '../../../../hooks/redux';
-import { changeInputUserValue } from '../../../../store/reducers/profile';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+import { changeInputUserValue } from '../../../../store/reducers/updateUser';
 import CreateAvatar from '../../../../components/Element/CreateAvatar';
+import { user } from '../../../../store/reducers/user';
+import { LocalStorage } from '../../../../utils/LocalStorage';
 
 type ProfileProps = {
   onChangeView: (step: string) => void;
 };
 
 function Profile({ onChangeView }: ProfileProps) {
+  const dispatch = useAppDispatch();
   const [selectedAvatar, setSelectedAvatar] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const hasError = useAppSelector((state) => state.user.error);
 
   const avatars = [
     'avatar1',
@@ -33,18 +39,28 @@ function Profile({ onChangeView }: ProfileProps) {
     'avatar6',
   ];
 
-  const dispatch = useAppDispatch();
-
   const handleChangeUsernameValue = (event: ChangeEvent<HTMLInputElement>) => {
-    const username = event.target.value;
+    const usernameValue = event.target.value;
 
-    dispatch(changeInputUserValue({ fieldName: 'username', value: username }));
+    setUsername(usernameValue);
   };
 
   const handleClickAvatarValue = (seed: string) => {
     setSelectedAvatar(seed);
 
     dispatch(changeInputUserValue({ fieldName: 'avatar', value: seed }));
+  };
+
+  const handleSubmitData = () => {
+    const userAuth = LocalStorage.getItem('auth');
+    const { userId } = userAuth;
+
+    dispatch(changeInputUserValue({ fieldName: 'username', value: username }));
+    dispatch(user(userId));
+
+    if (!hasError) {
+      onChangeView('preferences');
+    }
   };
 
   return (
@@ -107,7 +123,7 @@ function Profile({ onChangeView }: ProfileProps) {
 
         <Group>
           <Button
-            onClick={() => onChangeView('preferences')}
+            onClick={handleSubmitData}
             rightSection={<IconChevronRight size={14} />}
           >
             Suivant

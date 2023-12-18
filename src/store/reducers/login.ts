@@ -3,20 +3,17 @@ import { LoginCredentials, LoginState } from '../../@types';
 import { axiosInstance } from '../../utils/axios';
 import { LocalStorage } from '../../utils/LocalStorage';
 
-const userData = LocalStorage.getItem('user');
+const userAuthData = LocalStorage.getItem('auth');
+
 const initialState: LoginState = {
   credentials: {
     email: '',
     password: '',
   },
-  auth: {
-    userId: null,
-    token: '',
-  },
   isConnected: false,
   isLoading: false,
   error: null,
-  ...userData,
+  ...userAuthData,
 };
 
 export const login = createAsyncThunk(
@@ -26,14 +23,6 @@ export const login = createAsyncThunk(
       'http://localhost:3000/login',
       credentials
     );
-    const authentification = {
-      auth: {
-        userId: data.userId,
-        token: data.token,
-      },
-      isConnected: data.isConnected,
-    };
-    LocalStorage.setItem('user', authentification);
     return data;
   }
 );
@@ -50,13 +39,13 @@ const loginSlice = createSlice({
       }>
     ) {
       const { fieldName, value } = action.payload;
+
       state.credentials[fieldName] = value;
     },
+
     logout(state) {
-      LocalStorage.removeItem('user');
+      LocalStorage.removeItem('auth');
       state.isConnected = false;
-      state.auth.token = '';
-      state.auth.userId = null;
     },
   },
   extraReducers(builder) {
@@ -71,13 +60,20 @@ const loginSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         const responseData = action.payload;
+        const { isConnected } = responseData;
 
-        state.isConnected = responseData.isConnected;
+        state.isConnected = isConnected;
         state.isLoading = false;
-        state.auth = {
-          userId: responseData.userId,
-          token: responseData.token,
+
+        const authentification = {
+          auth: {
+            userId: responseData.userId,
+            token: responseData.token,
+          },
+          isConnected,
         };
+
+        LocalStorage.setItem('auth', authentification);
       });
   },
 });
