@@ -28,6 +28,7 @@ import {
   updateEvent,
 } from '../../store/reducers/updateEvent';
 import { deleteEvent } from '../../store/reducers/deleteEvent';
+import { publishEvent } from '../../store/reducers/publishEvent';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { Event } from '../../@types/event';
 
@@ -133,6 +134,19 @@ function EventSettings() {
       .unwrap()
       .then(() => {
         navigate('/');
+      });
+  };
+
+  const handlePublishEvent = () => {
+    dispatch(
+      publishEvent({
+        id: eventData.id,
+        status: 'published',
+      })
+    )
+      .unwrap()
+      .then(() => {
+        navigate(`/event/${slugify(eventData.title, { lower: true })}`);
       });
   };
 
@@ -331,7 +345,9 @@ function EventSettings() {
             </Button>
             <Flex gap="md">
               <Button type="submit">Modifier et enregistrer</Button>
-              <Button color="green">Publier</Button>
+              <Button color="green" onClick={handlePublishEvent}>
+                Publier
+              </Button>
             </Flex>
           </Flex>
         </div>
