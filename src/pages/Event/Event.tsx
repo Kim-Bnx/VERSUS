@@ -58,6 +58,9 @@ function Event() {
     return eventData.organizer.id === userData.id;
   };
 
+  console.log(`organizer: ${eventData.organizer.id}`);
+  console.log(`user log : ${userData.id}`);
+
   const [isRegister, setIsRegister] = useState(false);
 
   const checkIcon = (
