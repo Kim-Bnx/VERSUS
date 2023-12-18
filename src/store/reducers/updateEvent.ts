@@ -1,6 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { EventState, Event } from '../../@types/event';
+import { axiosInstance } from '../../utils/axios';
 
 const initialState: EventState = {
   event: {
@@ -32,7 +33,7 @@ const initialState: EventState = {
 export const updateEvent = createAsyncThunk(
   'event/update',
   async (updatedData: Event) => {
-    const { data } = await axios.patch(
+    const { data } = await axiosInstance.patch(
       `http://localhost:3000/event/${updatedData.id}`,
       updatedData
     );

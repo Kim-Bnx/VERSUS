@@ -14,7 +14,7 @@ const initialState: SearchState = {
 };
 
 export const search = createAsyncThunk('search', async (searchTerm: string) => {
-  const { data } = await axios.get('https://localhost:3000/search/all', {
+  const { data } = await axios.get('http://localhost:3000/search/all', {
     params: {
       q: searchTerm,
     },
