@@ -9,8 +9,6 @@ const initialState: ProfileState = {
     confirmPassword: '',
     username: '',
     avatar: '',
-    games: [],
-    platforms: [],
   },
   isSuccess: false,
   error: null,
@@ -18,9 +16,15 @@ const initialState: ProfileState = {
 
 export const profile = createAsyncThunk(
   'profile',
-  async (accountInfos: UserData) => {
+  async ({
+    accountInfos,
+    userId,
+  }: {
+    accountInfos: UserData;
+    userId: number | null;
+  }) => {
     const { data } = await axios.patch(
-      'http://localhost:3000/user/',
+      `http://localhost:3000/user/${userId}`,
       accountInfos
     );
 

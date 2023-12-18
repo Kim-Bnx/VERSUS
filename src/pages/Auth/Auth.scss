@@ -33,9 +33,13 @@
       &-selected {
         .circle {
           margin-top: 1rem;
-          height: 5rem;
-          width: 5rem;
-          border-radius: 50%;
+
+          &:hover {
+            border: inherit;
+            cursor: default;
+            width: inherit;
+            height: inherit;
+          }
         }
       }
 
@@ -51,7 +55,7 @@
 
     .form-title,
     .form-subtitle,
-    .mantine-TextInput-label {
+    label {
       margin-bottom: 0.5rem;
       text-transform: capitalize;
     }

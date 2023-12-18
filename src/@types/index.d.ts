@@ -37,11 +37,21 @@ export type ProfileState = {
 };
 
 export type UserData = {
-  email: string;
-  password: string;
-  confirmPassword: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
   username: string;
   avatar: string;
+};
+
+export type ProfileGamesState = {
   games: number[];
+  isSuccess: boolean;
+  error: null | string;
+};
+
+export type ProfilePlatformsState = {
   platforms: number[];
+  isSuccess: boolean;
+  error: null | string;
 };

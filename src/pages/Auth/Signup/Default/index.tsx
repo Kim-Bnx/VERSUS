@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import {
   Anchor,
   Text,
@@ -10,41 +10,32 @@ import {
   PasswordInput,
 } from '@mantine/core';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import {
-  changeInputSignupValue,
-  signup,
-} from '../../../../store/reducers/signup';
-import { changeInputLoginValue, login } from '../../../../store/reducers/login';
+import { signup } from '../../../../store/reducers/signup';
+import { login } from '../../../../store/reducers/login';
 
 type DefaultProps = {
   onChangeView: (step: string) => void;
 };
 
 function Default({ onChangeView }: DefaultProps) {
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
+  const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
+
   const dispatch = useAppDispatch();
 
   const isSuccess = useAppSelector((state) => state.signup.isSuccess);
   const errorMsg = useAppSelector((state) => state.signup.error);
-  const emailValue = useAppSelector((state) => state.signup.credentials.email);
-  const passwordValue = useAppSelector(
-    (state) => state.signup.credentials.password
-  );
-  const confirmPasswordValue = useAppSelector(
-    (state) => state.signup.credentials.confirmation
-  );
 
   const handleChangeEmailValue = (event: ChangeEvent<HTMLInputElement>) => {
     const email = event.target.value;
 
-    dispatch(changeInputSignupValue({ fieldName: 'email', value: email }));
+    setEmailValue(email);
   };
 
   const handleChangePasswordValue = (event: ChangeEvent<HTMLInputElement>) => {
     const password = event.target.value;
-
-    dispatch(
-      changeInputSignupValue({ fieldName: 'password', value: password })
-    );
+    setPasswordValue(password);
   };
 
   const handleChangeConfirmPasswordValue = (
@@ -52,15 +43,12 @@ function Default({ onChangeView }: DefaultProps) {
   ) => {
     const confirmPassword = event.target.value;
 
-    dispatch(
-      changeInputSignupValue({
-        fieldName: 'confirmation',
-        value: confirmPassword,
-      })
-    );
+    setConfirmPasswordValue(confirmPassword);
   };
 
-  const handleSubmit = () => {
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     dispatch(
       signup({
         email: emailValue,
@@ -70,22 +58,20 @@ function Default({ onChangeView }: DefaultProps) {
     );
   };
 
-  if (isSuccess) {
-    dispatch(changeInputLoginValue({ fieldName: 'email', value: emailValue }));
+  // To prevent double rendering
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(
+        login({
+          email: emailValue,
+          password: passwordValue,
+        })
+      );
 
-    dispatch(
-      changeInputLoginValue({ fieldName: 'password', value: passwordValue })
-    );
-
-    dispatch(
-      login({
-        email: emailValue,
-        password: passwordValue,
-      })
-    );
-
-    onChangeView('profile');
-  }
+      onChangeView('profile');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess]);
 
   return (
     <Box>
@@ -93,7 +79,7 @@ function Default({ onChangeView }: DefaultProps) {
         Inscription
       </Title>
 
-      <Box className="section">
+      <Box component="form" className="section" onSubmit={handleFormSubmit}>
         <TextInput
           onChange={handleChangeEmailValue}
           label="Email"
@@ -120,7 +106,7 @@ function Default({ onChangeView }: DefaultProps) {
         {errorMsg && <Text>{errorMsg}</Text>}
 
         <Flex mt="2rem" justify="flex-end">
-          <Button onClick={handleSubmit}>S&apos;inscrire</Button>
+          <Button type="submit">S&apos;inscrire</Button>
         </Flex>
       </Box>
 
