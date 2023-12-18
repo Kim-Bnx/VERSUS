@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import {
@@ -9,15 +9,18 @@ import {
   Button,
   Flex,
   Image,
+  Notification,
   Pill,
   Stack,
   Tabs,
   Text,
   Title,
   TypographyStylesProvider,
+  rem,
 } from '@mantine/core';
 import {
   IoCalendarClearOutline,
+  IoCheckmarkSharp,
   IoCloseOutline,
   IoGameController,
   IoLocationSharp,
@@ -42,6 +45,8 @@ function Event() {
     dispatch(fetchEvent(slug));
   }, [dispatch, slug]);
 
+  const sanitizedEventRules = DOMPurify.sanitize(eventData.rules);
+
   const isRegisterToEvent = () => {
     const participantFound = eventData.participants.map(
       (participant) => participant.id
@@ -53,9 +58,11 @@ function Event() {
     return eventData.organizer.id === userData.id;
   };
 
-  console.log(isEventAdmin());
+  const [isRegister, setIsRegister] = useState(false);
 
-  const sanitizedEventRules = DOMPurify.sanitize(eventData.rules);
+  const checkIcon = (
+    <IoCheckmarkSharp style={{ width: rem(20), height: rem(20) }} />
+  );
 
   const handleEventRegister = () => {
     dispatch(
@@ -64,8 +71,11 @@ function Event() {
         user_id: userData.id,
       })
     );
-    console.log('inscrit');
-    navigate(0);
+
+    setIsRegister(true);
+    setTimeout(() => {
+      setIsRegister(false);
+    }, 3000);
   };
 
   const handleEventUnregister = () => {
@@ -75,8 +85,11 @@ function Event() {
         user_id: userData.id,
       })
     );
-    console.log('désinscrit');
-    navigate(0);
+
+    setIsRegister(true);
+    setTimeout(() => {
+      setIsRegister(false);
+    }, 3000);
   };
 
   const handleDeleteAttendee = (user_id: number) => {
@@ -230,6 +243,32 @@ function Event() {
           </div>
         </div>
       </Tabs>
+
+      {isRegisterToEvent() ? (
+        <Notification
+          className={`notification_registration ${isRegister ? 'active' : ''}`}
+          icon={checkIcon}
+          color="teal"
+          title="Inscription annulée"
+          mt="md"
+        >
+          Vous êtes désinscrit·e à l&apos;évènement
+          <br />
+          <Anchor onClick={() => navigate(0)}>Recharger la page</Anchor>
+        </Notification>
+      ) : (
+        <Notification
+          className={`notification_registration ${isRegister ? 'active' : ''}`}
+          icon={checkIcon}
+          color="teal"
+          title="Inscription validée !"
+          mt="md"
+        >
+          Vous êtes inscrit·e à l&apos;évènement
+          <br />
+          <Anchor onClick={() => navigate(0)}>Recharger la page</Anchor>
+        </Notification>
+      )}
     </>
   );
 }
