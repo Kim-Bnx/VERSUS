@@ -23,6 +23,7 @@ const initialState: EventState = {
     plateform: '',
     plateform_id: 0,
     user_id: 0,
+    participants: [],
   },
   isLoading: true,
   modified: false,

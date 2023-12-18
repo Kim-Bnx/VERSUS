@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { MouseEvent, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import {
   Box,
@@ -22,18 +22,51 @@ import './Event.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { fetchEvent } from '../../store/reducers/event';
 import Date from '../../components/Date/Date';
+import { registerToEvent } from '../../store/reducers/registerEvent';
+import { unregisterToEvent } from '../../store/reducers/unregisterEvent';
 
 function Event() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { slug } = useParams();
   if (!slug) throw new Error('Invalid slug');
   const eventData = useAppSelector((state) => state.event.event);
+  const userData = useAppSelector((state) => state.user.data);
 
   useEffect(() => {
     dispatch(fetchEvent(slug));
   }, [dispatch, slug]);
 
+  const isRegisterToEvent = () => {
+    const participantFound = eventData.participants.map(
+      (participant) => participant.id
+    );
+    return participantFound.includes(userData.id);
+  };
+
   const sanitizedEventRules = DOMPurify.sanitize(eventData.rules);
+
+  const handleEventRegister = () => {
+    dispatch(
+      registerToEvent({
+        event_id: eventData.id,
+        user_id: userData.id,
+      })
+    );
+    console.log('inscrit');
+    navigate(0);
+  };
+
+  const handleEventUnregister = () => {
+    dispatch(
+      unregisterToEvent({
+        event_id: eventData.id,
+        user_id: userData.id,
+      })
+    );
+    console.log('désinscrit');
+    navigate(0);
+  };
 
   return (
     <>
@@ -102,12 +135,31 @@ function Event() {
             <Button className="event__buttons--contact">
               {eventData.contact}
             </Button>
-            <Button className="event__buttons--register">
-              S&apos;inscrire
-            </Button>
+
+            {isRegisterToEvent() ? (
+              <Button
+                className="event__buttons--register"
+                onClick={handleEventUnregister}
+              >
+                Se désinscrire
+              </Button>
+            ) : (
+              <Button
+                className="event__buttons--register"
+                onClick={handleEventRegister}
+              >
+                S&apos;inscrire
+              </Button>
+            )}
           </Stack>
         </div>
       </div>
+
+      <Box>
+        {eventData.participants.map((user) => (
+          <p key={user.id}>{user.username}</p>
+        ))}
+      </Box>
 
       <TypographyStylesProvider>
         <Box
