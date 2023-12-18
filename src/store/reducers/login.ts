@@ -23,7 +23,6 @@ export const login = createAsyncThunk(
       'http://localhost:3000/login',
       credentials
     );
-
     return data;
   }
 );

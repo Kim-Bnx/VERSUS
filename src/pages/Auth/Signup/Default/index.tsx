@@ -18,6 +18,10 @@ type DefaultProps = {
 };
 
 function Default({ onChangeView }: DefaultProps) {
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
+  const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
+
   const dispatch = useAppDispatch();
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');

@@ -14,7 +14,6 @@ import {
   Select,
   Text,
   TextInput,
-  Textarea,
   Title,
   VisuallyHidden,
   rem,
@@ -24,7 +23,10 @@ import slugify from 'slugify';
 import { DateTimePicker, DatesProvider } from '@mantine/dates';
 import { IoCheckmarkSharp } from 'react-icons/io5';
 import { fetchEvent } from '../../store/reducers/event';
-import { updateEvent } from '../../store/reducers/updateEvent';
+import {
+  changeTextEditorValue,
+  updateEvent,
+} from '../../store/reducers/updateEvent';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { Event } from '../../@types/event';
 
@@ -33,6 +35,7 @@ import gamesData from './gamesData';
 import plateformData from './plateformData';
 
 import './EventSettings.scss';
+import TextEditor from '../../components/TextEditor/TextEditor';
 
 function getItem(param: any, data: any[]) {
   if (typeof param === 'string') {
@@ -52,7 +55,11 @@ function EventSettings() {
   const gamesNameData = gamesData.map((game) => game.name);
   const plateformNameData = plateformData.map((plateform) => plateform.name);
   const eventData = useAppSelector((state) => state.event.event);
-  const eventState = useAppSelector((state) => state.event);
+  const [eventRules, setEventRules] = useState(eventData.rules);
+
+  useEffect(() => {
+    dispatch(fetchEvent(slug));
+  }, [dispatch, slug]);
 
   const [modified, setModified] = useState(false);
 
@@ -63,10 +70,6 @@ function EventSettings() {
   const form = useForm({
     initialValues: { ...eventData },
   });
-
-  useEffect(() => {
-    dispatch(fetchEvent(slug));
-  }, [dispatch, slug]);
 
   useEffect(() => {
     form.setValues({
@@ -82,7 +85,14 @@ function EventSettings() {
       game: getItem(eventData.game_id, gamesData),
       plateform: getItem(eventData.plateform_id, plateformData),
     });
+    if (eventData.rules) {
+      setEventRules(eventData.rules);
+    }
   }, [eventData]);
+
+  useEffect(() => {
+    dispatch(changeTextEditorValue(eventRules));
+  }, [eventRules]);
 
   const handleSubmitUpdateEvent = (values: Event) => {
     const newValues = {
@@ -90,6 +100,7 @@ function EventSettings() {
       type_event_id: getItem(values.type_event, eventTypeData),
       game_id: getItem(values.game, gamesData),
       plateform_id: getItem(values.plateform, plateformData),
+      rules: eventRules,
     };
 
     dispatch(updateEvent(newValues))
@@ -288,7 +299,7 @@ function EventSettings() {
           className="fieldset-settings settings_presentation"
           variant="unstyled"
         >
-          <Textarea label="Présentation de l'évènement" />
+          <TextEditor setEventRules={setEventRules} content={eventRules} />
         </Fieldset>
 
         <VisuallyHidden>

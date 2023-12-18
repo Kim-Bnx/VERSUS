@@ -8,6 +8,7 @@ import store from './store';
 
 // Mantime styles
 import '@mantine/core/styles.css';
+import '@mantine/tiptap/styles.css';
 import '@mantine/dates/styles.css';
 import theme from './styles/theme';
 
