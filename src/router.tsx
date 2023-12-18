@@ -14,6 +14,7 @@ import About from './pages/Footer/About/Abouts';
 import Contact from './pages/Footer/Contact/Contact';
 import Terms from './pages/Footer/Terms/Terms';
 import EventSettings from './pages/EventSettings/EventSettings';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 export const router = createBrowserRouter([
   {
@@ -47,7 +48,11 @@ export const router = createBrowserRouter([
         // route for the connected user to see researched user's profile or his own
         path: 'profile',
         // ! EDIT CahierDesCharge
-        element: <MyProfile />,
+        element: (
+          <ProtectedRoute>
+            <MyProfile />
+          </ProtectedRoute>
+        ),
       },
       {
         path: 'about',
