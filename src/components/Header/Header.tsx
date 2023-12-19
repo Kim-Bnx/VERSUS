@@ -1,5 +1,14 @@
 import { useEffect } from 'react';
-import { Box, Button, Anchor, AppShell, Flex, Avatar } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import {
+  Box,
+  Button,
+  Anchor,
+  AppShell,
+  Flex,
+  Avatar,
+  Burger,
+} from '@mantine/core';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import SearchBar from '../SearchBar/SearchBar';
 
@@ -9,6 +18,7 @@ import { user } from '../../store/reducers/user';
 import CreateAvatar from '../Element/CreateAvatar';
 
 function Header() {
+  // const [opened, { toggle }] = useDisclosure();
   const dispatch = useAppDispatch();
   const isConnected = useAppSelector((state) => state.login.isConnected);
   const userData = useAppSelector((state) => state.user.data);
@@ -25,7 +35,7 @@ function Header() {
   }, [dispatch, isConnected]);
 
   return (
-    <AppShell.Header p="lg" className="header">
+    <>
       <Flex gap="md" className="actions" visibleFrom="sm">
         <Button
           className="button button-new__event"
@@ -50,7 +60,7 @@ function Header() {
           <CreateAvatar hw="2.5rem" seed={useAvatarValue} />
         </Flex>
       )}
-    </AppShell.Header>
+    </>
   );
 }
 
