@@ -7,8 +7,8 @@ import { Event as AppEvent } from '../../@types/event';
 import './Home.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { fetchAllEvents } from '../../store/reducers/events';
-// import { user } from '../../store/reducers/user';
-// import { LocalStorage } from '../../utils/LocalStorage';
+import { user } from '../../store/reducers/user';
+import { LocalStorage } from '../../utils/LocalStorage';
 
 function Home() {
   const dispatch = useAppDispatch();
@@ -40,7 +40,7 @@ function Home() {
   const sortEventsByParticipants = (eventsArray: AppEvent[]) => {
     return (
       eventsArray
-        // Use .slice to generate a copie of the array because .sort changes the array it affects directly
+        // Use .slice to generate a copy of the array because .sort changes the array it affects directly
         .slice()
         .sort((a, b) => b.participants.length - a.participants.length)
     );
@@ -48,17 +48,17 @@ function Home() {
 
   const sortedEvents = sortEventsByParticipants(events);
 
-  // const isConnected = useAppSelector((state) => state.login.isConnected);
+  const isConnected = useAppSelector((state) => state.login.isConnected);
   // const userGames = useAppSelector((state) => state.user.data.games);
 
-  // useEffect(() => {
-  //   if (isConnected) {
-  //     const userAuth = LocalStorage.getItem('auth');
+  useEffect(() => {
+    if (isConnected) {
+      const userAuth = LocalStorage.getItem('auth');
 
-  //     const { userId } = userAuth.auth;
-  //     dispatch(user(userId));
-  //   }
-  // }, [dispatch, isConnected]);
+      const { userId } = userAuth.auth;
+      dispatch(user(userId));
+    }
+  }, [dispatch, isConnected]);
 
   return (
     <>
@@ -120,41 +120,43 @@ function Home() {
         </SimpleGrid>
       </Box>
 
-      <Box className="container">
-        <Box className="title">
-          <Title tt="capitalize">vos jeux préférés</Title>
+      {isConnected && (
+        <Box className="container">
+          <Box className="title">
+            <Title tt="capitalize">vos jeux préférés</Title>
+          </Box>
+
+          <SimpleGrid cols={4} className="games__grid">
+            <Image
+              src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
+              className="thumb"
+            >
+              {/* <Text>Heartstone</Text> */}
+            </Image>
+
+            <Image
+              src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
+              className="thumb"
+            >
+              {/* <Text>Heartstone</Text> */}
+            </Image>
+
+            <Image
+              src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
+              className="thumb"
+            >
+              {/* <Text>Heartstone</Text> */}
+            </Image>
+
+            <Image
+              src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
+              className="thumb"
+            >
+              {/* <Text>Heartstone</Text> */}
+            </Image>
+          </SimpleGrid>
         </Box>
-
-        <SimpleGrid cols={4} className="games__grid">
-          <Image
-            src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
-            className="thumb"
-          >
-            {/* <Text>Heartstone</Text> */}
-          </Image>
-
-          <Image
-            src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
-            className="thumb"
-          >
-            {/* <Text>Heartstone</Text> */}
-          </Image>
-
-          <Image
-            src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
-            className="thumb"
-          >
-            {/* <Text>Heartstone</Text> */}
-          </Image>
-
-          <Image
-            src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
-            className="thumb"
-          >
-            {/* <Text>Heartstone</Text> */}
-          </Image>
-        </SimpleGrid>
-      </Box>
+      )}
     </>
   );
 }
