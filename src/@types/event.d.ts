@@ -34,8 +34,8 @@ export type Event = {
   type_event_id?: number;
   game?: string;
   game_id?: number;
-  plateform?: string;
-  plateform_id?: number;
+  platform?: string;
+  platform_id?: number;
   user_id?: number;
   organizer: UserData;
   participants: UserData[];

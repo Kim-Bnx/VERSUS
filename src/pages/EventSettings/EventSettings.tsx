@@ -34,7 +34,7 @@ import { Event } from '../../@types/event';
 
 import eventTypeData from './typeEventData';
 import gamesData from './gamesData';
-import plateformData from './plateformData';
+import platformData from './platformData';
 
 import './EventSettings.scss';
 import TextEditor from '../../components/TextEditor/TextEditor';
@@ -55,7 +55,7 @@ function EventSettings() {
   if (!slug) throw new Error('Invalid slug');
   const typeNameData = eventTypeData.map((event) => event.name);
   const gamesNameData = gamesData.map((game) => game.name);
-  const plateformNameData = plateformData.map((plateform) => plateform.name);
+  const platformNameData = platformData.map((platform) => platform.name);
   const eventData = useAppSelector((state) => state.event.event);
   const [eventRules, setEventRules] = useState(eventData.rules);
 
@@ -89,11 +89,12 @@ function EventSettings() {
         start_date: formattedStartDate,
         end_date: formattedEndDate,
         location: eventData.location,
+        contact: eventData.contact,
         banner: eventData.banner,
         thumbnail: eventData.thumbnail,
         type_event: getItem(eventData.type_event_id, eventTypeData),
         game: getItem(eventData.game_id, gamesData),
-        plateform: getItem(eventData.plateform_id, plateformData),
+        platform: getItem(eventData.platform_id, platformData),
       });
     }
     if (eventData.rules) {
@@ -110,10 +111,11 @@ function EventSettings() {
       ...values,
       type_event_id: getItem(values.type_event, eventTypeData),
       game_id: getItem(values.game, gamesData),
-      plateform_id: getItem(values.plateform, plateformData),
+      platform_id: getItem(values.platform, platformData),
       rules: eventRules,
     };
 
+    console.log(newValues);
     dispatch(updateEvent(newValues))
       .unwrap()
       .then((response) => {
@@ -257,7 +259,7 @@ function EventSettings() {
             />
             <TextInput
               label="Description"
-              placeholder="Brève description de l&pos;évènement"
+              placeholder="Brève description de l'évènement"
               {...form.getInputProps('description')}
             />
 
@@ -269,6 +271,7 @@ function EventSettings() {
             <TextInput
               label="Contact"
               placeholder="Discord, réseaux sociaux, adresse mail..."
+              {...form.getInputProps('contact')}
             />
           </Box>
         </Fieldset>
@@ -313,10 +316,10 @@ function EventSettings() {
             {...form.getInputProps('game')}
           />
           <Select
-            label="Plateforme"
-            placeholder="Choisir la plateforme"
-            data={plateformNameData}
-            {...form.getInputProps('plateform')}
+            label="platforme"
+            placeholder="Choisir la platforme"
+            data={platformNameData}
+            {...form.getInputProps('platform')}
           />
           <Select
             label="Type d'événement"

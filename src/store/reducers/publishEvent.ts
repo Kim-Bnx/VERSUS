@@ -13,7 +13,7 @@ export const publishEvent = createAsyncThunk(
   async ({ id, status }: PublicationValidation) => {
     const { data } = await axiosInstance.patch(
       `http://localhost:3000/event/${id}`,
-      status
+      { status }
     );
     return data;
   }

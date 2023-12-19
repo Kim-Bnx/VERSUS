@@ -5,6 +5,7 @@ import {
   ActionIcon,
   Anchor,
   Avatar,
+  Badge,
   Box,
   Button,
   Flex,
@@ -15,6 +16,7 @@ import {
   Tabs,
   Text,
   Title,
+  Tooltip,
   TypographyStylesProvider,
   rem,
 } from '@mantine/core';
@@ -22,6 +24,7 @@ import {
   IoCalendarClearOutline,
   IoCheckmarkSharp,
   IoCloseOutline,
+  IoCreateOutline,
   IoGameController,
   IoLocationSharp,
   IoTv,
@@ -57,9 +60,6 @@ function Event() {
   const isEventAdmin = () => {
     return eventData.organizer.id === userData.id;
   };
-
-  console.log(`organizer: ${eventData.organizer.id}`);
-  console.log(`user log : ${userData.id}`);
 
   const [isRegister, setIsRegister] = useState(false);
 
@@ -125,14 +125,24 @@ function Event() {
           </Box>
           <div className="event__infos">
             <Box className="event_infos--presentation">
-              <Flex gap="sm">
-                <Pill>{eventData.status}</Pill>
+              {eventData.type_event && <Pill>{eventData.type_event.name}</Pill>}
+              <Flex align="center" gap="sm">
+                <Title order={1}>{eventData.title}</Title>
 
-                {eventData.type_event && (
-                  <Pill>{eventData.type_event.name}</Pill>
+                {isEventAdmin() && eventData.status === 'published' ? (
+                  <Tooltip.Floating label="Evènement publié" color="gray">
+                    <Badge color="green" size="sm">
+                      <IoCheckmarkSharp />
+                    </Badge>
+                  </Tooltip.Floating>
+                ) : (
+                  <Tooltip.Floating label="Evènement publié" color="gray">
+                    <Badge color="gray" size="sm">
+                      <IoCreateOutline />
+                    </Badge>
+                  </Tooltip.Floating>
                 )}
               </Flex>
-              <Title order={1}>{eventData.title}</Title>
               <Text size="md">
                 <Flex align="center" gap="sm">
                   <IoCalendarClearOutline />
@@ -155,7 +165,7 @@ function Event() {
               </Text>
               <Text>
                 <IoTv color="var(--mantine-color-blue-filled)" />
-                PC
+                {eventData.platform.name}
               </Text>
             </Flex>
           </div>
