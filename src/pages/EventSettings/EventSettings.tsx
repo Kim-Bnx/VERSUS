@@ -59,10 +59,6 @@ function EventSettings() {
   const eventData = useAppSelector((state) => state.event.event);
   const [eventRules, setEventRules] = useState(eventData.rules);
 
-  useEffect(() => {
-    dispatch(fetchEvent(slug));
-  }, [dispatch, slug]);
-
   const form = useForm({
     initialValues: { ...eventData },
   });

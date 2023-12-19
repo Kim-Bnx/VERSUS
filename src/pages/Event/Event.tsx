@@ -158,7 +158,7 @@ function Event() {
                     </Badge>
                   </Tooltip.Floating>
                 ) : (
-                  <Tooltip.Floating label="Evènement publié" color="gray">
+                  <Tooltip.Floating label="Brouillon" color="gray">
                     <Badge color="gray" size="sm">
                       <IoCreateOutline />
                     </Badge>
@@ -193,14 +193,16 @@ function Event() {
           </div>
 
           <Stack className="event__buttons">
-            <Button
-              className="event__buttons--follow"
-              variant="outline"
-              component="a"
-              href={`/event/${eventData.title_slug}/settings`}
-            >
-              Editer
-            </Button>
+            {isEventAdmin() && (
+              <Button
+                className="event__buttons--follow"
+                variant="outline"
+                component="a"
+                href={`/event/${eventData.title_slug}/settings`}
+              >
+                Editer
+              </Button>
+            )}
             <Button className="event__buttons--follow">Suivre</Button>
             <Button className="event__buttons--contact">
               {eventData.contact}
