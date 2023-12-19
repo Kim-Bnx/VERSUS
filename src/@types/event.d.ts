@@ -30,10 +30,21 @@ export type Event = {
   contact?: string;
   type_event?: string;
   type_event_id?: number;
-  game?: string;
+  game?: {
+    id: null | number;
+    name: string;
+    thumbnail: null | string;
+    createdAt: null | string;
+    updatedAt: null | string;
+  };
   game_id?: number;
-  plateform?: string;
-  plateform_id?: number;
+  platform?: {
+    id: null | number;
+    name: string;
+    createdAt: string;
+    updatedAt: null | string;
+  };
+  platform_id?: number;
   user_id?: number;
 };
 
