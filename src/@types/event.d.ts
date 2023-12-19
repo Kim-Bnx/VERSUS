@@ -43,3 +43,10 @@ export type EventState = {
   modified: boolean;
   error: string | null;
 };
+
+export type EventsState = {
+  events: Event[];
+  isLoading: boolean;
+  modified: boolean;
+  error: string | null;
+};
