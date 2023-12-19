@@ -21,10 +21,7 @@ function Root() {
       transitionTimingFunction="ease"
     >
       <Header opened={opened} toggle={toggle} />
-      <AppShell.Navbar p="lg" className="navbar">
-        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-        <NavBar />
-      </AppShell.Navbar>
+      <NavBar opened={opened} toggle={toggle} />
       <Main />
     </AppShell>
   );

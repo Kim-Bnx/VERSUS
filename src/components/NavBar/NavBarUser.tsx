@@ -40,16 +40,8 @@ function NavBarGuest() {
   // MANAGE THE NAVIGATION LINKS
   const navigationLinks = [
     {
-      label: 'Mon Calendrier',
-      href: '/profile/username/schedule',
-    },
-    {
       label: 'Mes events',
       href: '/profile/username/events',
-    },
-    {
-      label: 'Mes équipes',
-      href: '/profile/username/teams',
     },
     {
       label: 'Mes favoris',
