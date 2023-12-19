@@ -1,10 +1,65 @@
+import { useEffect } from 'react';
 import { Anchor, Image, Box, Flex, Title, SimpleGrid } from '@mantine/core';
 import Slider from '../../components/Slider/Slider';
 import EventThumb from '../../components/Element/Thumb/Event';
+import { Event as AppEvent } from '../../@types/event';
 
 import './Home.scss';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { fetchAllEvents } from '../../store/reducers/events';
+// import { user } from '../../store/reducers/user';
+// import { LocalStorage } from '../../utils/LocalStorage';
 
 function Home() {
+  const dispatch = useAppDispatch();
+  const events = useAppSelector((state) => state.events.events);
+
+  useEffect(() => {
+    dispatch(fetchAllEvents());
+  }, [dispatch]);
+
+  // function that calculates the number of days left until the event starts
+  const calculateDaysLeft = (startDate) => {
+    // creates a new Date object representing the current date and time
+    const now = new Date();
+
+    // creates a new Date object from the 'startDate' string
+    // 'startDate' should be in a format that the Date constructor can interpret such as 'YYYY-MM-DD'. This line converts the string into a Date object.
+    const start = new Date(startDate);
+
+    // calculates the difference in milliseconds between the event's start date and the current date
+    const difference = start - now;
+
+    // converts the difference from milliseconds to days
+    // math.ceil is used to round up to the nearest whole day as even a partial day counts as a full day for the countdown.
+    const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+
+    return daysLeft > 0 ? daysLeft : 0;
+  };
+
+  const sortEventsByParticipants = (eventsArray: AppEvent[]) => {
+    return (
+      eventsArray
+        // Use .slice to generate a copie of the array because .sort changes the array it affects directly
+        .slice()
+        .sort((a, b) => b.participants.length - a.participants.length)
+    );
+  };
+
+  const sortedEvents = sortEventsByParticipants(events);
+
+  // const isConnected = useAppSelector((state) => state.login.isConnected);
+  // const userGames = useAppSelector((state) => state.user.data.games);
+
+  // useEffect(() => {
+  //   if (isConnected) {
+  //     const userAuth = LocalStorage.getItem('auth');
+
+  //     const { userId } = userAuth.auth;
+  //     dispatch(user(userId));
+  //   }
+  // }, [dispatch, isConnected]);
+
   return (
     <>
       <Flex justify="center" align="center" className="title-container">
@@ -15,38 +70,53 @@ function Home() {
 
       <Box className="container">
         <Flex justify="space-between" align="center" className="title">
-          <Title tt="capitalize">Catégories</Title>
+          <Title tt="capitalize">les prochains events</Title>
 
-          <Anchor className="categories__title-more">Voir plus</Anchor>
+          <Anchor href="#" className="categories__title-more">
+            Voir plus
+          </Anchor>
         </Flex>
 
         <SimpleGrid cols={3} className="categories-grid">
-          <EventThumb
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            game="league of legend"
-            name="Friendly party"
-            type="PC"
-            date="10/12/2023"
-            countdown={5}
-          />
+          {events.slice(0, 3).map((event) => (
+            <EventThumb
+              key={event.id}
+              image={event.thumbnail || 'url_de_limage_par_defaut'}
+              game={event.game.name}
+              name={event.title}
+              type={
+                event.platform ? event.platform.name : 'Plateforme non définie'
+              }
+              date={event.start_date}
+              countdown={calculateDaysLeft(event.start_date)}
+            />
+          ))}
+        </SimpleGrid>
+      </Box>
 
-          <EventThumb
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            game="mario kart 8 : deluxe"
-            name="blueME for fun"
-            type="switch"
-            date="10/12/2023"
-            countdown={8}
-          />
+      <Box className="container">
+        <Flex justify="space-between" align="center" className="title">
+          <Title tt="capitalize">Les plus populaires</Title>
 
-          <EventThumb
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            game="goldeneye 007"
-            name="old school edition"
-            type="retro"
-            date="8/12/2023"
-            countdown={1}
-          />
+          <Anchor href="#" className="categories__title-more">
+            Voir plus
+          </Anchor>
+        </Flex>
+
+        <SimpleGrid cols={3} className="categories-grid">
+          {sortedEvents.slice(0, 3).map((event) => (
+            <EventThumb
+              key={event.id}
+              image={event.thumbnail || 'url_de_limage_par_defaut'}
+              game={event.game.name}
+              name={event.title}
+              type={
+                event.platform ? event.platform.name : 'Plateforme non définie'
+              }
+              date={event.start_date}
+              countdown={calculateDaysLeft(event.start_date)}
+            />
+          ))}
         </SimpleGrid>
       </Box>
 
