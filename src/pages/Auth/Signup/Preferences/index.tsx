@@ -74,6 +74,7 @@ const GAMES = [
 type PreferencesProps = {
   onChangeView: (step: string) => void;
 };
+
 type SelectedItems = { [key: number]: boolean };
 
 function Preferences({ onChangeView }: PreferencesProps) {

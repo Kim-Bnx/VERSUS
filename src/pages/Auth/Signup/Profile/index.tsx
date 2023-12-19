@@ -13,9 +13,9 @@ import {
 } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { changeInputUserValue } from '../../../../store/reducers/updateUser';
+import { changeInputUserValue } from '../../../../store/reducers/loggedUserUpdate';
 import CreateAvatar from '../../../../components/Element/CreateAvatar';
-import { user } from '../../../../store/reducers/user';
+import { loggedUser } from '../../../../store/reducers/loggedUser';
 import { LocalStorage } from '../../../../utils/LocalStorage';
 
 type ProfileProps = {
@@ -28,7 +28,7 @@ function Profile({ onChangeView }: ProfileProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const hasError = useAppSelector((state) => state.user.error);
+  const hasError = useAppSelector((state) => state.loggedUser.error);
 
   const avatars = [
     'avatar1',
@@ -56,7 +56,7 @@ function Profile({ onChangeView }: ProfileProps) {
     const { userId } = userAuth;
 
     dispatch(changeInputUserValue({ fieldName: 'username', value: username }));
-    dispatch(user(userId));
+    dispatch(loggedUser(userId));
 
     if (!hasError) {
       onChangeView('preferences');

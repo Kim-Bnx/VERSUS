@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ProfilePlatformsState } from '../../@types';
 
 const initialState: ProfilePlatformsState = {
-  platforms: [],
+  platform_id: [],
   error: null,
   isSuccess: false,
 };
@@ -11,15 +11,15 @@ const initialState: ProfilePlatformsState = {
 export const userPlatforms = createAsyncThunk(
   'userPlatforms',
   async ({
-    platforms,
+    platform_id,
     userId,
   }: {
-    platforms: number[];
+    platform_id: number[];
     userId: number | null;
   }) => {
     const { data } = await axios.patch(
-      `http://localhost:3000/user/${userId}`,
-      platforms
+      `http://localhost:3000/user/${userId}/preferences/platforms`,
+      { platform_id }
     );
 
     return data;
@@ -38,7 +38,7 @@ const userPlatformsSlice = createSlice({
     ) {
       const { value } = action.payload;
 
-      state.platforms = value;
+      state.platform_id = value;
     },
   },
   extraReducers(builder) {

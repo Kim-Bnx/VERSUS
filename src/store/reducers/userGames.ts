@@ -1,6 +1,6 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ProfileGamesState } from '../../@types';
+import { axiosInstance } from '../../utils/axios';
 
 const initialState: ProfileGamesState = {
   games: [],
@@ -10,10 +10,10 @@ const initialState: ProfileGamesState = {
 
 export const userGames = createAsyncThunk(
   'userGames',
-  async ({ games, userId }: { games: number[]; userId: number | null }) => {
-    const { data } = await axios.patch(
-      `http://localhost:3000/user/${userId}`,
-      games
+  async ({ game_id, userId }: { game_id: number[]; userId: number | null }) => {
+    const { data } = await axiosInstance.patch(
+      `http://localhost:3000/user/${userId}/preferences/games`,
+      { game_id }
     );
 
     return data;
@@ -23,18 +23,7 @@ export const userGames = createAsyncThunk(
 const userGamesSlice = createSlice({
   name: 'userGames',
   initialState,
-  reducers: {
-    changeSelectedGames(
-      state,
-      action: PayloadAction<{
-        value: number[];
-      }>
-    ) {
-      const { value } = action.payload;
-
-      state.games = value;
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(userGames.pending, (state) => {
@@ -52,5 +41,5 @@ const userGamesSlice = createSlice({
   },
 });
 
-export const { changeSelectedGames } = userGamesSlice.actions;
+// export const {} = userGamesSlice.actions;
 export default userGamesSlice.reducer;

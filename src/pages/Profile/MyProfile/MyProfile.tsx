@@ -1,10 +1,4 @@
-import {
-  ChangeEvent,
-  FormEvent,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import {
   Avatar,
   Box,
@@ -15,90 +9,36 @@ import {
   Button,
   TextInput,
   PasswordInput,
-  Stack,
+  Grid,
+  GridCol,
 } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import { IconKey, IconSettingsFilled, IconUpload } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { user } from '../../../store/reducers/user';
+import { loggedUserUpdate } from '../../../store/reducers/loggedUserUpdate';
+import { logout } from '../../../store/reducers/login';
+import { userGames } from '../../../store/reducers/userGames';
+import { fetchGames } from '../../../store/reducers/game';
+import { fetchPlatforms } from '../../../store/reducers/platform';
+import { userPlatforms } from '../../../store/reducers/userPlatforms';
+import { loggedUser } from '../../../store/reducers/loggedUser';
+import { LocalStorage } from '../../../utils/LocalStorage';
 import PlatformSquare from '../../../components/Element/PlatformsSquares';
 import GamesLabels from '../../../components/Element/GamesLabels';
 import CreateAvatar from '../../../components/Element/CreateAvatar';
-import { LocalStorage } from '../../../utils/LocalStorage';
 
 import '../Profile.scss';
-
-const GAMES = [
-  {
-    id: 0,
-    name: 'League Of Legend',
-  },
-  {
-    id: 1,
-    name: 'Super Smash Bros.',
-  },
-  {
-    id: 2,
-    name: 'Valorant',
-  },
-  {
-    id: 3,
-    name: 'Minecraft',
-  },
-  {
-    id: 4,
-    name: 'Overwatch',
-  },
-  {
-    id: 5,
-    name: 'GTA V',
-  },
-  {
-    id: 6,
-    name: 'Fall Guys',
-  },
-  {
-    id: 7,
-    name: 'Call Of Duty',
-  },
-  {
-    id: 8,
-    name: 'Demineur',
-  },
-];
-
-const PLATFORMS = [
-  {
-    id: 0,
-    name: 'PC',
-  },
-  {
-    id: 1,
-    name: 'Switch',
-  },
-  {
-    id: 2,
-    name: 'PS5',
-  },
-  {
-    id: 3,
-    name: 'XBOX',
-  },
-  {
-    id: 4,
-    name: 'Retro',
-  },
-];
 
 type SelectedItems = { [key: number]: boolean };
 
 function MyProfile() {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const isConnected = useAppSelector((state) => state.login.isConnected);
-  const userData = useAppSelector((state) => state.user.data);
+  const [userId, setUserId] = useState(0);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [toggleEditProfile, setToggleEditProfile] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [visible, { toggle }] = useDisclosure(false);
@@ -109,10 +49,42 @@ function MyProfile() {
     [key: number]: boolean;
   }>({});
 
-  const userEmailValue = userData.email;
-  const userNameValue = userData.username;
+  const isConnected = useAppSelector((state) => state.login.isConnected);
+  const usernameState = useAppSelector(
+    (state) => state.loggedUser.data.username
+  );
+  const userEmailValue = useAppSelector((state) => state.loggedUser.data.email);
+  const useAvatarValue = useAppSelector(
+    (state) => state.loggedUser.data.avatar
+  );
+  const gamesState = useAppSelector((state) => state.game.games);
+  const userGamesState = useAppSelector((state) => state.loggedUser.data.games);
+  const platformsState = useAppSelector((state) => state.platform.platforms);
+  const userPlatformsState = useAppSelector(
+    (state) => state.loggedUser.data.platforms
+  );
+
+  const form = useForm({
+    initialValues: {
+      password: '',
+      confirmPassword: '',
+    },
+
+    validate: {
+      password: (value) =>
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/gm.test(
+          value
+        )
+          ? null
+          : 'Le mot de passe doit faire 8 caractéres au minimum et doit comporter un chiffre, un caractére spécial et une majuscule',
+      confirmPassword: (value, values) =>
+        value !== values.password
+          ? 'Les mots de passe ne correspondent pas.'
+          : null,
+    },
+  });
+
   const userPasswordValue = '******';
-  const useAvatarValue = userData.avatar;
 
   const handleEditProfile = () => {
     setToggleEditProfile(!toggleEditProfile);
@@ -122,20 +94,6 @@ function MyProfile() {
     const usernameValue = event.target.value;
 
     setUsername(usernameValue);
-  };
-
-  const handleChangePasswordValue = (event: ChangeEvent<HTMLInputElement>) => {
-    const passwordValue = event.target.value;
-
-    setPassword(passwordValue);
-  };
-
-  const handleChangeConfirmPasswordValue = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    const confirmPasswordValue = event.target.value;
-
-    setConfirmPassword(confirmPasswordValue);
   };
 
   const handleSelection = useCallback(
@@ -165,21 +123,71 @@ function MyProfile() {
     [handleSelection]
   );
 
+  const handleUsernameSubmit = () => {
+    dispatch(
+      loggedUserUpdate({
+        userDatas: { username },
+        userId,
+      })
+    );
+
+    window.location.reload();
+  };
+
+  const handlePasswordSubmit = () => {
+    const { values } = form;
+
+    setPassword(values.password);
+
+    dispatch(
+      loggedUserUpdate({
+        userDatas: { password },
+        userId,
+      })
+    );
+
+    dispatch(logout());
+
+    navigate('/');
+  };
+
+  const handleGamesSubmit = () => {
+    const selectedGamesIds = Object.keys(selectedGames)
+      .filter((key) => selectedGames[parseInt(key, 10)])
+      .map((key) => parseInt(key, 10));
+
+    dispatch(userGames({ game_id: selectedGamesIds, userId }));
+
+    console.log(selectedGamesIds);
+    // window.location.reload();
+  };
+
+  const handlePlatformsSubmit = () => {
+    const selectedPlatformsIds = Object.keys(selectedPlatforms)
+      .filter((key) => selectedPlatforms[parseInt(key, 10)])
+      .map((key) => parseInt(key, 10));
+
+    console.log('selectedPlatformsIds');
+
+    dispatch(userPlatforms({ platform_id: selectedPlatformsIds, userId }));
+
+    // window.location.reload();
+  };
+
   useEffect(() => {
     if (isConnected) {
       const userAuth = LocalStorage.getItem('auth');
 
-      const { userId } = userAuth.auth;
-      dispatch(user(userId));
+      const loggedUserId = userAuth.auth.userId;
+      setUserId(loggedUserId);
+      dispatch(loggedUser(loggedUserId));
+      dispatch(fetchGames());
+      dispatch(fetchPlatforms());
     }
   }, [dispatch, isConnected]);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  };
-
   return (
-    <Box component="form" className="wrapper" onSubmit={handleSubmit}>
+    <Box className="wrapper" w="100%">
       <Flex justify="space-between" align="center">
         <Title size="2rem" order={2}>
           {toggleEditProfile ? 'Modifier votre profil' : 'Votre Profil'}
@@ -226,17 +234,27 @@ function MyProfile() {
 
           <Box className="wrapper-right" c="white">
             <Text className="input-label">pseudonyme</Text>
-            {!toggleEditProfile ? (
-              <Text fw="bold">{userNameValue}</Text>
-            ) : (
-              <TextInput
-                mb="1rem"
-                maw="30rem"
-                aria-label="pseudo"
-                placeholder={userNameValue}
-                onChange={handleChangeUsernameValue}
-              />
-            )}
+
+            <Flex>
+              {!toggleEditProfile ? (
+                <Text fw="bold">{usernameState}</Text>
+              ) : (
+                <>
+                  <TextInput
+                    mb="1rem"
+                    maw="30rem"
+                    w="80%"
+                    aria-label="pseudo"
+                    placeholder={usernameState}
+                    onChange={handleChangeUsernameValue}
+                  />
+                  <Button ml="2rem" onClick={handleUsernameSubmit}>
+                    Valider
+                  </Button>
+                </>
+              )}
+            </Flex>
+
             <Text mt="1.5rem" className="input-label">
               adresse email
             </Text>
@@ -256,14 +274,16 @@ function MyProfile() {
                 {userPasswordValue}
               </Text>
             ) : (
-              <Stack>
+              <form onSubmit={form.onSubmit(handlePasswordSubmit)}>
                 <PasswordInput
                   mb="1rem"
                   maw="30rem"
+                  w="80%"
                   aria-label="password"
                   placeholder="Mot de passe"
                   visible={visible}
                   onVisibilityChange={toggle}
+                  {...form.getInputProps('password')}
                 />
                 <Text mt="1.5rem" className="input-label">
                   confirmation de mot de passe
@@ -271,12 +291,17 @@ function MyProfile() {
                 <PasswordInput
                   mb="1rem"
                   maw="30rem"
+                  w="80%"
                   aria-label="password-confirmation"
                   placeholder="Confirmation du mot de passe"
                   visible={visible}
                   onVisibilityChange={toggle}
+                  {...form.getInputProps('confirmPassword')}
                 />
-              </Stack>
+                <Button mt="1rem" type="submit">
+                  Valider
+                </Button>
+              </form>
             )}
           </Box>
         </Flex>
@@ -292,12 +317,35 @@ function MyProfile() {
             Mes plateformes
           </Title>
 
-          <PlatformSquare
-            span={2}
-            data={PLATFORMS}
-            selectedPlatforms={selectedPlatforms}
-            onSelectPlatform={handlePlatformSelection}
-          />
+          {!toggleEditProfile ? (
+            <Grid justify="flex-start" align="center" gutter={15}>
+              {platformsState.map((platform) => (
+                <Grid.Col span={2} key={platform.id}>
+                  <Flex
+                    justify="center"
+                    align="center"
+                    className={`platform ${
+                      selectedPlatforms[platform.id] ? 'selected' : ''
+                    }`}
+                  >
+                    <Text size="0.9rem">{platform.name}</Text>
+                  </Flex>
+                </Grid.Col>
+              ))}
+            </Grid>
+          ) : (
+            <>
+              <PlatformSquare
+                span={2}
+                data={userPlatformsState}
+                selectedPlatforms={selectedPlatforms}
+                onSelectPlatform={handlePlatformSelection}
+              />
+              <Flex mt="2rem" w="100%">
+                <Button onClick={handleGamesSubmit}>Valider</Button>
+              </Flex>
+            </>
+          )}
         </Box>
 
         <Box className="section section-full">
@@ -305,20 +353,38 @@ function MyProfile() {
             Mes jeux
           </Title>
 
-          <GamesLabels
-            data={GAMES}
-            selectedGames={selectedGames}
-            onSelectGame={handleGameSelection}
-          />
+          {!toggleEditProfile ? (
+            <Grid
+              justify="center"
+              align="center"
+              className="games-list"
+              gutter={15}
+            >
+              {gamesState.map((game) => (
+                <GridCol key={game.id} span="content">
+                  <Box
+                    className={`game ${
+                      selectedGames[game.id] ? 'selected' : ''
+                    }`}
+                  >
+                    <Text>{game.name}</Text>
+                  </Box>
+                </GridCol>
+              ))}
+            </Grid>
+          ) : (
+            <>
+              <GamesLabels
+                data={userGamesState}
+                selectedGames={selectedGames}
+                onSelectGame={handleGameSelection}
+              />
+              <Flex mt="2rem" w="100%">
+                <Button onClick={handleGamesSubmit}>Valider</Button>
+              </Flex>
+            </>
+          )}
         </Box>
-
-        {toggleEditProfile && (
-          <Flex w="100%" mt="5rem" justify="flex-end" align="center">
-            <Button bg="green" type="submit">
-              Valider les modifications
-            </Button>
-          </Flex>
-        )}
       </Box>
     </Box>
   );
