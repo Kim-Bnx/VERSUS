@@ -9,6 +9,7 @@ const initialState: EventsState = {
   error: null,
 };
 
+// TODO don't forget to change /events to /events/published once the db has been set with published events
 export const fetchAllEvents = createAsyncThunk('event/fetchAll', async () => {
   const { data } = await axios.get(`http://localhost:3000/events`);
   return data;
