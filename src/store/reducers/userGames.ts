@@ -31,15 +31,14 @@ const userGamesSlice = createSlice({
         state.isSuccess = false;
       })
       .addCase(userGames.rejected, (state) => {
-        state.error = 'Jeux rejetés';
+        state.error = 'requéte rejetée';
         state.isSuccess = false;
       })
       .addCase(userGames.fulfilled, (state) => {
-        state.error = null;
+        state.error = 'null';
         state.isSuccess = true;
       });
   },
 });
 
-// export const {} = userGamesSlice.actions;
 export default userGamesSlice.reducer;

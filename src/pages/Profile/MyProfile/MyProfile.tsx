@@ -158,8 +158,7 @@ function MyProfile() {
 
     dispatch(userGames({ game_id: selectedGamesIds, userId }));
 
-    console.log(selectedGamesIds);
-    // window.location.reload();
+    window.location.reload();
   };
 
   const handlePlatformsSubmit = () => {
@@ -167,11 +166,9 @@ function MyProfile() {
       .filter((key) => selectedPlatforms[parseInt(key, 10)])
       .map((key) => parseInt(key, 10));
 
-    console.log('selectedPlatformsIds');
-
     dispatch(userPlatforms({ platform_id: selectedPlatformsIds, userId }));
 
-    // window.location.reload();
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -185,6 +182,32 @@ function MyProfile() {
       dispatch(fetchPlatforms());
     }
   }, [dispatch, isConnected]);
+
+  useEffect(() => {
+    if (userGamesState.length > 0) {
+      const initialSelectedGames = userGamesState.reduce(
+        (acc, game) => ({
+          ...acc,
+          [game.id]: true,
+        }),
+        {}
+      );
+      setSelectedGames(initialSelectedGames);
+    }
+  }, [userGamesState]);
+
+  useEffect(() => {
+    if (userPlatformsState.length > 0) {
+      const initialSelectedPlatforms = userPlatformsState.reduce(
+        (acc, platform) => ({
+          ...acc,
+          [platform.id]: true,
+        }),
+        {}
+      );
+      setSelectedPlatforms(initialSelectedPlatforms);
+    }
+  }, [userPlatformsState]);
 
   return (
     <Box className="wrapper" w="100%">
@@ -319,15 +342,9 @@ function MyProfile() {
 
           {!toggleEditProfile ? (
             <Grid justify="flex-start" align="center" gutter={15}>
-              {platformsState.map((platform) => (
-                <Grid.Col span={2} key={platform.id}>
-                  <Flex
-                    justify="center"
-                    align="center"
-                    className={`platform ${
-                      selectedPlatforms[platform.id] ? 'selected' : ''
-                    }`}
-                  >
+              {userPlatformsState.map((platform) => (
+                <Grid.Col span={1} key={platform.id}>
+                  <Flex justify="center" align="center" className="platform">
                     <Text size="0.9rem">{platform.name}</Text>
                   </Flex>
                 </Grid.Col>
@@ -337,12 +354,12 @@ function MyProfile() {
             <>
               <PlatformSquare
                 span={2}
-                data={userPlatformsState}
+                data={platformsState}
                 selectedPlatforms={selectedPlatforms}
-                onSelectPlatform={handlePlatformSelection}
+                handlePlatformSelection={handlePlatformSelection}
               />
               <Flex mt="2rem" w="100%">
-                <Button onClick={handleGamesSubmit}>Valider</Button>
+                <Button onClick={handlePlatformsSubmit}>Valider</Button>
               </Flex>
             </>
           )}
@@ -355,18 +372,14 @@ function MyProfile() {
 
           {!toggleEditProfile ? (
             <Grid
-              justify="center"
+              justify="flex-start"
               align="center"
               className="games-list"
               gutter={15}
             >
-              {gamesState.map((game) => (
+              {userGamesState.map((game) => (
                 <GridCol key={game.id} span="content">
-                  <Box
-                    className={`game ${
-                      selectedGames[game.id] ? 'selected' : ''
-                    }`}
-                  >
+                  <Box className="game">
                     <Text>{game.name}</Text>
                   </Box>
                 </GridCol>
@@ -375,9 +388,9 @@ function MyProfile() {
           ) : (
             <>
               <GamesLabels
-                data={userGamesState}
+                data={gamesState}
                 selectedGames={selectedGames}
-                onSelectGame={handleGameSelection}
+                handleGameSelection={handleGameSelection}
               />
               <Flex mt="2rem" w="100%">
                 <Button onClick={handleGamesSubmit}>Valider</Button>

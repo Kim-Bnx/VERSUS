@@ -1,9 +1,9 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ProfilePlatformsState } from '../../@types';
+import { axiosInstance } from '../../utils/axios';
 
 const initialState: ProfilePlatformsState = {
-  platform_id: [],
+  platforms: [],
   error: null,
   isSuccess: false,
 };
@@ -17,7 +17,7 @@ export const userPlatforms = createAsyncThunk(
     platform_id: number[];
     userId: number | null;
   }) => {
-    const { data } = await axios.patch(
+    const { data } = await axiosInstance.patch(
       `http://localhost:3000/user/${userId}/preferences/platforms`,
       { platform_id }
     );
@@ -29,18 +29,7 @@ export const userPlatforms = createAsyncThunk(
 const userPlatformsSlice = createSlice({
   name: 'userPlatforms',
   initialState,
-  reducers: {
-    changeSelectedPlatforms(
-      state,
-      action: PayloadAction<{
-        value: number[];
-      }>
-    ) {
-      const { value } = action.payload;
-
-      state.platform_id = value;
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(userPlatforms.pending, (state) => {
@@ -48,15 +37,14 @@ const userPlatformsSlice = createSlice({
         state.isSuccess = false;
       })
       .addCase(userPlatforms.rejected, (state) => {
-        state.error = 'Jeux rejetés';
+        state.error = 'requéte rejetée';
         state.isSuccess = false;
       })
       .addCase(userPlatforms.fulfilled, (state) => {
-        state.error = null;
+        state.error = 'null';
         state.isSuccess = true;
       });
   },
 });
 
-export const { changeSelectedPlatforms } = userPlatformsSlice.actions;
 export default userPlatformsSlice.reducer;
