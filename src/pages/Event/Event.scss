@@ -43,16 +43,3 @@
 .attendee-username {
   flex-grow: 2;
 }
-
-.notification_registration {
-  position: fixed !important;
-  top: 100px;
-  right: 30px;
-  transform: translateX(150%);
-  transition: 0.5s;
-
-  &.active {
-    transform: translateX(0%);
-    transition: 0.5s;
-  }
-}
