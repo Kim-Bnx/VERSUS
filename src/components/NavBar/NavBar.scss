@@ -1,6 +1,14 @@
 @use '../../styles/variables' as v;
 @import url('https://fonts.googleapis.com/css2?family=Asap:wght@400;700&family=Fugaz+One&display=swap');
 
+[data-mantine-color-scheme='dark'] .logo {
+  color: #ebe8f3;
+}
+
+[data-mantine-color-scheme='light'] .logo {
+  color: #333c6e;
+}
+
 .logo {
   font-family: 'Fugaz One', sans-serif;
   font-size: 2rem;

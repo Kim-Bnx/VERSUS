@@ -44,7 +44,7 @@ function NavBar({ opened, toggle }: { opened: boolean; toggle: () => void }) {
     <AppShell.Navbar p="lg" className="navbar">
       <Flex align="center" gap="md">
         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-        <Anchor unstyled c="white" href="/" className="logo">
+        <Anchor unstyled href="/" className="logo">
           Versus
         </Anchor>
       </Flex>

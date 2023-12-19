@@ -75,15 +75,15 @@ function Event() {
 
             <Flex gap="xl" className="event__infos-details">
               <Text>
-                <IoGameController color="var(--mantine-color-blue-filled)" />
+                <IoGameController color="var(--mantine-color-indigo-filled)" />
                 {eventData.game.name}
               </Text>
               <Text>
-                <IoLocationSharp color="var(--mantine-color-blue-filled)" />
+                <IoLocationSharp color="var(--mantine-color-indigo-filled)" />
                 {eventData.location}
               </Text>
               <Text>
-                <IoTv color="var(--mantine-color-blue-filled)" />
+                <IoTv color="var(--mantine-color-indigo-filled)" />
                 PC
               </Text>
             </Flex>
