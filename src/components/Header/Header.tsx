@@ -8,6 +8,7 @@ import {
   Flex,
   Avatar,
   Burger,
+  Text,
 } from '@mantine/core';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import SearchBar from '../SearchBar/SearchBar';
@@ -17,7 +18,7 @@ import { LocalStorage } from '../../utils/LocalStorage';
 import { user } from '../../store/reducers/user';
 import CreateAvatar from '../Element/CreateAvatar';
 
-function Header() {
+function Header({ opened, toggle }: { opened: boolean; toggle: () => void }) {
   // const [opened, { toggle }] = useDisclosure();
   const dispatch = useAppDispatch();
   const isConnected = useAppSelector((state) => state.login.isConnected);
@@ -35,32 +36,43 @@ function Header() {
   }, [dispatch, isConnected]);
 
   return (
-    <>
-      <Flex gap="md" className="actions" visibleFrom="sm">
-        <Button
-          className="button button-new__event"
-          component="a"
-          href="/event/create"
-        >
-          Organiser un event
-        </Button>
+    <AppShell.Header p="lg">
+      <div className="header">
+        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
 
-        <SearchBar />
-      </Flex>
-
-      {!isConnected ? (
-        <Box className="connexion">
-          <Button component="a" href="/sign-in" className="button button-login">
-            Se connecter
+        <div className="header__actions">
+          <Button
+            visibleFrom="sm"
+            className="button header__actions-event"
+            component="a"
+            href="/event/create"
+          >
+            Organiser un event
           </Button>
-        </Box>
-      ) : (
-        <Flex className="profile" align="center" gap="md">
-          <Anchor href="/profile">{userNameValue}</Anchor>
-          <CreateAvatar hw="2.5rem" seed={useAvatarValue} />
-        </Flex>
-      )}
-    </>
+
+          <SearchBar />
+        </div>
+
+        {!isConnected ? (
+          <Box className="header__connexion">
+            <Button
+              component="a"
+              href="/sign-in"
+              className="button button-login"
+            >
+              Se connecter
+            </Button>
+          </Box>
+        ) : (
+          <Anchor href="/profile" className="header__profile">
+            <Flex align="center" gap="sm">
+              <Text visibleFrom="lg">{userNameValue}</Text>
+              <CreateAvatar hw="2.5rem" seed={useAvatarValue} />
+            </Flex>
+          </Anchor>
+        )}
+      </div>
+    </AppShell.Header>
   );
 }
 

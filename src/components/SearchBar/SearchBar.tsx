@@ -51,12 +51,12 @@ function SearchBar() {
   };
 
   return (
-    <Box>
+    <>
       <Autocomplete
         className="search-bar"
         placeholder="Recherche un event, team, joueur ..."
         aria-label="Barre de recherche"
-        rightSection={icon}
+        leftSection={icon}
         value={searchTerm}
         onChange={handleChangeSearchValue}
         data={[
@@ -66,7 +66,7 @@ function SearchBar() {
         ]}
       />
       {errorMsg && <Box>{errorMsg}</Box>}
-    </Box>
+    </>
   );
 }
 

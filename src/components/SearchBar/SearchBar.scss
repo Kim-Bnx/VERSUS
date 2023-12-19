@@ -1,15 +1,15 @@
 @use '../../styles/variables' as v;
 .search-bar {
   border-radius: 0.4rem;
-  border: 1px solid #929292;
-  color: white;
-  width: 34rem;
-  min-width: 320px;
+  border: 1px solid var(--mantine-color-default-border);
+  color: var(--mantine-color-text);
+  max-width: 25rem;
+  width: 100%;
 
   input {
     background-color: inherit;
     border: inherit;
     width: 100%;
-    color: white;
+    color: var(--mantine-color-text);
   }
 }
