@@ -8,3 +8,53 @@
   padding: 0.5rem;
   cursor: pointer;
 }
+
+.eventhumb {
+  position: relative;
+  overflow: hidden;
+
+  & > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.8) 12%,
+      rgba(0, 0, 0, 0) 50%
+    );
+  }
+}
+
+.thumb {
+  position: relative;
+  height: 19rem;
+
+  &__infos {
+    position: absolute;
+    bottom: 4rem;
+    left: 1.5rem;
+  }
+  &__dates {
+    position: absolute;
+    padding: 0.6rem 1rem;
+    bottom: 0;
+  }
+}
+
+.thumb__dates {
+  border-radius: 0 0 var(--mantine-radius-md) var(--mantine-radius-md);
+}
+
+[data-mantine-color-scheme='dark'] .thumb__dates {
+  background-color: var(--mantine-color-dark-9);
+}
+
+[data-mantine-color-scheme='light'] .thumb__dates {
+  background-color: var(--mantine-color-gray-3);
+}

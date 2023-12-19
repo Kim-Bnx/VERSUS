@@ -20,7 +20,7 @@ function Home() {
           <Anchor className="categories__title-more">Voir plus</Anchor>
         </Flex>
 
-        <SimpleGrid cols={3} className="categories-grid">
+        <div className="categories-grid">
           <EventThumb
             image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
             game="league of legend"
@@ -47,7 +47,7 @@ function Home() {
             date="8/12/2023"
             countdown={1}
           />
-        </SimpleGrid>
+        </div>
       </Box>
 
       <Box className="container">
@@ -55,35 +55,35 @@ function Home() {
           <Title tt="capitalize">vos jeux préférés</Title>
         </Box>
 
-        <SimpleGrid cols={4} className="games__grid">
+        <div className="games__grid">
           <Image
             src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
-            className="thumb"
+            className="games__grid-image"
           >
             {/* <Text>Heartstone</Text> */}
           </Image>
 
           <Image
             src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
-            className="thumb"
+            className="games__grid-image"
           >
             {/* <Text>Heartstone</Text> */}
           </Image>
 
           <Image
             src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
-            className="thumb"
+            className="games__grid-image"
           >
             {/* <Text>Heartstone</Text> */}
           </Image>
 
           <Image
             src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
-            className="thumb"
+            className="games__grid-image"
           >
             {/* <Text>Heartstone</Text> */}
           </Image>
-        </SimpleGrid>
+        </div>
       </Box>
     </>
   );

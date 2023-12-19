@@ -22,7 +22,7 @@ function EventThumb({
   countdown,
 }: EventThumbProps) {
   return (
-    <BackgroundImage src={image}>
+    <BackgroundImage src={image} className="eventhumb" radius="md">
       <Flex className="thumb" direction="column">
         <FavoriteBtn />
 
@@ -38,7 +38,6 @@ function EventThumb({
         <Flex
           justify="space-between"
           align="center"
-          bg="#1d1d1d"
           miw="100%"
           className="thumb__dates"
         >

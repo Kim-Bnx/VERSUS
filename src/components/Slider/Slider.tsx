@@ -16,7 +16,6 @@ function Slider() {
         withControls={false}
         withIndicators
         slideSize="100%"
-        slideGap="xs"
         loop
         style={{ flex: 1 }}
       >
@@ -28,7 +27,7 @@ function Slider() {
             <TypeTag name="microsoft activision blizzard" />
           </BackgroundImage>
 
-          <Box c="white" className="slide-content">
+          <Box className="slide-content">
             <Box className="event">
               <Box className="event-description">
                 <Box className="event-title">
@@ -77,7 +76,7 @@ function Slider() {
             <TypeTag name="playstation 5" />
           </BackgroundImage>
 
-          <Box c="white" className="slide-content">
+          <Box className="slide-content">
             <Box className="event">
               <Box className="event-description">
                 <Box className="event-title">
@@ -126,7 +125,7 @@ function Slider() {
             <TypeTag name="switch" />
           </BackgroundImage>
 
-          <Box c="white" className="slide-content">
+          <Box className="slide-content">
             <Box className="event">
               <Box className="event-description">
                 <Box className="event-title">
