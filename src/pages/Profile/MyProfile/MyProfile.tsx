@@ -22,6 +22,7 @@ import { logout } from '../../../store/reducers/login';
 import { userGames } from '../../../store/reducers/userGames';
 import { fetchGames } from '../../../store/reducers/game';
 import { fetchPlatforms } from '../../../store/reducers/platform';
+import { patchPassword } from '../../../store/reducers/passwordChange';
 import { userPlatforms } from '../../../store/reducers/userPlatforms';
 import { loggedUser } from '../../../store/reducers/loggedUser';
 import { LocalStorage } from '../../../utils/LocalStorage';
@@ -39,6 +40,7 @@ function MyProfile() {
   const [userId, setUserId] = useState(0);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [toggleEditProfile, setToggleEditProfile] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [visible, { toggle }] = useDisclosure(false);
@@ -96,6 +98,25 @@ function MyProfile() {
     setUsername(usernameValue);
   };
 
+  const handleUsernameSubmit = () => {
+    dispatch(
+      loggedUserUpdate({
+        userDatas: { username },
+        userId,
+      })
+    );
+
+    window.location.reload();
+  };
+
+  const handlePasswordSubmit = () => {
+    const { values } = form;
+
+    dispatch(patchPassword({ id: userId, ...values }));
+    dispatch(logout());
+    navigate('/');
+  };
+
   const handleSelection = useCallback(
     (
       setId: React.Dispatch<React.SetStateAction<SelectedItems>>,
@@ -122,34 +143,6 @@ function MyProfile() {
     },
     [handleSelection]
   );
-
-  const handleUsernameSubmit = () => {
-    dispatch(
-      loggedUserUpdate({
-        userDatas: { username },
-        userId,
-      })
-    );
-
-    window.location.reload();
-  };
-
-  const handlePasswordSubmit = () => {
-    const { values } = form;
-
-    setPassword(values.password);
-
-    dispatch(
-      loggedUserUpdate({
-        userDatas: { password },
-        userId,
-      })
-    );
-
-    dispatch(logout());
-
-    navigate('/');
-  };
 
   const handleGamesSubmit = () => {
     const selectedGamesIds = Object.keys(selectedGames)
@@ -353,7 +346,7 @@ function MyProfile() {
           ) : (
             <>
               <PlatformSquare
-                span={2}
+                span={1}
                 data={platformsState}
                 selectedPlatforms={selectedPlatforms}
                 handlePlatformSelection={handlePlatformSelection}

@@ -12,6 +12,7 @@ import userPlatformsReducer from './reducers/userPlatforms';
 import profileReducer from './reducers/profile';
 import gameReducer from './reducers/game';
 import platformReducer from './reducers/platform';
+import passwordChangeReducer from './reducers/passwordChange';
 
 const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ const store = configureStore({
     profile: profileReducer,
     game: gameReducer,
     platform: platformReducer,
+    passwordChange: passwordChangeReducer,
   },
 });
 

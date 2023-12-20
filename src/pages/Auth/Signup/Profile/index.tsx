@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import {
   Anchor,
   Box,
@@ -26,8 +26,8 @@ function Profile({ onChangeView }: ProfileProps) {
   const dispatch = useAppDispatch();
   const [selectedAvatar, setSelectedAvatar] = useState('');
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
+
   const hasError = useAppSelector((state) => state.loggedUser.error);
 
   const avatars = [
@@ -53,15 +53,20 @@ function Profile({ onChangeView }: ProfileProps) {
 
   const handleSubmitData = () => {
     const userAuth = LocalStorage.getItem('auth');
-    const { userId } = userAuth;
+    const { userId } = userAuth.auth;
 
     dispatch(changeInputUserValue({ fieldName: 'username', value: username }));
     dispatch(loggedUser(userId));
+    setIsSuccess(true);
+  };
 
-    if (!hasError) {
+  useEffect(() => {
+    if (hasError) {
+      setIsSuccess(false);
+    } else if (isSuccess) {
       onChangeView('preferences');
     }
-  };
+  }, [hasError, onChangeView, isSuccess]);
 
   return (
     <Flex align="center" justify="center" direction="column">

@@ -32,3 +32,14 @@ export type UserPlatforms = {
   id: number;
   name: string;
 };
+
+export type PasswordChangeState = {
+  data: NewPasswords;
+  error: null | string;
+};
+
+export type NewPassword = {
+  id: number;
+  password: string;
+  confirmPassword: string;
+};

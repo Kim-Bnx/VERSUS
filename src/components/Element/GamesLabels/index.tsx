@@ -13,7 +13,6 @@ function GamesLabels({
   selectedGames,
   handleGameSelection,
 }: TypeTagProps) {
-  console.log(selectedGames);
   return (
     <Grid justify="center" align="center" className="games-list" gutter={15}>
       {data.map((game) => (
