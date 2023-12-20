@@ -13,9 +13,11 @@ import {
 } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { changeInputUserValue } from '../../../../store/reducers/loggedUserUpdate';
+import {
+  loggedUserUpdate,
+  changeInputUserValue,
+} from '../../../../store/reducers/loggedUserUpdate';
 import CreateAvatar from '../../../../components/Element/CreateAvatar';
-import { loggedUser } from '../../../../store/reducers/loggedUser';
 import { LocalStorage } from '../../../../utils/LocalStorage';
 
 type ProfileProps = {
@@ -47,8 +49,6 @@ function Profile({ onChangeView }: ProfileProps) {
 
   const handleClickAvatarValue = (seed: string) => {
     setSelectedAvatar(seed);
-
-    dispatch(changeInputUserValue({ fieldName: 'avatar', value: seed }));
   };
 
   const handleSubmitData = () => {
@@ -56,8 +56,16 @@ function Profile({ onChangeView }: ProfileProps) {
     const { userId } = userAuth.auth;
 
     dispatch(changeInputUserValue({ fieldName: 'username', value: username }));
-    dispatch(loggedUser(userId));
-    setIsSuccess(true);
+    dispatch(
+      loggedUserUpdate({
+        userDatas: { username, avatar: selectedAvatar },
+        userId,
+      })
+    )
+      .unwrap()
+      .then(() => {
+        setIsSuccess(true);
+      });
   };
 
   useEffect(() => {

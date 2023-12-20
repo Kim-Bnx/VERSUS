@@ -112,9 +112,12 @@ function MyProfile() {
   const handlePasswordSubmit = () => {
     const { values } = form;
 
-    dispatch(patchPassword({ id: userId, ...values }));
-    dispatch(logout());
-    navigate('/');
+    dispatch(patchPassword({ id: userId, ...values }))
+      .unwrap()
+      .then(() => {
+        dispatch(logout());
+        navigate('/');
+      });
   };
 
   const handleSelection = useCallback(
