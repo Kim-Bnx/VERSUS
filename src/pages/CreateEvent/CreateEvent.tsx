@@ -23,7 +23,7 @@ import {
 function CreateEvent() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const userId = useAppSelector((state) => state.user.data.id);
+  const userId = useAppSelector((state) => state.loggedUser.data.id);
 
   const form = useForm({
     initialValues: {

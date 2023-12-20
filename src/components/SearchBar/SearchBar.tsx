@@ -14,21 +14,28 @@ function SearchBar() {
   const errorMsg = useAppSelector((state) => state.search.error);
   const data = useAppSelector((state) => state.search.searchResults);
 
-  const events = data.events.map((event) => ({
-    label: event.title,
-    value: event.title,
-    url: `/event/${event.title_slug}`,
-  }));
-  const users = data.users.map((user) => ({
-    label: user.username,
-    value: user.username,
-    url: `/profile/${user.username}`,
-  }));
-  const teams = data.teams.map((team) => ({
-    label: team.name,
-    value: team.name,
-    url: `/team/${team.id}`,
-  }));
+  const events = data.events
+    ? data.events.map((event) => ({
+        label: event.title,
+        value: event.title,
+        url: `/event/${event.title_slug}`,
+      }))
+    : [];
+  const users = data.users
+    ? data.users.map((user) => ({
+        label: user.username,
+        value: user.username,
+        url: `/profile/${user.username}`,
+      }))
+    : [];
+
+  const teams = data.teams
+    ? data.teams.map((team) => ({
+        label: team.name,
+        value: team.name,
+        url: `/team/${team.id}`,
+      }))
+    : [];
 
   const findItemByUrl = (value: string) => {
     // Combine all items into one array

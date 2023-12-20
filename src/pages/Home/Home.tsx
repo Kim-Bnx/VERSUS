@@ -52,7 +52,7 @@ function Home() {
   const sortedEvents = sortEventsByParticipants(events);
 
   const isConnected = useAppSelector((state) => state.login.isConnected);
-  // const userGames = useAppSelector((state) => state.user.data.games);
+  // const userGames = useAppSelector((state) => state.loggedUser.data.games);
 
   useEffect(() => {
     if (isConnected) {
@@ -63,8 +63,6 @@ function Home() {
       dispatch(fetchUserEvents(userId));
     }
   }, [dispatch, isConnected]);
-
-  console.log(events);
 
   return (
     <>

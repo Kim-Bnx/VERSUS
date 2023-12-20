@@ -4,7 +4,7 @@ import { UserState } from '../../@types/user';
 
 const initialState: UserState = {
   data: {
-    id: 0,
+    id: null,
     email: '',
     password: '',
     confirmPassword: '',

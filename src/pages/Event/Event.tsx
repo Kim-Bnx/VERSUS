@@ -43,7 +43,7 @@ function Event() {
   const { slug } = useParams();
   if (!slug) throw new Error('Invalid slug');
   const eventData = useAppSelector((state) => state.event.event);
-  const userData = useAppSelector((state) => state.user.data);
+  const userData = useAppSelector((state) => state.loggedUser.data);
 
   useEffect(() => {
     dispatch(fetchEvent(slug));
