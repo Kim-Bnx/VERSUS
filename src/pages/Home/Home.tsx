@@ -1,13 +1,5 @@
 import { useEffect } from 'react';
-import {
-  Anchor,
-  Image,
-  Box,
-  Flex,
-  Title,
-  SimpleGrid,
-  Text,
-} from '@mantine/core';
+import { Anchor, Image, Box, Flex, Title, SimpleGrid } from '@mantine/core';
 import Slider from '../../components/Slider/Slider';
 import EventThumb from '../../components/Element/Thumb/Event';
 import { Event as AppEvent } from '../../@types/event';
@@ -17,11 +9,13 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { fetchAllEvents } from '../../store/reducers/events';
 import { LocalStorage } from '../../utils/LocalStorage';
 import { fetchAllUserFavGames } from '../../store/reducers/userFavGames';
+import { fetchUserEvents } from '../../store/reducers/userEvents';
 
 function Home() {
   const dispatch = useAppDispatch();
   const events = useAppSelector((state) => state.events.events);
   const favGames = useAppSelector((state) => state.userFavGames.games);
+  const userEvents = useAppSelector((state) => state.userEvents.events);
 
   useEffect(() => {
     dispatch(fetchAllEvents());
@@ -66,8 +60,11 @@ function Home() {
 
       const { userId } = userAuth.auth;
       dispatch(fetchAllUserFavGames(userId));
+      dispatch(fetchUserEvents(userId));
     }
   }, [dispatch, isConnected]);
+
+  console.log(userEvents);
 
   return (
     <>
@@ -76,6 +73,35 @@ function Home() {
       </Flex>
 
       <Slider />
+
+      {isConnected && (
+        <Box className="container">
+          <Flex justify="space-between" align="center" className="title">
+            <Title tt="capitalize">Mes events</Title>
+
+            <Anchor href="#" className="categories__title-more">
+              Voir plus
+            </Anchor>
+          </Flex>
+
+          <SimpleGrid cols={3} className="categories-grid">
+            {userEvents.slice(0, 3).map((userEvent) => (
+              <EventThumb
+                key={userEvent.id}
+                image={userEvent.thumbnail || 'url_de_limage_par_defaut'}
+                name={userEvent.title}
+                type={
+                  userEvent.platform
+                    ? userEvent.platform.name
+                    : 'Plateforme non définie'
+                }
+                date={userEvent.start_date}
+                countdown={calculateDaysLeft(userEvent.start_date)}
+              />
+            ))}
+          </SimpleGrid>
+        </Box>
+      )}
 
       <Box className="container">
         <Flex justify="space-between" align="center" className="title">
@@ -137,9 +163,9 @@ function Home() {
 
           <SimpleGrid cols={4} className="games__grid">
             {favGames.map((game) => (
-              <Image key={game.id} src={game.thumbnail} className="thumb">
-                <Anchor href="#">{game.name}</Anchor>
-              </Image>
+              <Anchor href="/game/events" key={game.id}>
+                <Image src={game.thumbnail} className="thumb" />
+              </Anchor>
             ))}
           </SimpleGrid>
         </Box>
