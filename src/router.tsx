@@ -18,6 +18,8 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import EventAdmin from './components/ProtectedRoute/EventAdmin';
 import Populars from './pages/Categories/Populars';
 import Upcoming from './pages/Categories/Upcoming';
+import UserParticipations from './pages/Profile/UserProfile/UserParticipations';
+import UserEventsCreated from './pages/Profile/UserProfile/UserEvents';
 
 export const router = createBrowserRouter([
   {
@@ -58,6 +60,14 @@ export const router = createBrowserRouter([
         path: 'profile/:username',
         // ! EDIT CahierDesCharge
         element: <UserProfile />,
+      },
+      {
+        path: 'profile/:username/participations',
+        element: <UserParticipations />,
+      },
+      {
+        path: 'profile/:username/events',
+        element: <UserEventsCreated />,
       },
       {
         // route for the connected user to see researched user's profile or his own

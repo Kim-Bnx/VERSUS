@@ -7,6 +7,8 @@ const initialState: ProfileState = {
     id: 0,
     username: '',
     avatar: '',
+    events: [],
+    organize: [],
     games: [],
     platforms: [],
     createdAt: '',
