@@ -52,12 +52,15 @@ function Home() {
   const sortedEvents = sortEventsByParticipants(events);
 
   const isConnected = useAppSelector((state) => state.login.isConnected);
+  const username = useAppSelector(
+    (state) => state.loggedUser.data.username_slug
+  );
   // const userGames = useAppSelector((state) => state.loggedUser.data.games);
-  const userAuth = LocalStorage.getItem('auth');
-  const { userId } = userAuth.auth;
 
   useEffect(() => {
     if (isConnected) {
+      const userAuth = LocalStorage.getItem('auth');
+      const { userId } = userAuth.auth;
       dispatch(fetchAllUserFavGames(userId));
       dispatch(fetchUserEvents(userId));
     }
@@ -77,7 +80,7 @@ function Home() {
             <Title>Mes participations</Title>
 
             <Anchor
-              href={`/profile/${userId}/participations`}
+              href={`/profile/${username}/participations`}
               className="categories__title-more"
             >
               Voir plus
