@@ -29,6 +29,7 @@ import {
   IoLocationSharp,
   IoTv,
 } from 'react-icons/io5';
+import slugify from 'slugify';
 import Date from '../../components/Date/Date';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { fetchEvent } from '../../store/reducers/event';
@@ -36,6 +37,7 @@ import { registerToEvent } from '../../store/reducers/registerEvent';
 import { unregisterToEvent } from '../../store/reducers/unregisterEvent';
 
 import './Event.scss';
+import CreateAvatar from '../../components/Element/CreateAvatar';
 
 function Event() {
   const dispatch = useAppDispatch();
@@ -256,10 +258,11 @@ function Event() {
               <Box className="event__attendees">
                 {eventData.participants.map((attendee) => (
                   <Box key={attendee.id} className="attendee">
-                    <Avatar />
                     <Anchor
                       className="attendee-username"
-                      href={`/event/profile/${attendee.username}`}
+                      href={`/profile/${slugify(attendee.username, {
+                        lower: true,
+                      })}`}
                     >
                       {attendee.username}
                     </Anchor>

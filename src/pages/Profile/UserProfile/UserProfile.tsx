@@ -57,7 +57,7 @@ function UserProfile() {
   useEffect(() => {
     if (username !== undefined) {
       const userId = parseInt(username, 10);
-      dispatch(profile(userId));
+      dispatch(profile(username));
       dispatch(fetchUserEvents(userId));
     }
   }, [dispatch, username]);

@@ -1,13 +1,5 @@
 import { useEffect } from 'react';
-import {
-  Anchor,
-  Image,
-  Box,
-  Flex,
-  Title,
-  SimpleGrid,
-  Button,
-} from '@mantine/core';
+import { Anchor, Image, Box, Flex, Title } from '@mantine/core';
 import Slider from '../../components/Slider/Slider';
 import EventThumb from '../../components/Element/Thumb/Event';
 import { Event as AppEvent } from '../../@types/event';
@@ -61,12 +53,11 @@ function Home() {
 
   const isConnected = useAppSelector((state) => state.login.isConnected);
   // const userGames = useAppSelector((state) => state.loggedUser.data.games);
+  const userAuth = LocalStorage.getItem('auth');
+  const { userId } = userAuth.auth;
 
   useEffect(() => {
     if (isConnected) {
-      const userAuth = LocalStorage.getItem('auth');
-
-      const { userId } = userAuth.auth;
       dispatch(fetchAllUserFavGames(userId));
       dispatch(fetchUserEvents(userId));
     }
@@ -85,7 +76,10 @@ function Home() {
           <Flex justify="space-between" align="center" className="title">
             <Title>Mes participations</Title>
 
-            <Anchor href="#" className="categories__title-more">
+            <Anchor
+              href={`/profile/${userId}/participations`}
+              className="categories__title-more"
+            >
               Voir plus
             </Anchor>
           </Flex>
@@ -119,7 +113,7 @@ function Home() {
         <Flex justify="space-between" align="center" className="title">
           <Title>Évènements à venir</Title>
 
-          <Anchor href="#" className="categories__title-more">
+          <Anchor href="/events/upcoming" className="categories__title-more">
             Voir plus
           </Anchor>
         </Flex>
@@ -154,7 +148,7 @@ function Home() {
         <Flex justify="space-between" align="center" className="title">
           <Title>Évènements populaires</Title>
 
-          <Anchor href="#" className="categories__title-more">
+          <Anchor href="/events/populars" className="categories__title-more">
             Voir plus
           </Anchor>
         </Flex>

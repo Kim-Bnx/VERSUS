@@ -33,6 +33,16 @@
   background-color: var(--mantine-color-indigo-light);
 }
 
+.mantine-Tabs-panel .mantine-TypographyStylesProvider-root {
+  margin: 0;
+  padding: 0;
+}
+
+.event__presentation,
+.event__attendees {
+  margin: var(--mantine-spacing-lg) 0;
+}
+
 .attendee {
   display: flex;
   align-items: center;

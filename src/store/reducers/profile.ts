@@ -14,8 +14,8 @@ const initialState: ProfileState = {
   error: null,
 };
 
-export const profile = createAsyncThunk('profile', async (userId: number) => {
-  const { data } = await axios.get(`http://localhost:3000/user/${userId}`);
+export const profile = createAsyncThunk('profile', async (username: string) => {
+  const { data } = await axios.get(`http://localhost:3000/user/${username}`);
 
   return data;
 });
