@@ -158,7 +158,7 @@ function Home() {
       {isConnected && favGames.length > 0 && (
         <Box className="container">
           <Box className="title">
-            <Title tt="capitalize">vos jeux préférés</Title>
+            <Title tt="capitalize">mes jeux préférés</Title>
           </Box>
 
           <SimpleGrid cols={4} className="games__grid">
