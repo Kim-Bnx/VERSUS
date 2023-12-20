@@ -9,7 +9,7 @@ const initialState: UserFavGamesState = {
 };
 
 export const fetchAllUserFavGames = createAsyncThunk(
-  'userGames',
+  'userFavGames',
   async (userId: number | null) => {
     const { data } = await axios.get(`http://localhost:3000/user/${userId}`);
 
