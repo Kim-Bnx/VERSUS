@@ -16,6 +16,8 @@ import Terms from './pages/Footer/Terms/Terms';
 import EventSettings from './pages/EventSettings/EventSettings';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import EventAdmin from './components/ProtectedRoute/EventAdmin';
+import Populars from './pages/Categories/Populars';
+import Upcoming from './pages/Categories/Upcoming';
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +28,14 @@ export const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
+      },
+      {
+        path: '/events/populars',
+        element: <Populars />,
+      },
+      {
+        path: '/events/upcoming',
+        element: <Upcoming />,
       },
       {
         path: 'event/create',
