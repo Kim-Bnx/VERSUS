@@ -79,3 +79,9 @@ export type EventsState = {
   modified: boolean;
   error: string | null;
 };
+
+export type UserEventsState = {
+  events: Event[];
+  error: null | string;
+  isLoading: boolean;
+};
