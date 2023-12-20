@@ -27,7 +27,9 @@ function PlatformsSquares({
             }`}
             onClick={() => handlePlatformSelection(platform.id)}
           >
-            <Text size="0.9rem">{platform.name}</Text>
+            <Text size="0.9rem" px="0.5rem">
+              {platform.name}
+            </Text>
           </Flex>
         </Grid.Col>
       ))}

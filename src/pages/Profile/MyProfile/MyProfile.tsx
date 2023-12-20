@@ -339,7 +339,9 @@ function MyProfile() {
               {userPlatformsState.map((platform) => (
                 <Grid.Col span={1} key={platform.id}>
                   <Flex justify="center" align="center" className="platform">
-                    <Text size="0.9rem">{platform.name}</Text>
+                    <Text size="0.9rem" px="0.5rem">
+                      {platform.name}
+                    </Text>
                   </Flex>
                 </Grid.Col>
               ))}
