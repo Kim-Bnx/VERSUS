@@ -25,25 +25,31 @@
     z-index: 1;
     background: linear-gradient(
       0deg,
-      rgba(0, 0, 0, 0.8) 12%,
-      rgba(0, 0, 0, 0) 50%
+      rgba(17, 17, 20, 0.7) 30%,
+      rgba(0, 0, 0, 0) 60%
     );
+  }
+
+  &__type {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
   }
 }
 
 .thumb {
-  position: relative;
-  height: 19rem;
+  display: grid;
+  grid-template-rows: 1fr max-content;
+  gap: var(--mantine-spacing-sm);
+  height: 15rem;
 
   &__infos {
-    position: absolute;
-    bottom: 4rem;
-    left: 1.5rem;
+    align-self: end;
+    margin: 0 var(--mantine-spacing-md);
   }
+
   &__dates {
-    position: absolute;
-    padding: 0.6rem 1rem;
-    bottom: 0;
+    padding: 0.5rem 1rem;
   }
 }
 

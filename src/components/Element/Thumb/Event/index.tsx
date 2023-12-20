@@ -1,9 +1,10 @@
-import { BackgroundImage, Box, Flex, Text } from '@mantine/core';
+import { BackgroundImage, Box, Flex, Pill, Text, Title } from '@mantine/core';
 import TypeTag from '../../TypeTag';
 import FavoriteBtn from '../../FavoriteBtn';
 import Date from '../../../Date/Date';
 
 import './index.scss';
+import { IoCalendarClearOutline } from 'react-icons/io5';
 
 type EventThumbProps = {
   image: string;
@@ -24,32 +25,29 @@ function EventThumb({
 }: EventThumbProps) {
   return (
     <BackgroundImage src={image} className="eventhumb" radius="md">
-      <Flex className="thumb" direction="column">
+      <Pill className="eventhumb__type">{type}</Pill>
+
+      <Box className="thumb">
         {/* <FavoriteBtn /> */}
 
         <Box c="white" className="thumb__infos">
           <Text tt="uppercase">{game}</Text>
-          <Text tt="capitalize" size="2rem">
-            {name}
-          </Text>
+          <Title order={3}>{name}</Title>
         </Box>
-
-        <TypeTag name={type} />
 
         <Flex
           justify="space-between"
           align="center"
+          wrap="wrap"
           miw="100%"
           className="thumb__dates"
         >
-          <Text className="thumb__dates-start">
-            <Date startDate={date} />
-          </Text>
-          <Text className="thumb__dates-duration">
-            Commence dans {countdown} jours
-          </Text>
+          <Flex align="center" gap="sm" className="thumb__dates-start">
+            <IoCalendarClearOutline /> <Date startDate={date} />
+          </Flex>
+          <Text className="thumb__dates-duration">Dans {countdown} jours</Text>
         </Flex>
-      </Flex>
+      </Box>
     </BackgroundImage>
   );
 }

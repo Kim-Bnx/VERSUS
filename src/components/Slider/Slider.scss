@@ -2,15 +2,11 @@
 
 .slider {
   display: flex;
-  height: 30rem;
+  height: 25rem;
+  border-radius: var(--mantine-radius-md);
 
   .type-tag {
     bottom: 1rem;
-  }
-
-  .button--favorite {
-    right: 2rem;
-    top: 1rem;
   }
 
   .carousel {
@@ -35,46 +31,43 @@
     .slide {
       display: flex;
       border-right: 5px solid transparent;
-      border-radius: var(--mantine-radius-md);
 
       &-image {
         width: 60%;
         background-size: cover;
         background-position: bottom;
         position: relative;
+        border-radius: var(--mantine-radius-md) 0 0 var(--mantine-radius-md);
+
+        & .infos {
+          position: absolute;
+          bottom: 1rem;
+          right: 1rem;
+        }
       }
 
       &-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: var(--mantine-spacing-mg);
         width: 40%;
-        .event {
-          border-radius: 0 var(--mantine-radius-md) var(--mantine-radius-md) 0;
-          padding: 2rem;
-          &-title {
-            &__name {
-              padding-bottom: 0.5rem;
-            }
-          }
+        border-radius: 0 var(--mantine-radius-md) var(--mantine-radius-md) 0;
+        padding: 2rem;
+      }
 
-          &__date {
-            padding: 2rem 0;
-          }
-
-          &-link {
-            position: absolute;
-            bottom: 3rem;
-            right: 4rem;
-          }
-        }
+      &-button {
+        justify-self: flex-end;
       }
     }
   }
 }
 
-[data-mantine-color-scheme='dark'] .slide-content .event {
+[data-mantine-color-scheme='dark'] .slide-content {
   background-color: var(--mantine-color-dark-9);
 }
 
-[data-mantine-color-scheme='light'] .slide-content .event {
+[data-mantine-color-scheme='light'] .slide-content {
   background-color: var(--mantine-color-gray-3);
 }
 
@@ -87,13 +80,15 @@
         flex-direction: column;
 
         &-image {
-          height: 200px;
+          height: 250px;
           width: 100%;
+          border-radius: var(--mantine-radius-md) var(--mantine-radius-md) 0 0;
         }
 
         &-content {
           height: 300px;
           width: 100%;
+          border-radius: 0 0 var(--mantine-radius-md) var(--mantine-radius-md);
         }
       }
     }

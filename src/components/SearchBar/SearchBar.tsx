@@ -61,7 +61,7 @@ function SearchBar() {
     <>
       <Autocomplete
         className="search-bar"
-        placeholder="Recherche un event, team, joueur ..."
+        placeholder="Recherche un event, joueur ..."
         aria-label="Barre de recherche"
         leftSection={icon}
         value={searchTerm}
