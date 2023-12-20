@@ -66,7 +66,7 @@ function Header({ opened, toggle }: { opened: boolean; toggle: () => void }) {
         ) : (
           <Anchor href="/profile" className="header__profile">
             <Flex align="center" gap="sm">
-              <Text visibleFrom="lg">{userNameValue}</Text>
+              <Text visibleFrom="md">{userNameValue}</Text>
               <CreateAvatar hw="2.5rem" seed={useAvatarValue} />
             </Flex>
           </Anchor>

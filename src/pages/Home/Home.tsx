@@ -1,4 +1,4 @@
-import { Anchor, Image, Box, Flex, Title, SimpleGrid } from '@mantine/core';
+import { Anchor, Image, Box, Flex, Title } from '@mantine/core';
 import Slider from '../../components/Slider/Slider';
 import EventThumb from '../../components/Element/Thumb/Event';
 
@@ -7,9 +7,9 @@ import './Home.scss';
 function Home() {
   return (
     <>
-      <Flex justify="center" align="center" className="title-container">
+      <Box className="hero full-height">
         <Title order={1}>Organisez, rassemblez, jouez !</Title>
-      </Flex>
+      </Box>
 
       <Slider />
 

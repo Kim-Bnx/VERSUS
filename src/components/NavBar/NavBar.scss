@@ -9,7 +9,21 @@
   color: #333c6e;
 }
 
+.navbar__head {
+  position: relative;
+  text-align: center;
+
+  &-burger {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+  }
+}
+
 .logo {
+  text-align: center;
   font-family: 'Fugaz One', sans-serif;
   font-size: 2rem;
   text-transform: uppercase;
