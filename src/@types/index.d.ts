@@ -51,3 +51,22 @@ export type ProfilePlatformsState = {
   isSuccess: boolean;
   error: null | string;
 };
+
+export type UserFavGamesState = {
+  games: Game[];
+  isSuccess: boolean;
+  error: null | string;
+};
+
+export type Game = {
+  id: number;
+  name: string;
+  thumbnail: string;
+  createdAt: tring;
+  updatedAt: null | string;
+  user_like_game: {
+    createdAt: null | string;
+    user_id: null | number;
+    game_id: null | number;
+  };
+};
