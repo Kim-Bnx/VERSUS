@@ -186,7 +186,7 @@ function Event() {
                 {eventData.location}
               </Text>
               <Text>
-                <IoTv color="var(--mantine-color-blue-filled)" />
+                <IoTv color="var(--mantine-color-indigo-filled)" />
                 {eventData.platform.name}
               </Text>
             </Flex>
@@ -203,7 +203,6 @@ function Event() {
                 Editer
               </Button>
             )}
-            <Button className="event__buttons--follow">Suivre</Button>
             <Button className="event__buttons--contact">
               {eventData.contact}
             </Button>
@@ -228,6 +227,7 @@ function Event() {
       </div>
 
       <Tabs
+        color="indigo"
         defaultValue="presentation_tab"
         className="full-width event__content"
       >
