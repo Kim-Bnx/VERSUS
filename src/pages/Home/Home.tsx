@@ -72,7 +72,7 @@ function Home() {
 
       <Slider />
 
-      {isConnected && (
+      {isConnected && userEvents.length > 0 && (
         <Box className="container">
           <Flex justify="space-between" align="center" className="title">
             <Title tt="capitalize">Mes events</Title>

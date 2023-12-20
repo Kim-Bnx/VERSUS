@@ -16,6 +16,8 @@ import { profile } from '../../../store/reducers/profile';
 import TeamThumb from '../../../components/Element/Thumb/Team';
 import EventThumb from '../../../components/Element/Thumb/Event';
 import CreateAvatar from '../../../components/Element/CreateAvatar';
+import { fetchUserEvents } from '../../../store/reducers/userEvents';
+import DateFormat from '../../../components/Date/Date';
 
 import '../Profile.scss';
 
@@ -31,17 +33,32 @@ const membersList = [
 function UserProfile() {
   const dispatch = useAppDispatch();
   const userData = useAppSelector((state) => state.profile.data);
+  const userEvents = useAppSelector((state) => state.userEvents.events);
+  const userEventsNumber = useAppSelector(
+    (state) => state.userEvents.organize.length
+  );
   const { username } = useParams();
 
   const userNameValue = userData.username;
   const userAvatarValue = userData.avatar;
   const userGamesList = userData.games;
   const userPlatformsList = userData.platforms;
+  const userCreatedAt = userData.createdAt;
+
+  const calculateDaysLeft = (startDate) => {
+    const now = new Date();
+    const start = new Date(startDate);
+    const difference = start - now;
+    const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+
+    return daysLeft > 0 ? daysLeft : 0;
+  };
 
   useEffect(() => {
     if (username !== undefined) {
       const userId = parseInt(username, 10);
       dispatch(profile(userId));
+      dispatch(fetchUserEvents(userId));
     }
   }, [dispatch, username]);
 
@@ -61,13 +78,17 @@ function UserProfile() {
 
               <Flex>
                 <Text mr="1rem">
-                  <span className="bold">56</span> partipations
+                  <span className="bold">12</span> partipations
                 </Text>
                 <Text mr="1rem">
-                  <span className="bold">56</span> événements crées
+                  <span className="bold">{userEventsNumber}</span> événements
+                  crées
                 </Text>
                 <Text>
-                  Membre depuis le <span className="bold">12/11/2023</span>
+                  Membre depuis le{' '}
+                  <span className="bold">
+                    <DateFormat startDate={userCreatedAt} />
+                  </span>
                 </Text>
               </Flex>
 
@@ -97,32 +118,20 @@ function UserProfile() {
         </Title>
 
         <SimpleGrid cols={3} mt="1rem" className="categories-grid">
-          <EventThumb
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            game="league of legend"
-            name="Friendly party"
-            type="PC"
-            date="10/12/2023"
-            countdown={5}
-          />
-
-          <EventThumb
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            game="mario kart 8 : deluxe"
-            name="blueME for fun"
-            type="switch"
-            date="10/12/2023"
-            countdown={8}
-          />
-
-          <EventThumb
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            game="goldeneye 007"
-            name="old school edition"
-            type="retro"
-            date="8/12/2023"
-            countdown={1}
-          />
+          {userEvents.slice(0, 3).map((userEvent) => (
+            <EventThumb
+              key={userEvent.id}
+              image={userEvent.thumbnail || 'url_de_limage_par_defaut'}
+              name={userEvent.title}
+              type={
+                userEvent.platform
+                  ? userEvent.platform.name
+                  : 'Plateforme non définie'
+              }
+              date={userEvent.start_date}
+              countdown={calculateDaysLeft(userEvent.start_date)}
+            />
+          ))}
         </SimpleGrid>
       </Box>
 

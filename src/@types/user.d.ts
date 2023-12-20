@@ -19,6 +19,7 @@ export type ProfileState = {
     avatar: string;
     games: UserGames[];
     platforms: UserPlatforms[];
+    createdAt: string;
   };
   error: null | string;
 };

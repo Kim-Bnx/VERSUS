@@ -39,8 +39,6 @@ function MyProfile() {
   const dispatch = useAppDispatch();
   const [userId, setUserId] = useState(0);
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [toggleEditProfile, setToggleEditProfile] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [visible, { toggle }] = useDisclosure(false);
