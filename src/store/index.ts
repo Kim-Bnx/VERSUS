@@ -3,6 +3,8 @@ import loginReducer from './reducers/login';
 import eventReducer from './reducers/event';
 import newEventReducer from './reducers/createEvent';
 import updateEventReducer from './reducers/updateEvent';
+import registerEventReducer from './reducers/registerEvent';
+import unregisterEventReducer from './reducers/unregisterEvent';
 import searchReducer from './reducers/search';
 import signupReducer from './reducers/signup';
 import userReducer from './reducers/user';
@@ -17,6 +19,8 @@ const store = configureStore({
     event: eventReducer,
     newEvent: newEventReducer,
     updatedEvent: updateEventReducer,
+    registerEvent: registerEventReducer,
+    unregisterEvent: unregisterEventReducer,
     search: searchReducer,
     signup: signupReducer,
     user: userReducer,

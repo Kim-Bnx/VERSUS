@@ -26,5 +26,33 @@
 }
 
 .event__content {
-  padding: var(--mantine-spacing-xl) 0;
+  margin-top: -1rem;
+}
+
+.content__tabs {
+  background-color: var(--mantine-color-blue-light);
+}
+
+.attendee {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-md);
+  margin: var(--mantine-spacing-lg) 0;
+}
+
+.attendee-username {
+  flex-grow: 2;
+}
+
+.notification_registration {
+  position: fixed !important;
+  top: 100px;
+  right: 30px;
+  transform: translateX(150%);
+  transition: 0.5s;
+
+  &.active {
+    transform: translateX(0%);
+    transition: 0.5s;
+  }
 }

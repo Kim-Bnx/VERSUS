@@ -1,3 +1,5 @@
+import { UserData } from './user';
+
 export type NewEventState = {
   title: string;
   title_slug: string;
@@ -35,6 +37,8 @@ export type Event = {
   plateform?: string;
   plateform_id?: number;
   user_id?: number;
+  organizer: UserData;
+  participants: UserData[];
 };
 
 export type EventState = {
@@ -42,4 +46,14 @@ export type EventState = {
   isLoading: boolean;
   modified: boolean;
   error: string | null;
+};
+
+export type RegistrationState = {
+  isRegistered: boolean;
+  error: string | null;
+};
+
+export type UserRegistration = {
+  event_id: number;
+  user_id: number;
 };
