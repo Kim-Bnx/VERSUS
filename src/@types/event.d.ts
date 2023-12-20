@@ -32,9 +32,20 @@ export type Event = {
   contact?: string;
   type_event?: string;
   type_event_id?: number;
-  game?: string;
+  game?: {
+    id: null | number;
+    name: string;
+    thumbnail: null | string;
+    createdAt: null | string;
+    updatedAt: null | string;
+  };
   game_id?: number;
-  platform?: string;
+  platform?: {
+    id: null | number;
+    name: string;
+    createdAt: string;
+    updatedAt: null | string;
+  };
   platform_id?: number;
   user_id?: number;
   organizer: UserData;
@@ -56,4 +67,17 @@ export type RegistrationState = {
 export type UserRegistration = {
   event_id: number;
   user_id: number;
+};
+
+export type EventsState = {
+  events: Event[];
+  isLoading: boolean;
+  modified: boolean;
+  error: string | null;
+};
+
+export type UserEventsState = {
+  events: Event[];
+  error: null | string;
+  isLoading: boolean;
 };

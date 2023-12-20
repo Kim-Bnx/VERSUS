@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import loginReducer from './reducers/login';
 import eventReducer from './reducers/event';
+import eventsReducer from './reducers/events';
 import newEventReducer from './reducers/createEvent';
 import deleteEventReducer from './reducers/deleteEvent';
 import publishEventReducer from './reducers/publishEvent';
@@ -11,17 +12,20 @@ import searchReducer from './reducers/search';
 import signupReducer from './reducers/signup';
 import loggedUserReducer from './reducers/loggedUser';
 import loggedUserUpdateReducer from './reducers/loggedUserUpdate';
+import userFavGamesReducer from './reducers/userFavGames';
 import userGamesReducer from './reducers/userGames';
 import userPlatformsReducer from './reducers/userPlatforms';
 import profileReducer from './reducers/profile';
 import gameReducer from './reducers/game';
 import platformReducer from './reducers/platform';
 import passwordChangeReducer from './reducers/passwordChange';
+import userEventsReducer from './reducers/userEvents';
 
 const store = configureStore({
   reducer: {
     login: loginReducer,
     event: eventReducer,
+    events: eventsReducer,
     newEvent: newEventReducer,
     updatedEvent: updateEventReducer,
     deleteEvent: deleteEventReducer,
@@ -31,7 +35,9 @@ const store = configureStore({
     search: searchReducer,
     signup: signupReducer,
     loggedUser: loggedUserReducer,
+    userEvents: userEventsReducer,
     loggedUserUpdate: loggedUserUpdateReducer,
+    userFavGames: userFavGamesReducer,
     userGames: userGamesReducer,
     userPlatforms: userPlatformsReducer,
     profile: profileReducer,

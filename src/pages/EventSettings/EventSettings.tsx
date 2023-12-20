@@ -277,7 +277,7 @@ function EventSettings() {
         <Box className="settings_informations-inputs">
           <TextInput
             type="text"
-            label="Tire de l'évènement"
+            label="Titre de l'évènement"
             placeholder="Titre de l'évènement"
             {...form.getInputProps('title')}
           />
