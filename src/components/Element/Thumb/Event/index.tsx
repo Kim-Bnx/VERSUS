@@ -25,7 +25,7 @@ function EventThumb({
   return (
     <BackgroundImage src={image}>
       <Flex className="thumb" direction="column">
-        <FavoriteBtn />
+        {/* <FavoriteBtn /> */}
 
         <Box c="white" className="thumb__infos">
           <Text tt="uppercase">{game}</Text>

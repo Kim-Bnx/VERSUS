@@ -75,7 +75,7 @@ function Home() {
       {isConnected && userEvents.length > 0 && (
         <Box className="container">
           <Flex justify="space-between" align="center" className="title">
-            <Title tt="capitalize">Mes events</Title>
+            <Title>Mes events</Title>
 
             <Anchor href="#" className="categories__title-more">
               Voir plus
@@ -84,18 +84,23 @@ function Home() {
 
           <SimpleGrid cols={3} className="categories-grid">
             {userEvents.slice(0, 3).map((userEvent) => (
-              <EventThumb
+              <Anchor
+                href={`/event/${userEvent.title_slug}`}
+                unstyled
                 key={userEvent.id}
-                image={userEvent.thumbnail || 'url_de_limage_par_defaut'}
-                name={userEvent.title}
-                type={
-                  userEvent.platform
-                    ? userEvent.platform.name
-                    : 'Plateforme non définie'
-                }
-                date={userEvent.start_date}
-                countdown={calculateDaysLeft(userEvent.start_date)}
-              />
+              >
+                <EventThumb
+                  image={userEvent.thumbnail || 'url_de_limage_par_defaut'}
+                  name={userEvent.title}
+                  type={
+                    userEvent.platform
+                      ? userEvent.platform.name
+                      : 'Plateforme non définie'
+                  }
+                  date={userEvent.start_date}
+                  countdown={calculateDaysLeft(userEvent.start_date)}
+                />
+              </Anchor>
             ))}
           </SimpleGrid>
         </Box>
@@ -103,7 +108,7 @@ function Home() {
 
       <Box className="container">
         <Flex justify="space-between" align="center" className="title">
-          <Title tt="capitalize">les prochains events</Title>
+          <Title>Les prochains events</Title>
 
           <Anchor href="#" className="categories__title-more">
             Voir plus
@@ -112,24 +117,27 @@ function Home() {
 
         <SimpleGrid cols={3} className="categories-grid">
           {events.slice(0, 3).map((event) => (
-            <EventThumb
-              key={event.id}
-              image={event.thumbnail || 'url_de_limage_par_defaut'}
-              game={event.game ? event.game.name : 'nom pas trouvé'}
-              name={event.title}
-              type={
-                event.platform ? event.platform.name : 'Plateforme non définie'
-              }
-              date={event.start_date}
-              countdown={calculateDaysLeft(event.start_date)}
-            />
+            <Anchor unstyled key={event.id} href={`/event/${event.title_slug}`}>
+              <EventThumb
+                image={event.thumbnail || 'url_de_limage_par_defaut'}
+                game={event.game ? event.game.name : 'nom pas trouvé'}
+                name={event.title}
+                type={
+                  event.platform
+                    ? event.platform.name
+                    : 'Plateforme non définie'
+                }
+                date={event.start_date}
+                countdown={calculateDaysLeft(event.start_date)}
+              />
+            </Anchor>
           ))}
         </SimpleGrid>
       </Box>
 
       <Box className="container">
         <Flex justify="space-between" align="center" className="title">
-          <Title tt="capitalize">Les plus populaires</Title>
+          <Title>Les plus populaires</Title>
 
           <Anchor href="#" className="categories__title-more">
             Voir plus
@@ -138,17 +146,20 @@ function Home() {
 
         <SimpleGrid cols={3} className="categories-grid">
           {sortedEvents.slice(0, 3).map((event) => (
-            <EventThumb
-              key={event.id}
-              image={event.thumbnail || 'url_de_limage_par_defaut'}
-              game={event.game ? event.game.name : 'nom pas trouvé'}
-              name={event.title}
-              type={
-                event.platform ? event.platform.name : 'Plateforme non définie'
-              }
-              date={event.start_date}
-              countdown={calculateDaysLeft(event.start_date)}
-            />
+            <Anchor unstyled href={`/event/${event.title_slug}`} key={event.id}>
+              <EventThumb
+                image={event.thumbnail || 'url_de_limage_par_defaut'}
+                game={event.game ? event.game.name : 'nom pas trouvé'}
+                name={event.title}
+                type={
+                  event.platform
+                    ? event.platform.name
+                    : 'Plateforme non définie'
+                }
+                date={event.start_date}
+                countdown={calculateDaysLeft(event.start_date)}
+              />
+            </Anchor>
           ))}
         </SimpleGrid>
       </Box>
@@ -156,12 +167,12 @@ function Home() {
       {isConnected && favGames.length > 0 && (
         <Box className="container">
           <Box className="title">
-            <Title tt="capitalize">mes jeux préférés</Title>
+            <Title>Mes jeux préférés</Title>
           </Box>
 
           <SimpleGrid cols={4} className="games__grid">
-            {favGames.map((game) => (
-              <Anchor href="/game/events" key={game.id}>
+            {favGames.slice(0, 4).map((game) => (
+              <Anchor unstyled href="/game/events" key={game.id}>
                 <Image src={game.thumbnail} className="thumb" />
               </Anchor>
             ))}

@@ -209,7 +209,7 @@ function MyProfile() {
     <Box className="wrapper" w="100%">
       <Flex justify="space-between" align="center">
         <Title size="2rem" order={2}>
-          {toggleEditProfile ? 'Modifier votre profil' : 'Votre Profil'}
+          {toggleEditProfile ? 'Modifier votre profil' : 'Votre profil'}
         </Title>
 
         <Flex justify="space-between" align="center">
