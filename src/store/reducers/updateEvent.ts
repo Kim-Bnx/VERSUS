@@ -65,7 +65,6 @@ const updateEventSlice = createSlice({
     builder.addCase(updateEvent.fulfilled, (state) => {
       state.isLoading = false;
       state.modified = true;
-      console.log('event updated');
     });
   },
 });

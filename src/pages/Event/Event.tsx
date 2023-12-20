@@ -5,33 +5,37 @@ import {
   ActionIcon,
   Anchor,
   Avatar,
+  Badge,
   Box,
   Button,
   Flex,
   Image,
-  Notification,
   Pill,
   Stack,
   Tabs,
   Text,
   Title,
+  Tooltip,
   TypographyStylesProvider,
   rem,
 } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import {
   IoCalendarClearOutline,
   IoCheckmarkSharp,
   IoCloseOutline,
+  IoCreateOutline,
   IoGameController,
   IoLocationSharp,
   IoTv,
 } from 'react-icons/io5';
-import './Event.scss';
+import Date from '../../components/Date/Date';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { fetchEvent } from '../../store/reducers/event';
-import Date from '../../components/Date/Date';
 import { registerToEvent } from '../../store/reducers/registerEvent';
 import { unregisterToEvent } from '../../store/reducers/unregisterEvent';
+
+import './Event.scss';
 
 function Event() {
   const dispatch = useAppDispatch();
@@ -58,27 +62,26 @@ function Event() {
     return eventData.organizer.id === userData.id;
   };
 
-  console.log(`organizer: ${eventData.organizer.id}`);
-  console.log(`user log : ${userData.id}`);
-
-  const [isRegister, setIsRegister] = useState(false);
-
-  const checkIcon = (
-    <IoCheckmarkSharp style={{ width: rem(20), height: rem(20) }} />
-  );
-
   const handleEventRegister = () => {
     dispatch(
       registerToEvent({
         event_id: eventData.id,
         user_id: userData.id,
       })
-    );
-
-    setIsRegister(true);
-    setTimeout(() => {
-      setIsRegister(false);
-    }, 3000);
+    )
+      .unwrap()
+      .then(() => {
+        notifications.show({
+          title: 'Inscription validée !',
+          message: "Vous êtes inscrit·e à l'évènement",
+          autoClose: 2500,
+          onClose: () => navigate(0),
+          color: 'green',
+          icon: (
+            <IoCheckmarkSharp style={{ width: rem(18), height: rem(18) }} />
+          ),
+        });
+      });
   };
 
   const handleEventUnregister = () => {
@@ -87,12 +90,20 @@ function Event() {
         event_id: eventData.id,
         user_id: userData.id,
       })
-    );
-
-    setIsRegister(true);
-    setTimeout(() => {
-      setIsRegister(false);
-    }, 3000);
+    )
+      .unwrap()
+      .then(() => {
+        notifications.show({
+          title: 'Inscription annulée',
+          message: "Vous n'êtes plus inscrit·e à l'évènement",
+          autoClose: 2500,
+          onClose: () => navigate(0),
+          color: 'blue',
+          icon: (
+            <IoCheckmarkSharp style={{ width: rem(18), height: rem(18) }} />
+          ),
+        });
+      });
   };
 
   const handleDeleteAttendee = (user_id: number) => {
@@ -101,9 +112,20 @@ function Event() {
         event_id: eventData.id,
         user_id,
       })
-    );
-    console.log('participant supprimé');
-    navigate(0);
+    )
+      .unwrap()
+      .then(() => {
+        notifications.show({
+          title: 'Participant retiré',
+          message: '',
+          autoClose: 2500,
+          onClose: () => navigate(0),
+          color: 'blue',
+          icon: (
+            <IoCheckmarkSharp style={{ width: rem(18), height: rem(18) }} />
+          ),
+        });
+      });
   };
 
   return (
@@ -125,14 +147,24 @@ function Event() {
           </Box>
           <div className="event__infos">
             <Box className="event_infos--presentation">
-              <Flex gap="sm">
-                <Pill>{eventData.status}</Pill>
+              {eventData.type_event && <Pill>{eventData.type_event.name}</Pill>}
+              <Flex align="center" gap="sm">
+                <Title order={1}>{eventData.title}</Title>
 
-                {eventData.type_event && (
-                  <Pill>{eventData.type_event.name}</Pill>
+                {isEventAdmin() && eventData.status === 'published' ? (
+                  <Tooltip.Floating label="Evènement publié" color="gray">
+                    <Badge color="green" size="sm">
+                      <IoCheckmarkSharp />
+                    </Badge>
+                  </Tooltip.Floating>
+                ) : (
+                  <Tooltip.Floating label="Brouillon" color="gray">
+                    <Badge color="gray" size="sm">
+                      <IoCreateOutline />
+                    </Badge>
+                  </Tooltip.Floating>
                 )}
               </Flex>
-              <Title order={1}>{eventData.title}</Title>
               <Text size="md">
                 <Flex align="center" gap="sm">
                   <IoCalendarClearOutline />
@@ -155,20 +187,22 @@ function Event() {
               </Text>
               <Text>
                 <IoTv color="var(--mantine-color-blue-filled)" />
-                PC
+                {eventData.platform.name}
               </Text>
             </Flex>
           </div>
 
           <Stack className="event__buttons">
-            <Button
-              className="event__buttons--follow"
-              variant="outline"
-              component="a"
-              href={`/event/${eventData.title_slug}/settings`}
-            >
-              Editer
-            </Button>
+            {isEventAdmin() && (
+              <Button
+                className="event__buttons--follow"
+                variant="outline"
+                component="a"
+                href={`/event/${eventData.title_slug}/settings`}
+              >
+                Editer
+              </Button>
+            )}
             <Button className="event__buttons--follow">Suivre</Button>
             <Button className="event__buttons--contact">
               {eventData.contact}
@@ -246,32 +280,6 @@ function Event() {
           </div>
         </div>
       </Tabs>
-
-      {isRegisterToEvent() ? (
-        <Notification
-          className={`notification_registration ${isRegister ? 'active' : ''}`}
-          icon={checkIcon}
-          color="teal"
-          title="Inscription annulée"
-          mt="md"
-        >
-          Vous êtes désinscrit·e à l&apos;évènement
-          <br />
-          <Anchor onClick={() => navigate(0)}>Recharger la page</Anchor>
-        </Notification>
-      ) : (
-        <Notification
-          className={`notification_registration ${isRegister ? 'active' : ''}`}
-          icon={checkIcon}
-          color="teal"
-          title="Inscription validée !"
-          mt="md"
-        >
-          Vous êtes inscrit·e à l&apos;évènement
-          <br />
-          <Anchor onClick={() => navigate(0)}>Recharger la page</Anchor>
-        </Notification>
-      )}
     </>
   );
 }
