@@ -8,7 +8,7 @@
 
 .event__header {
   margin-top: -1rem;
-  background-color: var(--mantine-color-blue-light);
+  background-color: var(--mantine-color-indigo-light);
   padding: var(--mantine-spacing-xl) 0;
 
   &-content {
@@ -30,7 +30,17 @@
 }
 
 .content__tabs {
-  background-color: var(--mantine-color-blue-light);
+  background-color: var(--mantine-color-indigo-light);
+}
+
+.mantine-Tabs-panel .mantine-TypographyStylesProvider-root {
+  margin: 0;
+  padding: 0;
+}
+
+.event__presentation,
+.event__attendees {
+  margin: var(--mantine-spacing-lg) 0;
 }
 
 .attendee {

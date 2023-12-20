@@ -5,7 +5,7 @@ const themeProps = createTheme({
   white: '#fff', // neutral color (e.g. background)
   black: '#000', // contrast color (e.g. text)
 
-  primaryColor: 'blue',
+  primaryColor: 'indigo',
   defaultRadius: 'sm',
 
   // fontFamily: 'Open Sans, sans-serif',

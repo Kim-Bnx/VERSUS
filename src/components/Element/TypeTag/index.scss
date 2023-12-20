@@ -2,11 +2,18 @@
   position: absolute;
   bottom: 3.5rem;
   right: 1rem;
-  background-color: #1d1d1d;
-  padding: 0.4rem 1.2rem;
+  padding: 0.4rem 0.6rem;
   border-radius: 0.8rem;
 
   p {
     letter-spacing: 0.05rem;
   }
+}
+
+[data-mantine-color-scheme='dark'] .type-tag {
+  background-color: var(--mantine-color-dark-9);
+}
+
+[data-mantine-color-scheme='light'] .type-tag {
+  background-color: var(--mantine-color-gray-3);
 }

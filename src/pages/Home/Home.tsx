@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Anchor, Image, Box, Flex, Title, SimpleGrid } from '@mantine/core';
+import { Anchor, Image, Box, Flex, Title } from '@mantine/core';
 import Slider from '../../components/Slider/Slider';
 import EventThumb from '../../components/Element/Thumb/Event';
 import { Event as AppEvent } from '../../@types/event';
@@ -53,12 +53,11 @@ function Home() {
 
   const isConnected = useAppSelector((state) => state.login.isConnected);
   // const userGames = useAppSelector((state) => state.loggedUser.data.games);
+  const userAuth = LocalStorage.getItem('auth');
+  const { userId } = userAuth.auth;
 
   useEffect(() => {
     if (isConnected) {
-      const userAuth = LocalStorage.getItem('auth');
-
-      const { userId } = userAuth.auth;
       dispatch(fetchAllUserFavGames(userId));
       dispatch(fetchUserEvents(userId));
     }
@@ -66,28 +65,32 @@ function Home() {
 
   return (
     <>
-      <Flex justify="center" align="center" className="title-container">
+      <Box className="hero full-height">
         <Title order={1}>Organisez, rassemblez, jouez !</Title>
-      </Flex>
+      </Box>
 
       <Slider />
 
       {isConnected && userEvents.length > 0 && (
         <Box className="container">
           <Flex justify="space-between" align="center" className="title">
-            <Title>Mes events</Title>
+            <Title>Mes participations</Title>
 
-            <Anchor href="#" className="categories__title-more">
+            <Anchor
+              href={`/profile/${userId}/participations`}
+              className="categories__title-more"
+            >
               Voir plus
             </Anchor>
           </Flex>
 
-          <SimpleGrid cols={3} className="categories-grid">
+          <div className="categories-grid">
             {userEvents.slice(0, 3).map((userEvent) => (
               <Anchor
                 href={`/event/${userEvent.title_slug}`}
                 unstyled
                 key={userEvent.id}
+                className="eventhumb-link"
               >
                 <EventThumb
                   image={userEvent.thumbnail || 'url_de_limage_par_defaut'}
@@ -102,22 +105,28 @@ function Home() {
                 />
               </Anchor>
             ))}
-          </SimpleGrid>
+          </div>
         </Box>
       )}
 
       <Box className="container">
         <Flex justify="space-between" align="center" className="title">
-          <Title>Les prochains events</Title>
+          <Title>Évènements à venir</Title>
 
-          <Anchor href="#" className="categories__title-more">
+          <Anchor href="/events/upcoming" className="categories__title-more">
             Voir plus
           </Anchor>
         </Flex>
 
-        <SimpleGrid cols={3} className="categories-grid">
+        <div className="categories-grid">
           {events.slice(0, 3).map((event) => (
-            <Anchor unstyled key={event.id} href={`/event/${event.title_slug}`}>
+            <Anchor
+              unstyled
+              component="a"
+              key={event.id}
+              href={`/event/${event.title_slug}`}
+              className="eventhumb-link"
+            >
               <EventThumb
                 image={event.thumbnail || 'url_de_limage_par_defaut'}
                 game={event.game ? event.game.name : 'nom pas trouvé'}
@@ -132,21 +141,26 @@ function Home() {
               />
             </Anchor>
           ))}
-        </SimpleGrid>
+        </div>
       </Box>
 
       <Box className="container">
         <Flex justify="space-between" align="center" className="title">
-          <Title>Les plus populaires</Title>
+          <Title>Évènements populaires</Title>
 
-          <Anchor href="#" className="categories__title-more">
+          <Anchor href="/events/populars" className="categories__title-more">
             Voir plus
           </Anchor>
         </Flex>
 
-        <SimpleGrid cols={3} className="categories-grid">
+        <div className="categories-grid">
           {sortedEvents.slice(0, 3).map((event) => (
-            <Anchor unstyled href={`/event/${event.title_slug}`} key={event.id}>
+            <Anchor
+              unstyled
+              href={`/event/${event.title_slug}`}
+              key={event.id}
+              className="eventhumb-link"
+            >
               <EventThumb
                 image={event.thumbnail || 'url_de_limage_par_defaut'}
                 game={event.game ? event.game.name : 'nom pas trouvé'}
@@ -161,7 +175,7 @@ function Home() {
               />
             </Anchor>
           ))}
-        </SimpleGrid>
+        </div>
       </Box>
 
       {isConnected && favGames.length > 0 && (
@@ -170,13 +184,13 @@ function Home() {
             <Title>Mes jeux préférés</Title>
           </Box>
 
-          <SimpleGrid cols={4} className="games__grid">
+          <div className="games__grid">
             {favGames.slice(0, 4).map((game) => (
               <Anchor unstyled href="/game/events" key={game.id}>
-                <Image src={game.thumbnail} className="thumb" />
+                <Image src={game.thumbnail} h={350} radius="md" sizes="cover" />
               </Anchor>
             ))}
-          </SimpleGrid>
+          </div>
         </Box>
       )}
     </>

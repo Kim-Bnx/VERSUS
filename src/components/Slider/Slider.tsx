@@ -1,6 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Anchor, BackgroundImage, Box, Flex, Text, Title } from '@mantine/core';
+import {
+  Anchor,
+  BackgroundImage,
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Pill,
+  Space,
+  Text,
+  Title,
+} from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
+import {
+  IoCalendarClearOutline,
+  IoGameController,
+  IoLocationSharp,
+  IoTv,
+} from 'react-icons/io5';
 import TypeTag from '../Element/TypeTag';
 import FavoriteBtn from '../Element/FavoriteBtn';
 
@@ -11,6 +28,7 @@ import { fetchAllEvents } from '../../store/reducers/events';
 // Use alias to avoid confusion with global type Event
 import { Event as AppEvent } from '../../@types/event';
 import Date from '../Date/Date';
+import Event from '../../pages/Event/Event';
 
 function Slider() {
   const dispatch = useAppDispatch();
@@ -54,7 +72,7 @@ function Slider() {
         withControls={false}
         withIndicators
         slideSize="100%"
-        slideGap="xs"
+        slidesToScroll={1}
         loop
         style={{ flex: 1 }}
       >
@@ -66,49 +84,37 @@ function Slider() {
                 event.banner ||
                 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80'
               }
-            >
-              {event.platform && event.platform.name && (
-                <TypeTag name={event.platform.name} />
-              )}
-            </BackgroundImage>
+            />
 
-            <Box c="white" className="slide-content">
-              <Box className="event">
-                <Box className="event-description">
-                  <Box className="event-title">
-                    <Title size="2rem" className="event-title__name">
-                      {event.title}
-                    </Title>
-                    {event.game && event.game.name && (
-                      <Text tt="uppercase" className="event-title__game">
-                        {event.game.name}
-                      </Text>
-                    )}
-                  </Box>
-
-                  <Text tt="uppercase" size="0.9rem" className="event__date">
-                    <Date
-                      startDate={event.start_date}
-                      endDate={event.end_date}
-                    />
-                  </Text>
-
-                  <Text className="event__description">
-                    {event.description}
-                  </Text>
-                </Box>
-
-                <Flex className="event-link">
-                  <Anchor
-                    href={`/event/${event.title_slug}`}
-                    className="button"
-                  >
-                    Voir plus
-                  </Anchor>
+            <Box className="slide-content">
+              <Box className="slide-title">
+                <Title order={2}>{event.title}</Title>
+                <Flex align="center" gap="sm">
+                  <IoCalendarClearOutline />
+                  <Date startDate={event.start_date} endDate={event.end_date} />
                 </Flex>
-
-                <FavoriteBtn />
+                <Space h="md" />
+                <Text className="slide-description">{event.description}</Text>
               </Box>
+              <Flex justify="space-between">
+                <Flex gap="md">
+                  <Text>
+                    <IoGameController color="var(--mantine-color-indigo-filled)" />
+                    {event.game.name}
+                  </Text>
+                  <Text>
+                    <IoTv color="var(--mantine-color-indigo-filled)" />
+                    {event.platform.name}
+                  </Text>
+                </Flex>
+                <Button
+                  component="a"
+                  href={`/event/${event.title_slug}`}
+                  className="slide-button"
+                >
+                  Voir
+                </Button>
+              </Flex>
             </Box>
           </Carousel.Slide>
         ))}

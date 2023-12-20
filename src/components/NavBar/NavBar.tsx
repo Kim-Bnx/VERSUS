@@ -8,6 +8,7 @@ import {
   Tooltip,
   useComputedColorScheme,
   useMantineColorScheme,
+  Burger,
 } from '@mantine/core';
 import './NavBar.scss';
 import { IoLogOutOutline, IoMoon, IoSunnySharp } from 'react-icons/io5';
@@ -17,7 +18,7 @@ import NavBarGuest from './NavBarGuest';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { logout } from '../../store/reducers/login';
 
-function NavBar() {
+function NavBar({ opened, toggle }: { opened: boolean; toggle: () => void }) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -44,9 +45,27 @@ function NavBar() {
 
   return (
     <AppShell.Navbar p="lg" className="navbar">
-      <Anchor unstyled c="white" href="/" className="logo">
-        Versus
-      </Anchor>
+      <Box className="navbar__head">
+        <Burger
+          className="navbar__head-burger"
+          opened={opened}
+          onClick={toggle}
+          hiddenFrom="sm"
+          size="sm"
+        />
+        <Anchor unstyled href="/" className="logo">
+          Versus
+        </Anchor>
+      </Box>
+
+      <Button
+        hiddenFrom="sm"
+        className="button header__actions-event"
+        component="a"
+        href="/event/create"
+      >
+        Organiser un event
+      </Button>
 
       {isConnected && <NavBarUser />}
 
