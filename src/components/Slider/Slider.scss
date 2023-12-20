@@ -99,3 +99,15 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .mantine-Carousel-container {
+    width: 462px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .m-fcd81474.mantine-Carousel-container {
+    width: 340px;
+  }
+}

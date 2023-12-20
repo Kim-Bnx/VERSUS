@@ -16,6 +16,7 @@ function Slider() {
         withControls={false}
         withIndicators
         slideSize="100%"
+        slidesToScroll={1}
         loop
         style={{ flex: 1 }}
       >
