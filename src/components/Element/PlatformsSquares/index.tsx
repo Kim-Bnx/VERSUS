@@ -6,14 +6,14 @@ type PlatformSquareProps = {
   span: number;
   data: { id: number; name: string }[];
   selectedPlatforms: { [key: number]: boolean };
-  onSelectPlatform: (id: number) => void;
+  handlePlatformSelection: (id: number) => void;
 };
 
 function PlatformsSquares({
   span,
   data,
   selectedPlatforms,
-  onSelectPlatform,
+  handlePlatformSelection,
 }: PlatformSquareProps) {
   return (
     <Grid justify="flex-start" align="center" gutter={15}>
@@ -25,7 +25,7 @@ function PlatformsSquares({
             className={`platform ${
               selectedPlatforms[platform.id] ? 'selected' : ''
             }`}
-            onClick={() => onSelectPlatform(platform.id)}
+            onClick={() => handlePlatformSelection(platform.id)}
           >
             <Text size="0.9rem">{platform.name}</Text>
           </Flex>

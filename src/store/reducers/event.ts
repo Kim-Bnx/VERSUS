@@ -1,6 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { EventState } from '../../@types/event';
+import { UserData as TUserData } from '../../@types/user';
+
+const UserData: TUserData = {
+  id: 0,
+  email: '',
+  password: '',
+  confirmPassword: '',
+  username: '',
+  avatar: '',
+};
 
 const initialState: EventState = {
   event: {
@@ -34,6 +44,8 @@ const initialState: EventState = {
     },
     platform_id: 0,
     user_id: 0,
+    organizer: UserData,
+    participants: [],
   },
   isLoading: true,
   modified: false,

@@ -64,7 +64,7 @@ function Home() {
     }
   }, [dispatch, isConnected]);
 
-  console.log(userEvents);
+  console.log(events);
 
   return (
     <>
@@ -117,7 +117,7 @@ function Home() {
             <EventThumb
               key={event.id}
               image={event.thumbnail || 'url_de_limage_par_defaut'}
-              game={event.game.name}
+              game={event.game ? event.game.name : 'nom pas trouvé'}
               name={event.title}
               type={
                 event.platform ? event.platform.name : 'Plateforme non définie'
@@ -143,7 +143,7 @@ function Home() {
             <EventThumb
               key={event.id}
               image={event.thumbnail || 'url_de_limage_par_defaut'}
-              game={event.game.name}
+              game={event.game ? event.game.name : 'nom pas trouvé'}
               name={event.title}
               type={
                 event.platform ? event.platform.name : 'Plateforme non définie'

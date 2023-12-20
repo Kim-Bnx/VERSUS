@@ -1,6 +1,16 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { EventState, Event } from '../../@types/event';
 import { axiosInstance } from '../../utils/axios';
+import { EventState, Event } from '../../@types/event';
+import { UserData as TUserData } from '../../@types/user';
+
+const UserData: TUserData = {
+  id: 0,
+  email: '',
+  password: '',
+  confirmPassword: '',
+  username: '',
+  avatar: '',
+};
 
 const initialState: EventState = {
   event: {
@@ -34,6 +44,8 @@ const initialState: EventState = {
     },
     platform_id: 0,
     user_id: 0,
+    organizer: UserData,
+    participants: [],
   },
   isLoading: true,
   modified: false,
@@ -64,7 +76,6 @@ const updateEventSlice = createSlice({
     builder.addCase(updateEvent.fulfilled, (state) => {
       state.isLoading = false;
       state.modified = true;
-      console.log('event updated');
     });
   },
 });

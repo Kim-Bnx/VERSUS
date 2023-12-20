@@ -23,13 +23,14 @@ import {
 function CreateEvent() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const userId = useAppSelector((state) => state.user.data.id);
 
   const form = useForm({
     initialValues: {
       title: useAppSelector((state) => state.newEvent.title),
       start_date: useAppSelector((state) => state.newEvent.start_date),
       end_date: useAppSelector((state) => state.newEvent.end_date),
-      user_id: 1,
+      user_id: userId,
     },
     transformValues: (values) => ({
       ...values,
@@ -37,6 +38,12 @@ function CreateEvent() {
       end_date: values.end_date.toString(),
     }),
   });
+
+  useEffect(() => {
+    form.setValues({
+      user_id: userId,
+    });
+  }, [userId]);
 
   useEffect(() => {
     dispatch(
@@ -65,7 +72,6 @@ function CreateEvent() {
   }, [dispatch, form.values.end_date]);
 
   // SUBMIT FORM TO CREATE EVENT
-
   const handleSubmitCreateEvent = (values: TransformedValues<typeof form>) => {
     dispatch(createEvent(values))
       // Catch the asyncThunk result
@@ -118,7 +124,7 @@ function CreateEvent() {
           </DatesProvider>
           <VisuallyHidden>
             <Grid.Col span={12}>
-              <Input type="number" {...form.getInputProps('end_date')} />
+              <Input type="number" {...form.getInputProps('user_id')} />
             </Grid.Col>
           </VisuallyHidden>
         </Grid>
