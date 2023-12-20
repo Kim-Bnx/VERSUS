@@ -1,5 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { axiosInstance } from '../../utils/axios';
+import { axiosInstanceToken } from '../../utils/axios';
 import { NewEventState, NewEvent } from '../../@types/event';
 
 const initialState: NewEventState = {
@@ -14,10 +14,7 @@ const initialState: NewEventState = {
 export const createEvent = createAsyncThunk(
   'event/create',
   async (event: NewEvent) => {
-    const { data } = await axiosInstance.post(
-      'http://localhost:3000/event',
-      event
-    );
+    const { data } = await axiosInstanceToken.post('/event', event);
     return data;
   }
 );

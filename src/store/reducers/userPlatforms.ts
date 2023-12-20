@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ProfilePlatformsState } from '../../@types';
-import { axiosInstance } from '../../utils/axios';
+import { axiosInstanceToken } from '../../utils/axios';
 
 const initialState: ProfilePlatformsState = {
   platforms: [],
@@ -17,8 +17,8 @@ export const userPlatforms = createAsyncThunk(
     platform_id: number[];
     userId: number | null;
   }) => {
-    const { data } = await axiosInstance.patch(
-      `http://localhost:3000/user/${userId}/preferences/platforms`,
+    const { data } = await axiosInstanceToken.patch(
+      `/user/${userId}/preferences/platforms`,
       { platform_id }
     );
 

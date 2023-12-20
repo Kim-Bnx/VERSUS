@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { GameState, GameList } from '../../@types/game';
+import { axiosInstance } from '../../utils/axios';
 
 const initialState: GameState = {
   games: [],
@@ -8,7 +8,7 @@ const initialState: GameState = {
 };
 
 export const fetchGames = createAsyncThunk('game', async () => {
-  const { data } = await axios.get(`http://localhost:3000/games`);
+  const { data } = await axiosInstance.get(`/games`);
   return data;
 });
 

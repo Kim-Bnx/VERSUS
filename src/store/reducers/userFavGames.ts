@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { UserFavGamesState } from '../../@types';
+import { axiosInstance } from '../../utils/axios';
 
 const initialState: UserFavGamesState = {
   games: [],
@@ -11,7 +11,7 @@ const initialState: UserFavGamesState = {
 export const fetchAllUserFavGames = createAsyncThunk(
   'userFavGames',
   async (userId: number | null) => {
-    const { data } = await axios.get(`http://localhost:3000/user/${userId}`);
+    const { data } = await axiosInstance.get(`/user/${userId}`);
 
     return data;
   }

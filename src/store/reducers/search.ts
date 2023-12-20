@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { SearchState } from '../../@types/search';
+import { axiosInstance } from '../../utils/axios';
 
 const initialState: SearchState = {
   isLoading: false,
@@ -14,7 +14,7 @@ const initialState: SearchState = {
 };
 
 export const search = createAsyncThunk('search', async (searchTerm: string) => {
-  const { data } = await axios.get('http://localhost:3000/search/all', {
+  const { data } = await axiosInstance.get('/search/all', {
     params: {
       q: searchTerm,
     },

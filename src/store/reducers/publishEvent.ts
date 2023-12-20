@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { axiosInstance } from '../../utils/axios';
+import { axiosInstanceToken } from '../../utils/axios';
 
 type PublicationValidation = {
   id: number;
@@ -11,10 +11,7 @@ const initialState = {};
 export const publishEvent = createAsyncThunk(
   'event/publish',
   async ({ id, status }: PublicationValidation) => {
-    const { data } = await axiosInstance.patch(
-      `http://localhost:3000/event/${id}`,
-      { status }
-    );
+    const { data } = await axiosInstanceToken.patch(`/event/${id}`, { status });
     return data;
   }
 );

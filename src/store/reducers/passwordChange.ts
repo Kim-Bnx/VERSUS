@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { axiosInstance } from '../../utils/axios';
+import { axiosInstanceToken } from '../../utils/axios';
 import { PasswordChangeState, NewPassword } from '../../@types/user';
 
 const initialState: PasswordChangeState = {
@@ -14,8 +14,8 @@ const initialState: PasswordChangeState = {
 export const patchPassword = createAsyncThunk(
   'passwordChange',
   async (newUserData: NewPassword) => {
-    const { data } = await axiosInstance.patch(
-      `http://localhost:3000/user/${newUserData.id}/edit/password`,
+    const { data } = await axiosInstanceToken.patch(
+      `/user/${newUserData.id}/edit/password`,
       {
         password: newUserData.password,
         confirmation: newUserData.confirmPassword,
