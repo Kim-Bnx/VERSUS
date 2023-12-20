@@ -33,7 +33,7 @@
       border-right: 5px solid transparent;
 
       &-image {
-        width: 60%;
+        width: 55%;
         background-size: cover;
         background-position: bottom;
         position: relative;
@@ -51,7 +51,7 @@
         flex-direction: column;
         justify-content: space-between;
         gap: var(--mantine-spacing-mg);
-        width: 40%;
+        width: 45%;
         border-radius: 0 var(--mantine-radius-md) var(--mantine-radius-md) 0;
         padding: 2rem;
       }
@@ -71,7 +71,7 @@
   background-color: var(--mantine-color-gray-3);
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 768px) {
   .slider {
     height: 500px;
 
@@ -97,12 +97,12 @@
 
 @media screen and (max-width: 768px) {
   .mantine-Carousel-container {
-    width: 462px;
+    width: 566px;
   }
 }
 
 @media screen and (max-width: 425px) {
   .m-fcd81474.mantine-Carousel-container {
-    width: 340px;
+    width: 394px;
   }
 }
