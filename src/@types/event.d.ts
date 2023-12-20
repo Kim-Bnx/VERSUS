@@ -78,6 +78,7 @@ export type EventsState = {
 
 export type UserEventsState = {
   events: Event[];
+  organize: [];
   error: null | string;
   isLoading: boolean;
 };

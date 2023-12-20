@@ -4,6 +4,7 @@ import { UserEventsState } from '../../@types/event';
 
 const initialState: UserEventsState = {
   events: [],
+  organize: [],
   error: null,
   isLoading: false,
 };
