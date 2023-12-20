@@ -19,13 +19,11 @@ import {
   changeInputEventValue,
   createEvent,
 } from '../../store/reducers/createEvent';
-import { LocalStorage } from '../../utils/LocalStorage';
 
 function CreateEvent() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const userAuth = LocalStorage.getItem('auth');
-  const { userId } = userAuth.auth;
+  const userId = useAppSelector((state) => state.user.data.id);
 
   const form = useForm({
     initialValues: {

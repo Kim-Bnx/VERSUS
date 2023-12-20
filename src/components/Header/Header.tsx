@@ -30,7 +30,7 @@ function Header() {
         <Button
           className="button button-new__event"
           component="a"
-          href="/event/create"
+          href={isConnected ? '/event/create' : '/sign-in'}
         >
           Organiser un event
         </Button>
