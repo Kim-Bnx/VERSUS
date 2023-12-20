@@ -16,16 +16,12 @@ function EventAdmin({ children }) {
   useEffect(() => {
     dispatch(fetchEvent(slug))
       .unwrap()
-      .catch(() => {
-        navigate('/error');
+      .then((response) => {
+        if (response.organizer.id !== userData.id) {
+          navigate('/error');
+        }
       });
   }, [dispatch, slug]);
-
-  useEffect(() => {
-    if (eventData.organizer.id !== userData.id) {
-      navigate('/error');
-    }
-  }, [eventData]);
 
   return children;
 }

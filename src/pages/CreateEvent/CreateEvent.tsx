@@ -40,6 +40,12 @@ function CreateEvent() {
   });
 
   useEffect(() => {
+    form.setValues({
+      user_id: userId,
+    });
+  }, [userId]);
+
+  useEffect(() => {
     dispatch(
       changeInputEventValue({ fieldName: 'title', value: form.values.title })
     );
@@ -66,7 +72,6 @@ function CreateEvent() {
   }, [dispatch, form.values.end_date]);
 
   // SUBMIT FORM TO CREATE EVENT
-
   const handleSubmitCreateEvent = (values: TransformedValues<typeof form>) => {
     dispatch(createEvent(values))
       // Catch the asyncThunk result
