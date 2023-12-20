@@ -7,82 +7,19 @@ import {
   Grid,
   SimpleGrid,
   Text,
+  GridCol,
 } from '@mantine/core';
 import { IconHeartFilled, IconStarFilled } from '@tabler/icons-react';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { profile } from '../../../store/reducers/profile';
 import TeamThumb from '../../../components/Element/Thumb/Team';
 import EventThumb from '../../../components/Element/Thumb/Event';
 import CreateAvatar from '../../../components/Element/CreateAvatar';
-import { userGames } from '../../../store/reducers/userGames';
-import { userPlatforms } from '../../../store/reducers/userPlatforms';
-import PlatformSquare from '../../../components/Element/PlatformsSquares';
-import GamesLabels from '../../../components/Element/GamesLabels';
+import { fetchUserEvents } from '../../../store/reducers/userEvents';
+import DateFormat from '../../../components/Date/Date';
 
 import '../Profile.scss';
-
-const GAMES = [
-  {
-    id: 0,
-    name: 'League Of Legend',
-  },
-  {
-    id: 1,
-    name: 'Super Smash Bros.',
-  },
-  {
-    id: 2,
-    name: 'Valorant',
-  },
-  {
-    id: 3,
-    name: 'Minecraft',
-  },
-  {
-    id: 4,
-    name: 'Overwatch',
-  },
-  {
-    id: 5,
-    name: 'GTA V',
-  },
-  {
-    id: 6,
-    name: 'Fall Guys',
-  },
-  {
-    id: 7,
-    name: 'Call Of Duty',
-  },
-  {
-    id: 8,
-    name: 'Demineur',
-  },
-];
-
-const PLATFORMS = [
-  {
-    id: 0,
-    name: 'PC',
-  },
-  {
-    id: 1,
-    name: 'Switch',
-  },
-  {
-    id: 2,
-    name: 'PS5',
-  },
-  {
-    id: 3,
-    name: 'XBOX',
-  },
-  {
-    id: 4,
-    name: 'Retro',
-  },
-];
 
 const membersList = [
   'RubisIron',
@@ -93,67 +30,35 @@ const membersList = [
   'MemberSix',
 ];
 
-type SelectedItems = { [key: number]: boolean };
-
 function UserProfile() {
   const dispatch = useAppDispatch();
   const userData = useAppSelector((state) => state.profile.data);
+  const userEvents = useAppSelector((state) => state.userEvents.events);
+  const userEventsNumber = useAppSelector(
+    (state) => state.userEvents.organize.length
+  );
   const { username } = useParams();
-  const [selectedGames, setSelectedGames] = useState<{
-    [key: number]: boolean;
-  }>({});
-
-  const [selectedPlatforms, setSelectedPlatforms] = useState<{
-    [key: number]: boolean;
-  }>({});
 
   const userNameValue = userData.username;
   const userAvatarValue = userData.avatar;
+  const userGamesList = userData.games;
+  const userPlatformsList = userData.platforms;
+  const userCreatedAt = userData.createdAt;
 
-  const handleSelection = useCallback(
-    (
-      setId: React.Dispatch<React.SetStateAction<SelectedItems>>,
-      id: number
-    ) => {
-      setId((prevSelected) => ({
-        ...prevSelected,
-        [id]: !prevSelected[id],
-      }));
-    },
-    []
-  );
+  const calculateDaysLeft = (startDate) => {
+    const now = new Date();
+    const start = new Date(startDate);
+    const difference = start - now;
+    const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
 
-  const handlePlatformSelection = useCallback(
-    (id: number) => {
-      handleSelection(setSelectedPlatforms, id);
-    },
-    [handleSelection]
-  );
-
-  const handleGameSelection = useCallback(
-    (id: number) => {
-      handleSelection(setSelectedGames, id);
-    },
-    [handleSelection]
-  );
-
-  const handleEditPreferences = () => {
-    // const selectedGameIds = Object.keys(selectedGames)
-    //   .filter((key) => selectedGames[parseInt(key, 10)])
-    //   .map((key) => parseInt(key, 10));
-    // const selectedPlatformIds = Object.keys(selectedPlatforms)
-    //   .filter((key) => selectedPlatforms[parseInt(key, 10)])
-    //   .map((key) => parseInt(key, 10));
-    // dispatch(profileGames({ games: selectedGameIds, userId: loggedUserId }));
-    // dispatch(
-    //   profilePlatforms({ platforms: selectedPlatformIds, userId: loggedUserId })
-    // );
+    return daysLeft > 0 ? daysLeft : 0;
   };
 
   useEffect(() => {
     if (username !== undefined) {
       const userId = parseInt(username, 10);
       dispatch(profile(userId));
+      dispatch(fetchUserEvents(userId));
     }
   }, [dispatch, username]);
 
@@ -173,13 +78,17 @@ function UserProfile() {
 
               <Flex>
                 <Text mr="1rem">
-                  <span className="bold">56</span> partipations
+                  <span className="bold">12</span> partipations
                 </Text>
                 <Text mr="1rem">
-                  <span className="bold">56</span> événements crées
+                  <span className="bold">{userEventsNumber}</span> événements
+                  crées
                 </Text>
                 <Text>
-                  Membre depuis le <span className="bold">12/11/2023</span>
+                  Membre depuis le{' '}
+                  <span className="bold">
+                    <DateFormat startDate={userCreatedAt} />
+                  </span>
                 </Text>
               </Flex>
 
@@ -209,32 +118,20 @@ function UserProfile() {
         </Title>
 
         <SimpleGrid cols={3} mt="1rem" className="categories-grid">
-          <EventThumb
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            game="league of legend"
-            name="Friendly party"
-            type="PC"
-            date="10/12/2023"
-            countdown={5}
-          />
-
-          <EventThumb
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            game="mario kart 8 : deluxe"
-            name="blueME for fun"
-            type="switch"
-            date="10/12/2023"
-            countdown={8}
-          />
-
-          <EventThumb
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            game="goldeneye 007"
-            name="old school edition"
-            type="retro"
-            date="8/12/2023"
-            countdown={1}
-          />
+          {userEvents.slice(0, 3).map((userEvent) => (
+            <EventThumb
+              key={userEvent.id}
+              image={userEvent.thumbnail || 'url_de_limage_par_defaut'}
+              name={userEvent.title}
+              type={
+                userEvent.platform
+                  ? userEvent.platform.name
+                  : 'Plateforme non définie'
+              }
+              date={userEvent.start_date}
+              countdown={calculateDaysLeft(userEvent.start_date)}
+            />
+          ))}
         </SimpleGrid>
       </Box>
 
@@ -292,7 +189,15 @@ function UserProfile() {
             Platformes
           </Title>
 
-          {/* <PlatformSquare span={2} data={PLATFORMS} /> */}
+          <Grid justify="flex-start" align="center" gutter={15}>
+            {userPlatformsList.map((platform) => (
+              <Grid.Col span={1} key={platform.id}>
+                <Flex justify="center" align="center" className="platform">
+                  <Text size="0.9rem">{platform.name}</Text>
+                </Flex>
+              </Grid.Col>
+            ))}
+          </Grid>
         </Box>
 
         <Box className="section section-full">
@@ -300,7 +205,20 @@ function UserProfile() {
             Jeux
           </Title>
 
-          <Grid gutter={15}>{/* <GamesLabels data={GAMES} /> */}</Grid>
+          <Grid
+            justify="flex-start"
+            align="center"
+            className="games-list"
+            gutter={15}
+          >
+            {userGamesList.map((game) => (
+              <GridCol key={game.id} span="content">
+                <Box className="game">
+                  <Text>{game.name}</Text>
+                </Box>
+              </GridCol>
+            ))}
+          </Grid>
         </Box>
       </Box>
     </Box>

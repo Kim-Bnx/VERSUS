@@ -4,35 +4,37 @@ import { UserState } from '../../@types/user';
 
 const initialState: UserState = {
   data: {
-    id: 0,
+    id: null,
     email: '',
     password: '',
     confirmPassword: '',
     username: '',
     avatar: '',
+    games: [],
+    platforms: [],
   },
   error: null,
 };
 
-export const user = createAsyncThunk('user', async (userId: number) => {
+export const loggedUser = createAsyncThunk('user', async (userId: number) => {
   const { data } = await axios.get(`http://localhost:3000/user/${userId}`);
 
   return data;
 });
 
 const userSlice = createSlice({
-  name: 'user',
+  name: 'loggedUser',
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(user.pending, (state) => {
+      .addCase(loggedUser.pending, (state) => {
         state.error = null;
       })
-      .addCase(user.rejected, (state) => {
+      .addCase(loggedUser.rejected, (state) => {
         state.error = 'id incorrect';
       })
-      .addCase(user.fulfilled, (state, action) => {
+      .addCase(loggedUser.fulfilled, (state, action) => {
         const payloadKeys = Object.keys(action.payload);
 
         payloadKeys.forEach((key) => {
@@ -44,5 +46,4 @@ const userSlice = createSlice({
   },
 });
 
-// export const {  } = userSlice.actions;
 export default userSlice.reducer;

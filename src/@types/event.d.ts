@@ -1,3 +1,5 @@
+import { UserData } from './user';
+
 export type NewEventState = {
   title: string;
   title_slug: string;
@@ -30,11 +32,24 @@ export type Event = {
   contact?: string;
   type_event?: string;
   type_event_id?: number;
-  game?: string;
+  game?: {
+    id: null | number;
+    name: string;
+    thumbnail: null | string;
+    createdAt: null | string;
+    updatedAt: null | string;
+  };
   game_id?: number;
-  plateform?: string;
-  plateform_id?: number;
+  platform?: {
+    id: null | number;
+    name: string;
+    createdAt: string;
+    updatedAt: null | string;
+  };
+  platform_id?: number;
   user_id?: number;
+  organizer: UserData;
+  participants: UserData[];
 };
 
 export type EventState = {
@@ -42,4 +57,28 @@ export type EventState = {
   isLoading: boolean;
   modified: boolean;
   error: string | null;
+};
+
+export type RegistrationState = {
+  isRegistered: boolean;
+  error: string | null;
+};
+
+export type UserRegistration = {
+  event_id: number;
+  user_id: number;
+};
+
+export type EventsState = {
+  events: Event[];
+  isLoading: boolean;
+  modified: boolean;
+  error: string | null;
+};
+
+export type UserEventsState = {
+  events: Event[];
+  organize: [];
+  error: null | string;
+  isLoading: boolean;
 };

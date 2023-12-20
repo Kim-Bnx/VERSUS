@@ -7,6 +7,9 @@ const initialState: ProfileState = {
     id: 0,
     username: '',
     avatar: '',
+    games: [],
+    platforms: [],
+    createdAt: '',
   },
   error: null,
 };

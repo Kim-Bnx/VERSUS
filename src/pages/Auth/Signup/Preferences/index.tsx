@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Anchor, Text, Box, Button, Flex, Group, Title } from '@mantine/core';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
@@ -8,78 +8,21 @@ import { userPlatforms } from '../../../../store/reducers/userPlatforms';
 import PlatformSquares from '../../../../components/Element/PlatformsSquares';
 import GamesLabels from '../../../../components/Element/GamesLabels';
 import { LocalStorage } from '../../../../utils/LocalStorage';
-
-const PLATFORMS = [
-  {
-    id: 0,
-    name: 'PC',
-  },
-  {
-    id: 1,
-    name: 'Switch',
-  },
-  {
-    id: 2,
-    name: 'PS5',
-  },
-  {
-    id: 3,
-    name: 'XBOX',
-  },
-  {
-    id: 4,
-    name: 'Retro',
-  },
-];
-
-const GAMES = [
-  {
-    id: 0,
-    name: 'League Of Legend',
-  },
-  {
-    id: 1,
-    name: 'Super Smash Bros.',
-  },
-  {
-    id: 2,
-    name: 'Valorant',
-  },
-  {
-    id: 3,
-    name: 'Minecraft',
-  },
-  {
-    id: 4,
-    name: 'Overwatch',
-  },
-  {
-    id: 5,
-    name: 'GTA V',
-  },
-  {
-    id: 6,
-    name: 'Fall Guys',
-  },
-  {
-    id: 7,
-    name: 'Call Of Duty',
-  },
-  {
-    id: 8,
-    name: 'Demineur',
-  },
-];
+import { fetchGames } from '../../../../store/reducers/game';
+import { fetchPlatforms } from '../../../../store/reducers/platform';
 
 type PreferencesProps = {
   onChangeView: (step: string) => void;
 };
+
 type SelectedItems = { [key: number]: boolean };
 
 function Preferences({ onChangeView }: PreferencesProps) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isSuccess = useAppSelector((state) => state.signup.isSuccess);
+  const gamesState = useAppSelector((state) => state.game.games);
+  const platformsState = useAppSelector((state) => state.platform.platforms);
 
   const [selectedGames, setSelectedGames] = useState<{
     [key: number]: boolean;
@@ -118,7 +61,7 @@ function Preferences({ onChangeView }: PreferencesProps) {
 
   const handleSubmitData = () => {
     const userAuth = LocalStorage.getItem('auth');
-    const { userId } = userAuth;
+    const { userId } = userAuth.auth;
 
     const selectedGamesIds = Object.keys(selectedGames)
       .filter((key) => selectedGames[parseInt(key, 10)])
@@ -128,13 +71,18 @@ function Preferences({ onChangeView }: PreferencesProps) {
       .filter((key) => selectedPlatforms[parseInt(key, 10)])
       .map((key) => parseInt(key, 10));
 
-    dispatch(userGames({ games: selectedGamesIds, userId }));
-    dispatch(userPlatforms({ platforms: selectedPlatformsIds, userId }));
+    dispatch(userGames({ game_id: selectedGamesIds, userId }));
+    dispatch(userPlatforms({ platform_id: selectedPlatformsIds, userId }));
+
+    if (isSuccess) {
+      navigate('/');
+    }
   };
 
-  if (isSuccess) {
-    navigate('/');
-  }
+  useEffect(() => {
+    dispatch(fetchGames());
+    dispatch(fetchPlatforms());
+  }, [dispatch]);
 
   return (
     <Flex align="center" justify="center" direction="column">
@@ -152,9 +100,9 @@ function Preferences({ onChangeView }: PreferencesProps) {
         </Title>
 
         <GamesLabels
-          data={GAMES}
+          data={gamesState}
           selectedGames={selectedGames}
-          onSelectGame={handleGameSelection}
+          handleGameSelection={handleGameSelection}
         />
       </Box>
 
@@ -165,9 +113,9 @@ function Preferences({ onChangeView }: PreferencesProps) {
 
         <PlatformSquares
           span={3}
-          data={PLATFORMS}
+          data={platformsState}
           selectedPlatforms={selectedPlatforms}
-          onSelectPlatform={handlePlatformSelection}
+          handlePlatformSelection={handlePlatformSelection}
         />
       </Box>
 

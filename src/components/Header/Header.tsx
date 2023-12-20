@@ -15,14 +15,14 @@ import SearchBar from '../SearchBar/SearchBar';
 
 import './Header.scss';
 import { LocalStorage } from '../../utils/LocalStorage';
-import { user } from '../../store/reducers/user';
+import { loggedUser } from '../../store/reducers/loggedUser';
 import CreateAvatar from '../Element/CreateAvatar';
 
 function Header({ opened, toggle }: { opened: boolean; toggle: () => void }) {
   // const [opened, { toggle }] = useDisclosure();
   const dispatch = useAppDispatch();
   const isConnected = useAppSelector((state) => state.login.isConnected);
-  const userData = useAppSelector((state) => state.user.data);
+  const userData = useAppSelector((state) => state.loggedUser.data);
   const userNameValue = userData.username;
   const useAvatarValue = userData.avatar;
 
@@ -31,7 +31,7 @@ function Header({ opened, toggle }: { opened: boolean; toggle: () => void }) {
       const userAuth = LocalStorage.getItem('auth');
 
       const { userId } = userAuth.auth;
-      dispatch(user(userId));
+      dispatch(loggedUser(userId));
     }
   }, [dispatch, isConnected]);
 
@@ -45,7 +45,7 @@ function Header({ opened, toggle }: { opened: boolean; toggle: () => void }) {
             visibleFrom="sm"
             className="button header__actions-event"
             component="a"
-            href="/event/create"
+            href={isConnected ? '/event/create' : '/sign-in'}
           >
             Organiser un event
           </Button>

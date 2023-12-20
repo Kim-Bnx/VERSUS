@@ -19,6 +19,7 @@
 		"@mantine/form": "^7.2.2",
 		"@mantine/hooks": "^7.2.2",
 		"@mantine/modals": "^7.2.2",
+		"@mantine/notifications": "^7.3.2",
 		"@mantine/tiptap": "^7.2.2",
 		"@reduxjs/toolkit": "^1.9.7",
 		"@tabler/icons-react": "^2.42.0",

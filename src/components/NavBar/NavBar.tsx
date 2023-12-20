@@ -12,6 +12,7 @@ import {
 } from '@mantine/core';
 import './NavBar.scss';
 import { IoLogOutOutline, IoMoon, IoSunnySharp } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 import NavBarUser from './NavBarUser';
 import NavBarGuest from './NavBarGuest';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
@@ -19,6 +20,7 @@ import { logout } from '../../store/reducers/login';
 
 function NavBar({ opened, toggle }: { opened: boolean; toggle: () => void }) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   // SETTINGS OF THE COLOR SCHEME SWITCH
   //
@@ -38,6 +40,7 @@ function NavBar({ opened, toggle }: { opened: boolean; toggle: () => void }) {
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate('/');
   };
 
   return (

@@ -1,6 +1,7 @@
 import { BackgroundImage, Box, Flex, Text } from '@mantine/core';
 import TypeTag from '../../TypeTag';
 import FavoriteBtn from '../../FavoriteBtn';
+import Date from '../../../Date/Date';
 
 import './index.scss';
 
@@ -24,7 +25,7 @@ function EventThumb({
   return (
     <BackgroundImage src={image} className="eventhumb" radius="md">
       <Flex className="thumb" direction="column">
-        <FavoriteBtn />
+        {/* <FavoriteBtn /> */}
 
         <Box c="white" className="thumb__infos">
           <Text tt="uppercase">{game}</Text>
@@ -41,8 +42,12 @@ function EventThumb({
           miw="100%"
           className="thumb__dates"
         >
-          <Text className="thumb__dates-start">{date}</Text>
-          <Text className="thumb__dates-duration">{countdown} jours</Text>
+          <Text className="thumb__dates-start">
+            <Date startDate={date} />
+          </Text>
+          <Text className="thumb__dates-duration">
+            Commence dans {countdown} jours
+          </Text>
         </Flex>
       </Flex>
     </BackgroundImage>
