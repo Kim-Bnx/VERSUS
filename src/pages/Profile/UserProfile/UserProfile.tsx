@@ -7,82 +7,17 @@ import {
   Grid,
   SimpleGrid,
   Text,
+  GridCol,
 } from '@mantine/core';
 import { IconHeartFilled, IconStarFilled } from '@tabler/icons-react';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { profile } from '../../../store/reducers/profile';
 import TeamThumb from '../../../components/Element/Thumb/Team';
 import EventThumb from '../../../components/Element/Thumb/Event';
 import CreateAvatar from '../../../components/Element/CreateAvatar';
-import { userGames } from '../../../store/reducers/userGames';
-import { userPlatforms } from '../../../store/reducers/userPlatforms';
-import PlatformSquare from '../../../components/Element/PlatformsSquares';
-import GamesLabels from '../../../components/Element/GamesLabels';
 
 import '../Profile.scss';
-
-const GAMES = [
-  {
-    id: 0,
-    name: 'League Of Legend',
-  },
-  {
-    id: 1,
-    name: 'Super Smash Bros.',
-  },
-  {
-    id: 2,
-    name: 'Valorant',
-  },
-  {
-    id: 3,
-    name: 'Minecraft',
-  },
-  {
-    id: 4,
-    name: 'Overwatch',
-  },
-  {
-    id: 5,
-    name: 'GTA V',
-  },
-  {
-    id: 6,
-    name: 'Fall Guys',
-  },
-  {
-    id: 7,
-    name: 'Call Of Duty',
-  },
-  {
-    id: 8,
-    name: 'Demineur',
-  },
-];
-
-const PLATFORMS = [
-  {
-    id: 0,
-    name: 'PC',
-  },
-  {
-    id: 1,
-    name: 'Switch',
-  },
-  {
-    id: 2,
-    name: 'PS5',
-  },
-  {
-    id: 3,
-    name: 'XBOX',
-  },
-  {
-    id: 4,
-    name: 'Retro',
-  },
-];
 
 const membersList = [
   'RubisIron',
@@ -93,62 +28,15 @@ const membersList = [
   'MemberSix',
 ];
 
-type SelectedItems = { [key: number]: boolean };
-
 function UserProfile() {
   const dispatch = useAppDispatch();
   const userData = useAppSelector((state) => state.profile.data);
   const { username } = useParams();
-  const [selectedGames, setSelectedGames] = useState<{
-    [key: number]: boolean;
-  }>({});
-
-  const [selectedPlatforms, setSelectedPlatforms] = useState<{
-    [key: number]: boolean;
-  }>({});
 
   const userNameValue = userData.username;
   const userAvatarValue = userData.avatar;
-
-  const handleSelection = useCallback(
-    (
-      setId: React.Dispatch<React.SetStateAction<SelectedItems>>,
-      id: number
-    ) => {
-      setId((prevSelected) => ({
-        ...prevSelected,
-        [id]: !prevSelected[id],
-      }));
-    },
-    []
-  );
-
-  const handlePlatformSelection = useCallback(
-    (id: number) => {
-      handleSelection(setSelectedPlatforms, id);
-    },
-    [handleSelection]
-  );
-
-  const handleGameSelection = useCallback(
-    (id: number) => {
-      handleSelection(setSelectedGames, id);
-    },
-    [handleSelection]
-  );
-
-  const handleEditPreferences = () => {
-    // const selectedGameIds = Object.keys(selectedGames)
-    //   .filter((key) => selectedGames[parseInt(key, 10)])
-    //   .map((key) => parseInt(key, 10));
-    // const selectedPlatformIds = Object.keys(selectedPlatforms)
-    //   .filter((key) => selectedPlatforms[parseInt(key, 10)])
-    //   .map((key) => parseInt(key, 10));
-    // dispatch(profileGames({ games: selectedGameIds, userId: loggedUserId }));
-    // dispatch(
-    //   profilePlatforms({ platforms: selectedPlatformIds, userId: loggedUserId })
-    // );
-  };
+  const userGamesList = userData.games;
+  const userPlatformsList = userData.platforms;
 
   useEffect(() => {
     if (username !== undefined) {
@@ -292,7 +180,15 @@ function UserProfile() {
             Platformes
           </Title>
 
-          {/* <PlatformSquare span={2} data={PLATFORMS} /> */}
+          <Grid justify="flex-start" align="center" gutter={15}>
+            {userPlatformsList.map((platform) => (
+              <Grid.Col span={1} key={platform.id}>
+                <Flex justify="center" align="center" className="platform">
+                  <Text size="0.9rem">{platform.name}</Text>
+                </Flex>
+              </Grid.Col>
+            ))}
+          </Grid>
         </Box>
 
         <Box className="section section-full">
@@ -300,7 +196,20 @@ function UserProfile() {
             Jeux
           </Title>
 
-          <Grid gutter={15}>{/* <GamesLabels data={GAMES} /> */}</Grid>
+          <Grid
+            justify="flex-start"
+            align="center"
+            className="games-list"
+            gutter={15}
+          >
+            {userGamesList.map((game) => (
+              <GridCol key={game.id} span="content">
+                <Box className="game">
+                  <Text>{game.name}</Text>
+                </Box>
+              </GridCol>
+            ))}
+          </Grid>
         </Box>
       </Box>
     </Box>

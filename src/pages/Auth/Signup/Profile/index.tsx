@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import {
   Anchor,
   Box,
@@ -13,9 +13,11 @@ import {
 } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { changeInputUserValue } from '../../../../store/reducers/updateUser';
+import {
+  loggedUserUpdate,
+  changeInputUserValue,
+} from '../../../../store/reducers/loggedUserUpdate';
 import CreateAvatar from '../../../../components/Element/CreateAvatar';
-import { user } from '../../../../store/reducers/user';
 import { LocalStorage } from '../../../../utils/LocalStorage';
 
 type ProfileProps = {
@@ -26,9 +28,9 @@ function Profile({ onChangeView }: ProfileProps) {
   const dispatch = useAppDispatch();
   const [selectedAvatar, setSelectedAvatar] = useState('');
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const hasError = useAppSelector((state) => state.user.error);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const hasError = useAppSelector((state) => state.loggedUser.error);
 
   const avatars = [
     'avatar1',
@@ -47,21 +49,32 @@ function Profile({ onChangeView }: ProfileProps) {
 
   const handleClickAvatarValue = (seed: string) => {
     setSelectedAvatar(seed);
-
-    dispatch(changeInputUserValue({ fieldName: 'avatar', value: seed }));
   };
 
   const handleSubmitData = () => {
     const userAuth = LocalStorage.getItem('auth');
-    const { userId } = userAuth;
+    const { userId } = userAuth.auth;
 
     dispatch(changeInputUserValue({ fieldName: 'username', value: username }));
-    dispatch(user(userId));
+    dispatch(
+      loggedUserUpdate({
+        userDatas: { username, avatar: selectedAvatar },
+        userId,
+      })
+    )
+      .unwrap()
+      .then(() => {
+        setIsSuccess(true);
+      });
+  };
 
-    if (!hasError) {
+  useEffect(() => {
+    if (hasError) {
+      setIsSuccess(false);
+    } else if (isSuccess) {
       onChangeView('preferences');
     }
-  };
+  }, [hasError, onChangeView, isSuccess]);
 
   return (
     <Flex align="center" justify="center" direction="column">

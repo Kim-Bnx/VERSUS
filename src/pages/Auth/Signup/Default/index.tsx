@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import {
   Anchor,
   Text,
@@ -23,7 +23,6 @@ function Default({ onChangeView }: DefaultProps) {
   const [passwordValue, setPasswordValue] = useState('');
   const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
 
-  const isSuccess = useAppSelector((state) => state.signup.isSuccess);
   const errorMsg = useAppSelector((state) => state.signup.error);
 
   const handleChangeEmailValue = (event: ChangeEvent<HTMLInputElement>) => {
@@ -54,22 +53,19 @@ function Default({ onChangeView }: DefaultProps) {
         password: passwordValue,
         confirmation: confirmPasswordValue,
       })
-    );
+    )
+      .unwrap()
+      .then(() => {
+        dispatch(
+          login({
+            email: emailValue,
+            password: passwordValue,
+          })
+        );
+
+        onChangeView('profile');
+      });
   };
-
-  useEffect(() => {
-    if (isSuccess) {
-      dispatch(
-        login({
-          email: emailValue,
-          password: passwordValue,
-        })
-      );
-
-      onChangeView('profile');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess]);
 
   return (
     <Box>

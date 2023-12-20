@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { ProfileState, UserData } from '../../@types';
+import { axiosInstance } from '../../utils/axios';
 
 const initialState: ProfileState = {
   data: {
@@ -14,26 +14,26 @@ const initialState: ProfileState = {
   error: null,
 };
 
-export const updateUser = createAsyncThunk(
-  'updateUser',
+export const loggedUserUpdate = createAsyncThunk(
+  'loggedUserUpdate',
   async ({
-    accountInfos,
+    userDatas,
     userId,
   }: {
-    accountInfos: UserData;
+    userDatas: UserData;
     userId: number | null;
   }) => {
-    const { data } = await axios.patch(
+    const { data } = await axiosInstance.patch(
       `http://localhost:3000/user/${userId}`,
-      accountInfos
+      userDatas
     );
 
     return data;
   }
 );
 
-const updateUserSlice = createSlice({
-  name: 'updateUser',
+const loggedUserUpdateSlice = createSlice({
+  name: 'loggedUserUpdate',
   initialState,
   reducers: {
     changeInputUserValue(
@@ -45,33 +45,33 @@ const updateUserSlice = createSlice({
     ) {
       const { fieldName, value } = action.payload;
 
-      const updatedProfileValues = {
+      const updatedUserValue = {
         ...state.data,
         [fieldName]: value,
       };
 
       return {
         ...state,
-        data: updatedProfileValues,
+        data: updatedUserValue,
       };
     },
   },
   extraReducers(builder) {
     builder
-      .addCase(updateUser.pending, (state) => {
+      .addCase(loggedUserUpdate.pending, (state) => {
         state.error = null;
         state.isSuccess = false;
       })
-      .addCase(updateUser.rejected, (state) => {
+      .addCase(loggedUserUpdate.rejected, (state) => {
         state.error = 'Modification rejeté';
         state.isSuccess = false;
       })
-      .addCase(updateUser.fulfilled, (state) => {
+      .addCase(loggedUserUpdate.fulfilled, (state) => {
         state.error = null;
         state.isSuccess = true;
       });
   },
 });
 
-export const { changeInputUserValue } = updateUserSlice.actions;
-export default updateUserSlice.reducer;
+export const { changeInputUserValue } = loggedUserUpdateSlice.actions;
+export default loggedUserUpdateSlice.reducer;

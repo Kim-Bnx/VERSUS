@@ -9,11 +9,14 @@ import registerEventReducer from './reducers/registerEvent';
 import unregisterEventReducer from './reducers/unregisterEvent';
 import searchReducer from './reducers/search';
 import signupReducer from './reducers/signup';
-import userReducer from './reducers/user';
-import updateUserReducer from './reducers/updateUser';
+import loggedUserReducer from './reducers/loggedUser';
+import loggedUserUpdateReducer from './reducers/loggedUserUpdate';
 import userGamesReducer from './reducers/userGames';
 import userPlatformsReducer from './reducers/userPlatforms';
 import profileReducer from './reducers/profile';
+import gameReducer from './reducers/game';
+import platformReducer from './reducers/platform';
+import passwordChangeReducer from './reducers/passwordChange';
 
 const store = configureStore({
   reducer: {
@@ -27,11 +30,14 @@ const store = configureStore({
     unregisterEvent: unregisterEventReducer,
     search: searchReducer,
     signup: signupReducer,
-    user: userReducer,
-    updateUser: updateUserReducer,
+    loggedUser: loggedUserReducer,
+    loggedUserUpdate: loggedUserUpdateReducer,
     userGames: userGamesReducer,
     userPlatforms: userPlatformsReducer,
     profile: profileReducer,
+    game: gameReducer,
+    platform: platformReducer,
+    passwordChange: passwordChangeReducer,
   },
 });
 
