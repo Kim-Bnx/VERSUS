@@ -1,5 +1,13 @@
 import { useEffect } from 'react';
-import { Anchor, Image, Box, Flex, Title, SimpleGrid } from '@mantine/core';
+import {
+  Anchor,
+  Image,
+  Box,
+  Flex,
+  Title,
+  SimpleGrid,
+  Text,
+} from '@mantine/core';
 import Slider from '../../components/Slider/Slider';
 import EventThumb from '../../components/Element/Thumb/Event';
 import { Event as AppEvent } from '../../@types/event';
@@ -7,12 +15,13 @@ import { Event as AppEvent } from '../../@types/event';
 import './Home.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { fetchAllEvents } from '../../store/reducers/events';
-import { user } from '../../store/reducers/user';
 import { LocalStorage } from '../../utils/LocalStorage';
+import { fetchAllUserFavGames } from '../../store/reducers/userFavGames';
 
 function Home() {
   const dispatch = useAppDispatch();
   const events = useAppSelector((state) => state.events.events);
+  const favGames = useAppSelector((state) => state.userFavGames.games);
 
   useEffect(() => {
     dispatch(fetchAllEvents());
@@ -56,7 +65,7 @@ function Home() {
       const userAuth = LocalStorage.getItem('auth');
 
       const { userId } = userAuth.auth;
-      dispatch(user(userId));
+      dispatch(fetchAllUserFavGames(userId));
     }
   }, [dispatch, isConnected]);
 
@@ -120,40 +129,18 @@ function Home() {
         </SimpleGrid>
       </Box>
 
-      {isConnected && (
+      {isConnected && favGames.length > 0 && (
         <Box className="container">
           <Box className="title">
             <Title tt="capitalize">vos jeux préférés</Title>
           </Box>
 
           <SimpleGrid cols={4} className="games__grid">
-            <Image
-              src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
-              className="thumb"
-            >
-              {/* <Text>Heartstone</Text> */}
-            </Image>
-
-            <Image
-              src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
-              className="thumb"
-            >
-              {/* <Text>Heartstone</Text> */}
-            </Image>
-
-            <Image
-              src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
-              className="thumb"
-            >
-              {/* <Text>Heartstone</Text> */}
-            </Image>
-
-            <Image
-              src="https://static-cdn.jtvnw.net/ttv-boxart/138585_IGDB-285x380.jpg"
-              className="thumb"
-            >
-              {/* <Text>Heartstone</Text> */}
-            </Image>
+            {favGames.map((game) => (
+              <Image key={game.id} src={game.thumbnail} className="thumb">
+                <Anchor href="#">{game.name}</Anchor>
+              </Image>
+            ))}
           </SimpleGrid>
         </Box>
       )}
