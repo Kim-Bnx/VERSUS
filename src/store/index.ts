@@ -12,6 +12,7 @@ import userFavGamesReducer from './reducers/userFavGames';
 import userGamesReducer from './reducers/userGames';
 import userPlatformsReducer from './reducers/userPlatforms';
 import profileReducer from './reducers/profile';
+import userEventsReducer from './reducers/userEvents';
 
 const store = configureStore({
   reducer: {
@@ -23,6 +24,7 @@ const store = configureStore({
     search: searchReducer,
     signup: signupReducer,
     user: userReducer,
+    userEvents: userEventsReducer,
     updateUser: updateUserReducer,
     userFavGames: userFavGamesReducer,
     userGames: userGamesReducer,
