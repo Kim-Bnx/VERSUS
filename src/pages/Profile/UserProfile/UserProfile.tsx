@@ -5,38 +5,24 @@ import {
   Title,
   Button,
   Grid,
-  SimpleGrid,
   Text,
   GridCol,
+  Anchor,
+  Space,
 } from '@mantine/core';
-import { IconHeartFilled, IconStarFilled } from '@tabler/icons-react';
 import { useEffect } from 'react';
+import slugify from 'slugify';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { profile } from '../../../store/reducers/profile';
-import TeamThumb from '../../../components/Element/Thumb/Team';
 import EventThumb from '../../../components/Element/Thumb/Event';
 import CreateAvatar from '../../../components/Element/CreateAvatar';
-import { fetchUserEvents } from '../../../store/reducers/userEvents';
 import DateFormat from '../../../components/Date/Date';
 
 import '../Profile.scss';
 
-const membersList = [
-  'RubisIron',
-  'EpicNever',
-  'KillMonsieur',
-  'AnotherMember',
-  'MonsieurCloud',
-  'MemberSix',
-];
-
 function UserProfile() {
   const dispatch = useAppDispatch();
   const userData = useAppSelector((state) => state.profile.data);
-  const userEvents = useAppSelector((state) => state.userEvents.events);
-  const userEventsNumber = useAppSelector(
-    (state) => state.userEvents.organize.length
-  );
   const { username } = useParams();
 
   const userNameValue = userData.username;
@@ -44,6 +30,8 @@ function UserProfile() {
   const userGamesList = userData.games;
   const userPlatformsList = userData.platforms;
   const userCreatedAt = userData.createdAt;
+  const userEventsParticipations = userData.events;
+  const userEventsCreated = userData.organize;
 
   const calculateDaysLeft = (startDate) => {
     const now = new Date();
@@ -56,9 +44,7 @@ function UserProfile() {
 
   useEffect(() => {
     if (username !== undefined) {
-      const userId = parseInt(username, 10);
       dispatch(profile(username));
-      dispatch(fetchUserEvents(userId));
     }
   }, [dispatch, username]);
 
@@ -78,11 +64,14 @@ function UserProfile() {
 
               <Flex>
                 <Text mr="1rem">
-                  <span className="bold">12</span> partipations
+                  <span className="bold">
+                    {userEventsParticipations.length}
+                  </span>{' '}
+                  partipations
                 </Text>
                 <Text mr="1rem">
-                  <span className="bold">{userEventsNumber}</span> événements
-                  crées
+                  <span className="bold">{userEventsCreated.length}</span>{' '}
+                  événements crées
                 </Text>
                 <Text>
                   Membre depuis le{' '}
@@ -99,84 +88,85 @@ function UserProfile() {
               </Flex>
             </Flex>
           </Flex>
-
-          <Box>
-            <Button mr="1rem">
-              <IconStarFilled color="yellow" />
-            </Button>
-
-            <Button>
-              <IconHeartFilled color="red" />
-            </Button>
-          </Box>
         </Flex>
       </Box>
 
       <Box mt="2rem">
-        <Title className="title" order={3}>
-          Evénements
-        </Title>
+        <Flex justify="space-between" align="center" className="title">
+          <Title order={3}>Participations</Title>
 
-        <SimpleGrid cols={3} mt="1rem" className="categories-grid">
-          {userEvents.slice(0, 3).map((userEvent) => (
-            <EventThumb
+          <Anchor
+            href={`/profile/${slugify(`${userNameValue}`, {
+              lower: true,
+            })}/participations`}
+            className="categories__title-more"
+          >
+            Voir plus
+          </Anchor>
+        </Flex>
+        <Space h="md" />
+
+        <div className="categories-grid">
+          {userEventsParticipations.slice(0, 3).map((userEvent) => (
+            <Anchor
+              href={`/event/${userEvent.title_slug}`}
+              unstyled
               key={userEvent.id}
-              image={userEvent.thumbnail || 'url_de_limage_par_defaut'}
-              name={userEvent.title}
-              type={
-                userEvent.platform
-                  ? userEvent.platform.name
-                  : 'Plateforme non définie'
-              }
-              date={userEvent.start_date}
-              countdown={calculateDaysLeft(userEvent.start_date)}
-            />
+              className="eventhumb-link"
+            >
+              <EventThumb
+                image={userEvent.thumbnail || 'url_de_limage_par_defaut'}
+                name={userEvent.title}
+                type={
+                  userEvent.platform
+                    ? userEvent.platform.name
+                    : 'Plateforme non définie'
+                }
+                date={userEvent.start_date}
+                countdown={calculateDaysLeft(userEvent.start_date)}
+              />
+            </Anchor>
           ))}
-        </SimpleGrid>
+        </div>
       </Box>
 
       <Box mt="2rem">
-        <Title className="title" order={3}>
-          Equipes
-        </Title>
+        <Flex justify="space-between" align="center" className="title">
+          <Title order={3}>Évènements créés</Title>
 
-        <SimpleGrid cols={4} mt="1rem">
-          <TeamThumb
-            name="Ekipe de la mort ki tue"
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            members={membersList}
-          />
+          <Anchor
+            href={`/profile/${slugify(`${userNameValue}`, {
+              lower: true,
+            })}/events`}
+            className="categories__title-more"
+          >
+            Voir plus
+          </Anchor>
+        </Flex>
+        <Space h="md" />
 
-          <TeamThumb
-            name="Ekipe de la mort ki tue"
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            members={membersList}
-          />
-
-          <TeamThumb
-            name="Ekipe de la mort ki tue"
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            members={membersList}
-          />
-
-          <TeamThumb
-            name="Ekipe de la mort ki tue"
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            members={membersList}
-          />
-
-          <TeamThumb
-            name="Ekipe de la mort ki tue"
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            members={membersList}
-          />
-
-          <TeamThumb
-            name="Ekipe de la mort ki tue"
-            image="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
-            members={membersList}
-          />
-        </SimpleGrid>
+        <div className="categories-grid">
+          {userEventsCreated.slice(0, 3).map((userEvent) => (
+            <Anchor
+              href={`/event/${userEvent.title_slug}`}
+              unstyled
+              key={userEvent.id}
+              className="eventhumb-link"
+            >
+              <EventThumb
+                image={userEvent.thumbnail || 'url_de_limage_par_defaut'}
+                name={userEvent.title}
+                type={
+                  userEvent.platform
+                    ? userEvent.platform.name
+                    : 'Plateforme non définie'
+                }
+                date={userEvent.start_date}
+                countdown={calculateDaysLeft(userEvent.start_date)}
+              />
+            </Anchor>
+          ))}
+        </div>
       </Box>
 
       <Box mt="2rem">

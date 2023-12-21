@@ -2,6 +2,7 @@
 
 .team {
   display: grid;
-  gap: var(--mantine-spacing-lg);
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--mantine-spacing-sm);
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  padding: 0 5rem;
 }

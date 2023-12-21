@@ -12,7 +12,7 @@ function Root() {
       layout="alt"
       header={{ height: 80 }}
       navbar={{
-        width: 170,
+        width: 190,
         breakpoint: 'sm',
         collapsed: { mobile: !opened },
       }}

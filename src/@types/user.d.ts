@@ -1,3 +1,5 @@
+import { Event } from './event';
+
 export type UserState = {
   data: UserData & { games: UserGames[] } & { platforms: UserPlatforms[] };
   error: null | string;
@@ -17,6 +19,8 @@ export type ProfileState = {
     username: string;
     id: number;
     avatar: string;
+    events: Event[];
+    organize: Event[];
     games: UserGames[];
     platforms: UserPlatforms[];
     createdAt: string;

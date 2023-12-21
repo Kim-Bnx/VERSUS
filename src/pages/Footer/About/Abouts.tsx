@@ -26,19 +26,20 @@ function About() {
         </Text>
         <Space h="xl" />
       </Box>
-      <div className="team">
+      <div className="team full-width">
         <Card shadow="sm" padding="lg" radius="md">
           <Card.Section>
             <Image
-              src="https://lh3.googleusercontent.com/pw/ABLVV84O-Te_9PRH_unlhEf1j_91OcMSxmWzwQ9H8sp7hx7hH29V4iCOY7qKhKQE35DOOfkYx2lQqaxRCAtUeB1Qx89svQ45ZkeNO6HBMKf5FR1V_Jc4WFsg8C_gN8Bl8JZvg0Iv8rm6V_JManCk8buL-m4J7q6fM3i1qg1Mj1UT0P-1lzzWQjcod5pQ9NppF1Fa4GQlabo9lFEIQg3KQUGpsf_qq4AO5JlkZvR6vLyMGJ5ofvYz1MkAG1E_e7Sx-6iY2uU6AcERq5Sh0sHWX0Zczy2cvTy4ckvUqV-tLA8gJTjV_NfitUhnF55lccs197mmTVrFRsSb8SIB0WYC_EKNpxabz-VOEiqIb-IN0PDCpStDE8tnVaFdf13p26Ey-K0h0dBhGGyFYfpRapJMmDWnBLiC5jPcEunUH7MwNwocmJ9qKPhNLDUF5J1lwKGl4U5ARDOTvGH05RqVt1xM_y9dA-QVKVGwahSvp9XVD7kYcqmRuRefPd_gP4ZhXQOUjIjp3ePd4rnhUw8dv2PHghYnuYQJC-1eTMVlIPFzEOo70CtwxErkOgx97TUHW_7ogUQN2nm9Qq3WBvBKi0K9X7rxx0mG5Fy_KYeEMx8ohXJ8hw-H1fICkwyBLSFh9pGFDowMYC-ven2EVAo0PT6jxVx9I1Rqy6wZgLce2rPduwN4cI6iMsj4UNhmeMpBrhPBM-fEIXdleM4YcFXqSXv8vDp_WcZhjzpKipLc4to30QCeYLLApiJHPup3uems0_e50WQgYHTB9m3IaIS6MezoOnGxcXJ8AhHLM6iQeUq0y54nX2Kcn9fn3AzbTf3Tu3iguVtvuaf0r3QzNQOMh2g4ljqrMyy2r6drf3H_XOLGsmxJVZEVDi4maX659UOau0gsS3qbLJI0mHJXvoadGaInTJtElGHlylwz-lz_hiWvnEPT3iv_drIcuX5zsGr8d2ogU_ZSTCPxipHbZwk6G3vFA0D5bv9v6nSb9U_6sqgvizU---wUVH4GCwcr0DWLbqpFyMqAzU8aN8nQ1JgoxXeHWJs=w552-h981-s-no-gm?authuser=1"
+              src="https://cdn.discordapp.com/attachments/1177259193451954176/1187344814832881741/image.png?ex=65968c07&is=65841707&hm=65810fcb330d51c2f1a855d328d620cc2b59afedac8f180ae14db73ed9a22999&"
               height={200}
               fit="cover"
               alt="Image Kim"
             />
           </Card.Section>
 
-          <Group justify="space-between" mt="md" mb="xs">
+          <Group justify="space-between" mt="md" mb="xs" gap="xs">
             <Title order={2}>Kim</Title>
+            <Text size="sm">Spé React</Text>
             <Badge color="indigo">Product Owner</Badge>
           </Group>
 
@@ -52,15 +53,16 @@ function About() {
         <Card shadow="sm" padding="lg" radius="md">
           <Card.Section>
             <Image
-              src="https://lh3.googleusercontent.com/pw/ABLVV874bNzyvcwDrUcl1Nw3L8MmG7fumWKnXBoL0-qVr5R8AO3nNI8qLEZpy2P1VcM6iDNnCfKFSXGT39fFenZ0dmEtz_mb7G2UPJtPqKibVcsz-FC8n_bJ9HNmH4uVJztSBSANDadXeago51QZf0TI3Bnv9dj5CH3k4O92GPf1vlBL-v-SPmBV6Ym_pkcLMozo3U-15NPRn4q09teyNHxEG6zXcPr-Nk7DGkDs9S4ptSpSAIz5t9YUyYeESKkp8s6aKXj5Ru9qyPtAGr1CpKnOaq51w8RhxJz2B4njOpzFjegfa0EZ2jbvc3zJnKESPs4MTOcLx_rxVxnvY5_joVXIpN_nyN1NAUJxZSTi0fgMlaolwLDL7G7KMe9nCqKe4wVCvTkozPzPqfga9537rTahR3hMvBcG5kmwXBp-m2FVlWaK8zr84bAl9wX74qB1AUoF7iMdTX8InCX-cLskGJ2n-GJe8LazDgnS9hoNVeQAYYZxvr5p5ELUoHUDPVMNJf6KoyRBcjuRqxoKZ03U_TSQs9Xx-JLdqQHa7UDA-oPm8OviEARiaUvLycBVmkiALI9QALANjcb5VH9mfuHFmfOailRYdMIUqZzMkue1JDaZxpE7zZlf7RFL47Jv-5SEJiMMLTK-JJr9A47Nqecs7cpGPUbT8N_b4F1cJEIjKitYqu09cu5LYHRUDBG-ZjlpKZsc_pqMIJF5FBUSPgbAQzz-bo8LwdFkhOIMuNlBkgUEG8BzrZPzMrMR0clTBPksFkxZ6jobgbA3udMbtrcmH4wI-SKMAvCqzyX5BzDEeK7zIIwGe-uwyTAfmYO6qezxn_cS8naaI2Axc7oeQtBXvXknDdWLZeN-zLo5lKiDbVbw0aFj-Z228-MTWN9tMC5cWI9l-dwXSNRbSNMr_Y8FxQ6PB-OwSp3NVEDOSGxaKH5fZdz9DdPtaB3zrnKLAv7lyvBX_4x7eydk7Ri46r0wPCLu8Ijs0psYb_dlg2bTpUDwLvvw94LzTXq_kf3UlDblchGp6Q-lGpBCj4X-y2b41RM=w552-h981-s-no-gm?authuser=1"
+              src="https://avatars.githubusercontent.com/u/138364915?v=4"
               height={200}
               fit="cover"
               alt="Image Rami"
             />
           </Card.Section>
 
-          <Group justify="space-between" mt="md" mb="xs">
+          <Group justify="space-between" mt="md" mb="xs" gap="xs">
             <Title order={2}>Rami</Title>
+            <Text size="sm">Spé React</Text>
             <Badge color="indigo">Scrum Master</Badge>
           </Group>
 
@@ -73,11 +75,17 @@ function About() {
 
         <Card shadow="sm" padding="lg" radius="md">
           <Card.Section>
-            <Image height={200} fit="cover" alt="Image Sasha" />
+            <Image
+              src="https://avatars.githubusercontent.com/u/137801880?v=4"
+              height={200}
+              fit="cover"
+              alt="Image Sasha"
+            />
           </Card.Section>
 
-          <Group justify="space-between" mt="md" mb="xs">
+          <Group justify="space-between" mt="md" mb="xs" gap="xs">
             <Title order={2}>Sasha</Title>
+            <Text size="sm">Spé React</Text>
             <Badge color="indigo">Git master</Badge>
           </Group>
 
@@ -89,11 +97,17 @@ function About() {
 
         <Card shadow="sm" padding="lg" radius="md">
           <Card.Section>
-            <Image height={200} fit="cover" alt="Image Maxime" />
+            <Image
+              src="https://avatars.githubusercontent.com/u/36855870?v=4"
+              height={200}
+              fit="cover"
+              alt="Image Maxime"
+            />
           </Card.Section>
 
-          <Group justify="space-between" mt="md" mb="xs">
+          <Group justify="space-between" mt="md" mb="xs" gap="xs">
             <Title order={2}>Maxime</Title>
+            <Text size="sm">Spé React</Text>
             <Badge color="indigo">Lead front</Badge>
           </Group>
 
@@ -108,11 +122,17 @@ function About() {
 
         <Card shadow="sm" padding="lg" radius="md">
           <Card.Section>
-            <Image height={200} fit="cover" alt="Image William" />
+            <Image
+              src="https://cdn.discordapp.com/attachments/1177259193451954176/1187343580063342673/20231209_213541.jpg?ex=65968ae1&is=658415e1&hm=f875cec2c33742aa0dcb82ae04193202395082f1c3b1fcd2c5b0cd4e697ee530&"
+              height={200}
+              fit="cover"
+              alt="Image William"
+            />
           </Card.Section>
 
-          <Group justify="space-between" mt="md" mb="xs">
+          <Group justify="space-between" mt="md" mb="xs" gap="xs">
             <Title order={2}>William</Title>
+            <Text size="sm">Spé Data</Text>
             <Badge color="indigo">Lead Back</Badge>
           </Group>
 
