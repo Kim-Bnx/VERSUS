@@ -2,15 +2,11 @@
 
 .slider {
   display: flex;
-  height: 465px;
+  height: 25rem;
+  border-radius: var(--mantine-radius-md);
 
   .type-tag {
     bottom: 1rem;
-  }
-
-  .button--favorite {
-    right: 2rem;
-    top: 1rem;
   }
 
   .carousel {
@@ -37,48 +33,77 @@
       border-right: 5px solid transparent;
 
       &-image {
-        width: 60%;
-        background-size: cover;
-        background-position: bottom;
+        width: 55%;
+        background: no-repeat center;
+        background-size: 100% 100%;
+
         position: relative;
+        border-radius: var(--mantine-radius-md) 0 0 var(--mantine-radius-md);
+
+        & .infos {
+          position: absolute;
+          bottom: 1rem;
+          right: 1rem;
+        }
       }
 
       &-content {
-        width: 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: var(--mantine-spacing-mg);
+        width: 45%;
+        border-radius: 0 var(--mantine-radius-md) var(--mantine-radius-md) 0;
+        padding: 2rem;
+      }
 
-        .event {
-          border-right: 1px solid #929292;
-          border-bottom: 1px solid #929292;
-          border-top: 1px solid #929292;
-          height: 100%;
+      &-button {
+        justify-self: flex-end;
+      }
+    }
+  }
+}
 
-          &-description {
-            padding: 2rem 3rem 0 3rem;
-          }
+[data-mantine-color-scheme='dark'] .slide-content {
+  background-color: var(--mantine-color-dark-9);
+}
 
-          &-title {
-            &__name {
-              padding-bottom: 0.5rem;
-            }
-          }
+[data-mantine-color-scheme='light'] .slide-content {
+  background-color: var(--mantine-color-gray-3);
+}
 
-          &__date {
-            padding: 2rem 0;
-          }
+@media screen and (max-width: 768px) {
+  .slider {
+    height: 500px;
 
-          &__description {
-            text-align: justify;
-            overflow: hidden;
-            max-height: 12rem;
-          }
+    .carousel {
+      .slide {
+        flex-direction: column;
 
-          &-link {
-            position: absolute;
-            bottom: 3rem;
-            right: 4rem;
-          }
+        &-image {
+          height: 250px;
+          width: 100%;
+          border-radius: var(--mantine-radius-md) var(--mantine-radius-md) 0 0;
+        }
+
+        &-content {
+          height: 300px;
+          width: 100%;
+          border-radius: 0 0 var(--mantine-radius-md) var(--mantine-radius-md);
         }
       }
     }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mantine-Carousel-container {
+    width: 566px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .m-fcd81474.mantine-Carousel-container {
+    width: 394px;
   }
 }

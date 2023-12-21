@@ -2,6 +2,14 @@
 
 .footer {
   margin-top: 10rem;
-  background-color: var(--mantine-color-dark-filled);
+
   padding: var(--mantine-spacing-xl) 0;
+}
+
+[data-mantine-color-scheme='dark'] .footer {
+  background-color: var(--mantine-color-dark-8);
+}
+
+[data-mantine-color-scheme='light'] .footer {
+  background-color: var(--mantine-color-gray-1);
 }

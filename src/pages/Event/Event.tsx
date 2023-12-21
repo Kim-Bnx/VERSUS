@@ -29,6 +29,7 @@ import {
   IoLocationSharp,
   IoTv,
 } from 'react-icons/io5';
+import slugify from 'slugify';
 import Date from '../../components/Date/Date';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { fetchEvent } from '../../store/reducers/event';
@@ -36,6 +37,7 @@ import { registerToEvent } from '../../store/reducers/registerEvent';
 import { unregisterToEvent } from '../../store/reducers/unregisterEvent';
 
 import './Event.scss';
+import CreateAvatar from '../../components/Element/CreateAvatar';
 
 function Event() {
   const dispatch = useAppDispatch();
@@ -178,15 +180,15 @@ function Event() {
 
             <Flex gap="xl" className="event__infos-details">
               <Text>
-                <IoGameController color="var(--mantine-color-blue-filled)" />
+                <IoGameController color="var(--mantine-color-indigo-filled)" />
                 {eventData.game.name}
               </Text>
               <Text>
-                <IoLocationSharp color="var(--mantine-color-blue-filled)" />
+                <IoLocationSharp color="var(--mantine-color-indigo-filled)" />
                 {eventData.location}
               </Text>
               <Text>
-                <IoTv color="var(--mantine-color-blue-filled)" />
+                <IoTv color="var(--mantine-color-indigo-filled)" />
                 {eventData.platform.name}
               </Text>
             </Flex>
@@ -203,7 +205,6 @@ function Event() {
                 Editer
               </Button>
             )}
-            <Button className="event__buttons--follow">Suivre</Button>
             <Button className="event__buttons--contact">
               {eventData.contact}
             </Button>
@@ -228,6 +229,7 @@ function Event() {
       </div>
 
       <Tabs
+        color="indigo"
         defaultValue="presentation_tab"
         className="full-width event__content"
       >
@@ -248,7 +250,9 @@ function Event() {
               <TypographyStylesProvider>
                 <Box
                   className="event__presentation"
-                  dangerouslySetInnerHTML={{ __html: sanitizedEventRules }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizedEventRules,
+                  }}
                 />
               </TypographyStylesProvider>
             </Tabs.Panel>
@@ -256,10 +260,11 @@ function Event() {
               <Box className="event__attendees">
                 {eventData.participants.map((attendee) => (
                   <Box key={attendee.id} className="attendee">
-                    <Avatar />
                     <Anchor
                       className="attendee-username"
-                      href={`/event/profile/${attendee.username}`}
+                      href={`/profile/${slugify(attendee.username, {
+                        lower: true,
+                      })}`}
                     >
                       {attendee.username}
                     </Anchor>

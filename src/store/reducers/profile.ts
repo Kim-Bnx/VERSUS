@@ -7,6 +7,8 @@ const initialState: ProfileState = {
     id: 0,
     username: '',
     avatar: '',
+    events: [],
+    organize: [],
     games: [],
     platforms: [],
     createdAt: '',
@@ -14,8 +16,8 @@ const initialState: ProfileState = {
   error: null,
 };
 
-export const profile = createAsyncThunk('profile', async (userId: number) => {
-  const { data } = await axiosInstance.get(`/user/${userId}`);
+export const profile = createAsyncThunk('profile', async (username: string) => {
+  const { data } = await axiosInstance.get(`/user/${username}`);
 
   return data;
 });
