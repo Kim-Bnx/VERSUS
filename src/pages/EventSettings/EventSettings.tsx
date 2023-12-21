@@ -340,8 +340,8 @@ function EventSettings() {
           {...form.getInputProps('game')}
         />
         <Select
-          label="platforme"
-          placeholder="Choisir la platforme"
+          label="Plateforme"
+          placeholder="Choisir la plateforme"
           data={platformNameData}
           {...form.getInputProps('platform')}
         />

@@ -32,7 +32,7 @@ input {
 a {
   color: var(--mantine-color-anchor);
 
-  &:hover:not(.button) {
+  &:hover:not(.button, .logo, .eventhumb-link) {
     text-decoration: underline;
   }
 }

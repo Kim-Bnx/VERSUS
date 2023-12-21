@@ -96,7 +96,7 @@ function Home() {
                 className="eventhumb-link"
               >
                 <EventThumb
-                  image={userEvent.thumbnail || 'url_de_limage_par_defaut'}
+                  image={userEvent.banner || 'url_de_limage_par_defaut'}
                   game={
                     userEvent.game ? userEvent.game.name : 'Jeux non défini'
                   }
@@ -132,8 +132,8 @@ function Home() {
               className="eventhumb-link"
             >
               <EventThumb
-                image={event.thumbnail || 'url_de_limage_par_defaut'}
-                game={event.game ? event.game.name : 'nom pas trouvé'}
+                image={event.banner || 'url_de_limage_par_defaut'}
+                game={event.game ? event.game.name : 'Jeu non défini'}
                 name={event.title}
                 type={
                   event.platform
@@ -165,8 +165,8 @@ function Home() {
               className="eventhumb-link"
             >
               <EventThumb
-                image={event.thumbnail || 'url_de_limage_par_defaut'}
-                game={event.game ? event.game.name : 'nom pas trouvé'}
+                image={event.banner || 'url_de_limage_par_defaut'}
+                game={event.game ? event.game.name : 'Jeu non défini'}
                 name={event.title}
                 type={
                   event.platform

@@ -18,6 +18,7 @@ import {
   IoLocationSharp,
   IoTv,
 } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
 import TypeTag from '../Element/TypeTag';
 import FavoriteBtn from '../Element/FavoriteBtn';
 
@@ -108,8 +109,8 @@ function Slider() {
                   </Text>
                 </Flex>
                 <Button
-                  component="a"
-                  href={`/event/${event.title_slug}`}
+                  component={Link}
+                  to={`/event/${event.title_slug}`}
                   className="slide-button"
                 >
                   Voir
