@@ -52,7 +52,6 @@ function Event() {
   }, [dispatch, slug]);
 
   const sanitizedEventRules = DOMPurify.sanitize(eventData.rules);
-  const sanitizedEventDescription = DOMPurify.sanitize(eventData.description);
 
   const isRegisterToEvent = () => {
     const participantFound = eventData.participants.map(
@@ -145,7 +144,7 @@ function Event() {
               h={200}
               w={200}
               radius="sm"
-              fit="contain"
+              fit="cover"
             />
           </Box>
           <div className="event__infos">
@@ -238,7 +237,6 @@ function Event() {
           <div className="content__tabs-buttons">
             <Tabs.List>
               <Tabs.Tab value="presentation_tab">Présentation</Tabs.Tab>
-              <Tabs.Tab value="rules_tab">Règlement</Tabs.Tab>
               <Tabs.Tab value="participant_tab">
                 Participants ({eventData.participants.length})
               </Tabs.Tab>
@@ -253,16 +251,8 @@ function Event() {
                 <Box
                   className="event__presentation"
                   dangerouslySetInnerHTML={{
-                    __html: sanitizedEventDescription,
+                    __html: sanitizedEventRules,
                   }}
-                />
-              </TypographyStylesProvider>
-            </Tabs.Panel>
-            <Tabs.Panel value="rules_tab">
-              <TypographyStylesProvider>
-                <Box
-                  className="event__presentation"
-                  dangerouslySetInnerHTML={{ __html: sanitizedEventRules }}
                 />
               </TypographyStylesProvider>
             </Tabs.Panel>
