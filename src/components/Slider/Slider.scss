@@ -33,9 +33,19 @@
       border-right: 5px solid transparent;
 
       &-image {
+        // width: 55%;
+        // background: no-repeat center;
+        // background-size: auto 100%;
+        // background-color: rgba(146, 146, 146, 0.13);
+
         width: 55%;
-        background-size: cover;
-        background-position: bottom;
+        background: no-repeat center;
+        background-size: 100% 100%;
+
+        // width: 55%;
+        // background: no-repeat center;
+        // background-size: cover;
+
         position: relative;
         border-radius: var(--mantine-radius-md) 0 0 var(--mantine-radius-md);
 

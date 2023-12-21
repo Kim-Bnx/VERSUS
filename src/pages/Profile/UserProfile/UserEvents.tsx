@@ -27,8 +27,8 @@ function UserEventsCreated() {
 
   return (
     <>
-      <Title order={1}>Les évènements populaires</Title>
-      <Space h="xl" />
+      <Title order={1}>Mes évènements créés</Title>
+      <Space h="xs" />
       <div className="categories-grid">
         {userEvents.map((event) => (
           <Anchor

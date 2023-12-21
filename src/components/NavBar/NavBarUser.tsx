@@ -13,7 +13,13 @@ function NavBarGuest() {
   // MANAGE THE NAVIGATION LINKS
   const navigationLinks = [
     {
-      label: 'Mes Participations',
+      label: 'Mon profil',
+      href: `/profile/${slugify(`${username}`, {
+        lower: true,
+      })}`,
+    },
+    {
+      label: 'Mes participations',
       href: `/profile/${slugify(`${username}`, {
         lower: true,
       })}/participations`,
