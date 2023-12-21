@@ -250,7 +250,9 @@ function Event() {
               <TypographyStylesProvider>
                 <Box
                   className="event__presentation"
-                  dangerouslySetInnerHTML={{ __html: sanitizedEventRules }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizedEventRules,
+                  }}
                 />
               </TypographyStylesProvider>
             </Tabs.Panel>

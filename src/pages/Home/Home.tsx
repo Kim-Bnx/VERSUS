@@ -94,6 +94,7 @@ function Home() {
               >
                 <EventThumb
                   image={userEvent.thumbnail || 'url_de_limage_par_defaut'}
+                  game={userEvent.game.name}
                   name={userEvent.title}
                   type={
                     userEvent.platform

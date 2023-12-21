@@ -31,7 +31,7 @@ function Upcoming() {
 
   return (
     <>
-      <Title order={1}>Évènements à venir</Title>
+      <Title order={1}>Les évènements à venir</Title>
       <Space h="xl" />
       <div className="categories-grid">
         {sortedEvents.map((event) => (
