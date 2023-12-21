@@ -16,7 +16,7 @@ function Footer() {
         <Flex gap="md" className="footer__links">
           <Anchor href="/about">A propos</Anchor>
           <Anchor href="/contact">Contact</Anchor>
-          <Anchor href="/terms">Mention légales</Anchor>
+          <Anchor href="/terms">Mentions légales</Anchor>
         </Flex>
       </Flex>
     </div>

@@ -115,7 +115,7 @@ function UserProfile() {
               className="eventhumb-link"
             >
               <EventThumb
-                image={userEvent.thumbnail || 'url_de_limage_par_defaut'}
+                image={userEvent.banner || 'url_de_limage_par_defaut'}
                 name={userEvent.title}
                 type={
                   userEvent.platform

@@ -96,7 +96,7 @@ function Preferences({ onChangeView }: PreferencesProps) {
 
       <Box className="profile-games section">
         <Title order={2} size="1rem" className="form-title">
-          vos jeux
+          Vos jeux
         </Title>
 
         <GamesLabels
@@ -108,7 +108,7 @@ function Preferences({ onChangeView }: PreferencesProps) {
 
       <Box className="profile-platforms section">
         <Title order={2} size="1rem" className="form-title">
-          vos plateformes
+          Vos plateformes
         </Title>
 
         <PlatformSquares

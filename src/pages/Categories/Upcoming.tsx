@@ -42,8 +42,8 @@ function Upcoming() {
             className="eventhumb-link"
           >
             <EventThumb
-              image={event.thumbnail || 'url_de_limage_par_defaut'}
-              game={event.game ? event.game.name : 'nom pas trouvé'}
+              image={event.banner || 'url_de_limage_par_defaut'}
+              game={event.game ? event.game.name : 'Jeu non défini'}
               name={event.title}
               type={
                 event.platform ? event.platform.name : 'Plateforme non définie'
