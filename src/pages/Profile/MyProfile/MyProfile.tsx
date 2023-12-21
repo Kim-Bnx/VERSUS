@@ -102,9 +102,11 @@ function MyProfile() {
         userDatas: { username },
         userId,
       })
-    );
-
-    window.location.reload();
+    )
+      .unwrap()
+      .then(() => {
+        navigate(0);
+      });
   };
 
   const handlePasswordSubmit = () => {

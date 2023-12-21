@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { EventsState } from '../../@types/event';
+import { axiosInstance } from '../../utils/axios';
 
 const initialState: EventsState = {
   events: [],
@@ -10,7 +10,7 @@ const initialState: EventsState = {
 };
 
 export const fetchAllEvents = createAsyncThunk('event/fetchAll', async () => {
-  const { data } = await axios.get(`http://localhost:3000/events/published`);
+  const { data } = await axiosInstance.get(`/events/published`);
   return data;
 });
 

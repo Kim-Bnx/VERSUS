@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import {
   Box,
@@ -44,8 +45,8 @@ function Header({ opened, toggle }: { opened: boolean; toggle: () => void }) {
           <Button
             visibleFrom="sm"
             className="button header__actions-event"
-            component="a"
-            href={isConnected ? '/event/create' : '/sign-in'}
+            component={Link}
+            to={isConnected ? '/event/create' : '/sign-in'}
           >
             Organiser un event
           </Button>
@@ -56,20 +57,20 @@ function Header({ opened, toggle }: { opened: boolean; toggle: () => void }) {
         {!isConnected ? (
           <Box className="header__connexion">
             <Button
-              component="a"
-              href="/sign-in"
+              component={Link}
+              to="/sign-in"
               className="button button-login"
             >
               Se connecter
             </Button>
           </Box>
         ) : (
-          <Anchor href="/profile" className="header__profile">
+          <NavLink to="/profile" className="header__profile">
             <Flex align="center" gap="sm">
               <Text visibleFrom="md">{userNameValue}</Text>
               <CreateAvatar hw="2.5rem" seed={useAvatarValue} />
             </Flex>
-          </Anchor>
+          </NavLink>
         )}
       </div>
     </AppShell.Header>

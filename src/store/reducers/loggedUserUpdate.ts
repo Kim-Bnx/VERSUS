@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ProfileState, UserData } from '../../@types';
-import { axiosInstance } from '../../utils/axios';
+import { axiosInstanceToken } from '../../utils/axios';
 
 const initialState: ProfileState = {
   data: {
@@ -23,8 +23,8 @@ export const loggedUserUpdate = createAsyncThunk(
     userDatas: UserData;
     userId: number | null;
   }) => {
-    const { data } = await axiosInstance.patch(
-      `http://localhost:3000/user/${userId}`,
+    const { data } = await axiosInstanceToken.patch(
+      `/user/${userId}`,
       userDatas
     );
 

@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { PlatformState, PlatformList } from '../../@types/platform';
+import { axiosInstance } from '../../utils/axios';
 
 const initialState: PlatformState = {
   platforms: [],
@@ -8,7 +8,7 @@ const initialState: PlatformState = {
 };
 
 export const fetchPlatforms = createAsyncThunk('platform', async () => {
-  const { data } = await axios.get(`http://localhost:3000/platforms`);
+  const { data } = await axiosInstance.get(`/platforms`);
   return data;
 });
 

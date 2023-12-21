@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { axiosInstance } from '../../utils/axios';
+import { axiosInstanceToken } from '../../utils/axios';
 import { RegistrationState, UserRegistration } from '../../@types/event';
 
 const initialState: RegistrationState = {
@@ -10,8 +10,8 @@ const initialState: RegistrationState = {
 export const unregisterToEvent = createAsyncThunk(
   'event/register',
   async ({ event_id, user_id }: UserRegistration) => {
-    const { data } = await axiosInstance.patch(
-      `http://localhost:3000/event/${event_id}/unregister`,
+    const { data } = await axiosInstanceToken.patch(
+      `/event/${event_id}/unregister`,
       { user_id }
     );
     return data;

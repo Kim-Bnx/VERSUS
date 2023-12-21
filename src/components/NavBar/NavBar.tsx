@@ -12,7 +12,7 @@ import {
 } from '@mantine/core';
 import './NavBar.scss';
 import { IoLogOutOutline, IoMoon, IoSunnySharp } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import NavBarUser from './NavBarUser';
 import NavBarGuest from './NavBarGuest';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
@@ -53,9 +53,9 @@ function NavBar({ opened, toggle }: { opened: boolean; toggle: () => void }) {
           hiddenFrom="sm"
           size="sm"
         />
-        <Anchor unstyled href="/" className="logo">
+        <NavLink to="/" className="logo">
           Versus
-        </Anchor>
+        </NavLink>
       </Box>
 
       <Button

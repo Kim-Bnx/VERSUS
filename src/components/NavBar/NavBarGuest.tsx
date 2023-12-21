@@ -1,4 +1,5 @@
 import { Box, Button, Text } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
 function NavBarGuest() {
   return (
@@ -10,7 +11,7 @@ function NavBarGuest() {
         Faîtes vivre vos communautés en rassemblant des joueurs.
       </Text>
 
-      <Button component="a" href="/sign-up">
+      <Button component={Link} to="/sign-up">
         S&apos;inscrire
       </Button>
     </Box>

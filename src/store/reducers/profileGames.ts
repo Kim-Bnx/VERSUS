@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { ProfileGamesState } from '../../@types';
+import { axiosInstance } from '../../utils/axios';
 
 const initialState: ProfileGamesState = {
   games: [],
@@ -11,10 +11,7 @@ const initialState: ProfileGamesState = {
 export const profileGames = createAsyncThunk(
   'profileGames',
   async ({ games, userId }: { games: number[]; userId: number | null }) => {
-    const { data } = await axios.patch(
-      `http://localhost:3000/user/${userId}`,
-      games
-    );
+    const { data } = await axiosInstance.patch(`/user/${userId}`, games);
 
     return data;
   }

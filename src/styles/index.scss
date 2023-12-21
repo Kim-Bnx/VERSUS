@@ -28,3 +28,11 @@ input {
     outline: none;
   }
 }
+
+a {
+  color: var(--mantine-color-anchor);
+
+  &:hover:not(.button) {
+    text-decoration: underline;
+  }
+}

@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { SignupState, SignupCredentials } from '../../@types';
+import { axiosInstance } from '../../utils/axios';
 
 const initialState: SignupState = {
   credentials: {
@@ -16,10 +16,7 @@ const initialState: SignupState = {
 export const signup = createAsyncThunk(
   'signup',
   async (credentials: SignupCredentials) => {
-    const { data } = await axios.post(
-      'http://localhost:3000/signup',
-      credentials
-    );
+    const { data } = await axiosInstance.post('/signup', credentials);
 
     return data;
   }
