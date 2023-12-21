@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Anchor, Image, Box, Flex, Title } from '@mantine/core';
+import { NavLink } from 'react-router-dom';
 import Slider from '../../components/Slider/Slider';
 import EventThumb from '../../components/Element/Thumb/Event';
 import { Event as AppEvent } from '../../@types/event';
@@ -79,19 +80,18 @@ function Home() {
           <Flex justify="space-between" align="center" className="title">
             <Title>Mes participations</Title>
 
-            <Anchor
-              href={`/profile/${username}/participations`}
+            <NavLink
+              to={`/profile/${username}/participations`}
               className="categories__title-more"
             >
               Voir plus
-            </Anchor>
+            </NavLink>
           </Flex>
 
           <div className="categories-grid">
             {userEvents.slice(0, 3).map((userEvent) => (
-              <Anchor
-                href={`/event/${userEvent.title_slug}`}
-                unstyled
+              <NavLink
+                to={`/event/${userEvent.title_slug}`}
                 key={userEvent.id}
                 className="eventhumb-link"
               >
@@ -109,7 +109,7 @@ function Home() {
                   date={userEvent.start_date}
                   countdown={calculateDaysLeft(userEvent.start_date)}
                 />
-              </Anchor>
+              </NavLink>
             ))}
           </div>
         </Box>
@@ -119,18 +119,16 @@ function Home() {
         <Flex justify="space-between" align="center" className="title">
           <Title>Évènements à venir</Title>
 
-          <Anchor href="/events/upcoming" className="categories__title-more">
+          <NavLink to="/events/upcoming" className="categories__title-more">
             Voir plus
-          </Anchor>
+          </NavLink>
         </Flex>
 
         <div className="categories-grid">
           {events.slice(0, 3).map((event) => (
-            <Anchor
-              unstyled
-              component="a"
+            <NavLink
               key={event.id}
-              href={`/event/${event.title_slug}`}
+              to={`/event/${event.title_slug}`}
               className="eventhumb-link"
             >
               <EventThumb
@@ -145,7 +143,7 @@ function Home() {
                 date={event.start_date}
                 countdown={calculateDaysLeft(event.start_date)}
               />
-            </Anchor>
+            </NavLink>
           ))}
         </div>
       </Box>
@@ -154,16 +152,15 @@ function Home() {
         <Flex justify="space-between" align="center" className="title">
           <Title>Évènements populaires</Title>
 
-          <Anchor href="/events/populars" className="categories__title-more">
+          <NavLink to="/events/populars" className="categories__title-more">
             Voir plus
-          </Anchor>
+          </NavLink>
         </Flex>
 
         <div className="categories-grid">
           {sortedEvents.slice(0, 3).map((event) => (
-            <Anchor
-              unstyled
-              href={`/event/${event.title_slug}`}
+            <NavLink
+              to={`/event/${event.title_slug}`}
               key={event.id}
               className="eventhumb-link"
             >
@@ -179,7 +176,7 @@ function Home() {
                 date={event.start_date}
                 countdown={calculateDaysLeft(event.start_date)}
               />
-            </Anchor>
+            </NavLink>
           ))}
         </div>
       </Box>
@@ -192,9 +189,9 @@ function Home() {
 
           <div className="games__grid">
             {favGames.slice(0, 4).map((game) => (
-              <Anchor unstyled href="/game/events" key={game.id}>
+              <NavLink to="/game/events" key={game.id}>
                 <Image src={game.thumbnail} h={350} radius="md" sizes="cover" />
-              </Anchor>
+              </NavLink>
             ))}
           </div>
         </Box>
