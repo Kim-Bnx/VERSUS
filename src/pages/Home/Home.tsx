@@ -53,11 +53,11 @@ function Home() {
 
   const isConnected = useAppSelector((state) => state.login.isConnected);
   // const userGames = useAppSelector((state) => state.loggedUser.data.games);
-  const userAuth = LocalStorage.getItem('auth');
-  const { userId } = userAuth.auth;
 
   useEffect(() => {
     if (isConnected) {
+      const userAuth = LocalStorage.getItem('auth');
+      const { userId } = userAuth.auth;
       dispatch(fetchAllUserFavGames(userId));
       dispatch(fetchUserEvents(userId));
     }
