@@ -1,12 +1,29 @@
+import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
+import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { router } from './router';
+import store from './store';
 
-import App from './components/App/App';
+// Mantime styles
+import '@mantine/core/styles.css';
+import '@mantine/tiptap/styles.css';
+import '@mantine/dates/styles.css';
+import '@mantine/notifications/styles.css';
+import theme from './styles/theme';
 
+// Our custom styles
 import './styles/index.scss';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <MantineProvider defaultColorScheme="dark" theme={theme}>
+        <Notifications />
+        <RouterProvider router={router} />
+      </MantineProvider>
+    </Provider>
   </React.StrictMode>
 );

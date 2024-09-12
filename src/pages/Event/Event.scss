@@ -1,0 +1,55 @@
+@use '../../styles/variables' as v;
+
+.event__banner {
+  object-fit: cover;
+  object-position: center;
+  max-height: 350px;
+}
+
+.event__header {
+  margin-top: -1rem;
+  background-color: var(--mantine-color-indigo-light);
+  padding: var(--mantine-spacing-xl) 0;
+
+  &-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--mantine-spacing-lg);
+  }
+}
+
+.event__infos {
+  flex-grow: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.event__content {
+  margin-top: -1rem;
+}
+
+.content__tabs {
+  background-color: var(--mantine-color-indigo-light);
+}
+
+.mantine-Tabs-panel .mantine-TypographyStylesProvider-root {
+  margin: 0;
+  padding: 0;
+}
+
+.event__presentation,
+.event__attendees {
+  margin: var(--mantine-spacing-lg) 0;
+}
+
+.attendee {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-md);
+  margin: var(--mantine-spacing-lg) 0;
+}
+
+.attendee-username {
+  flex-grow: 2;
+}

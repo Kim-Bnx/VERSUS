@@ -1,0 +1,26 @@
+@use '../../styles/variables' as v;
+
+.hero {
+  padding: 4rem;
+  text-align: center;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  gap: var(--mantine-spacing-md);
+}
+
+.games__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 3fr));
+  gap: var(--mantine-spacing-md);
+
+  &-image {
+    height: auto;
+  }
+}
+
+.eventhumb-link {
+  color: inherit;
+}
