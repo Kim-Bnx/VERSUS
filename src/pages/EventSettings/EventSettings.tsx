@@ -22,7 +22,6 @@ import { useForm } from '@mantine/form';
 import slugify from 'slugify';
 import { DateTimePicker, DatesProvider } from '@mantine/dates';
 import { IoCheckmarkSharp, IoCloseSharp } from 'react-icons/io5';
-import { fetchEvent } from '../../store/reducers/event';
 import {
   changeTextEditorValue,
   updateEvent,
@@ -65,12 +64,8 @@ function EventSettings() {
 
   useEffect(() => {
     if (eventData) {
-      const formattedStartDate = eventData.start_date
-        ? new Date(eventData.start_date)
-        : null;
-      const formattedEndDate = eventData.end_date
-        ? new Date(eventData.end_date)
-        : null;
+      const formattedStartDate = eventData.start_date;
+      const formattedEndDate = eventData.end_date;
 
       form.setValues({
         id: eventData.id,
@@ -93,15 +88,15 @@ function EventSettings() {
   }, [eventData]);
 
   useEffect(() => {
-    dispatch(changeTextEditorValue(eventRules));
+    dispatch(changeTextEditorValue(eventRules || 'Aucune régle'));
   }, [eventRules]);
 
   const handleSubmitUpdateEvent = (values: Event) => {
     const newValues = {
       ...values,
-      type_event_id: getItem(values.type_event, eventTypeData),
-      game_id: getItem(values.game, gamesData),
-      platform_id: getItem(values.platform, platformData),
+      type_event_id: getItem(values.type_event ?? '', eventTypeData),
+      game_id: getItem(values.game ?? '', gamesData),
+      platform_id: getItem(values.platform ?? '', platformData),
       rules: eventRules,
     };
 
@@ -358,7 +353,10 @@ function EventSettings() {
         className="fieldset-settings settings_presentation"
         variant="unstyled"
       >
-        <TextEditor setEventRules={setEventRules} content={eventRules} />
+        <TextEditor
+          setEventRules={setEventRules}
+          content={eventRules || 'Aucune régle'}
+        />
       </Fieldset>
 
       <VisuallyHidden>

@@ -73,7 +73,7 @@ function Slider() {
         {selectedEvents.map((event) => (
           <Carousel.Slide key={event.id} className="slide">
             <BackgroundImage
-              className="slide-image"
+              className="slide-image img"
               component={Link}
               to={`/event/${event.title_slug}`}
               src={

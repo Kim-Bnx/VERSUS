@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import {
   ActionIcon,
   Anchor,
-  Avatar,
   Badge,
   Box,
   Button,
@@ -37,7 +36,7 @@ import { registerToEvent } from '../../store/reducers/registerEvent';
 import { unregisterToEvent } from '../../store/reducers/unregisterEvent';
 
 import './Event.scss';
-import CreateAvatar from '../../components/Element/CreateAvatar';
+// import CreateAvatar from '../../components/Element/CreateAvatar';
 
 function Event() {
   const dispatch = useAppDispatch();
@@ -51,7 +50,7 @@ function Event() {
     dispatch(fetchEvent(slug));
   }, [dispatch, slug]);
 
-  const sanitizedEventRules = DOMPurify.sanitize(eventData.rules);
+  const sanitizedEventRules = DOMPurify.sanitize(eventData.rules || '');
 
   const isRegisterToEvent = () => {
     const participantFound = eventData.participants.map(
@@ -181,7 +180,7 @@ function Event() {
             <Flex gap="xl" className="event__infos-details">
               <Text>
                 <IoGameController color="var(--mantine-color-indigo-filled)" />
-                {eventData.game.name}
+                {eventData.game?.name}
               </Text>
               <Text>
                 <IoLocationSharp color="var(--mantine-color-indigo-filled)" />
@@ -189,7 +188,7 @@ function Event() {
               </Text>
               <Text>
                 <IoTv color="var(--mantine-color-indigo-filled)" />
-                {eventData.platform.name}
+                {eventData.platform?.name}
               </Text>
             </Flex>
           </div>
@@ -244,7 +243,7 @@ function Event() {
           </div>
         </div>
 
-        <div className="full-width content-grid">
+        <Box className="full-width content-grid" mt="50" mih="500">
           <div className="content__tabs-panels">
             <Tabs.Panel value="presentation_tab">
               <TypographyStylesProvider>
@@ -283,7 +282,7 @@ function Event() {
               </Box>
             </Tabs.Panel>
           </div>
-        </div>
+        </Box>
       </Tabs>
     </>
   );

@@ -11,29 +11,38 @@
 
 .eventhumb {
   position: relative;
-  overflow: hidden;
+
+  &__image {
+    overflow: hidden;
+
+    &:before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(
+        0deg,
+        rgba(17, 17, 20, 0.7) 30%,
+        rgba(0, 0, 0, 0) 60%
+      );
+    }
+  }
 
   & > * {
     position: relative;
     z-index: 2;
   }
 
-  &:before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: linear-gradient(
-      0deg,
-      rgba(17, 17, 20, 0.7) 30%,
-      rgba(0, 0, 0, 0) 60%
-    );
-  }
-
   &__type {
     position: absolute;
     top: 1rem;
     right: 1rem;
+    line-height: 2rem;
+    background-color: var(--mantine-color-dark-7);
+    padding: 0 1rem !important;
+    border-radius: 1rem;
+    letter-spacing: 0.1rem;
+    font-weight: 600 !important;
   }
 }
 
@@ -54,7 +63,6 @@
 }
 
 .thumb__dates {
-  border-radius: 0 0 var(--mantine-radius-md) var(--mantine-radius-md);
 }
 
 [data-mantine-color-scheme='dark'] .thumb__dates {

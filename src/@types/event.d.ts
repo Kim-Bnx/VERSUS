@@ -20,9 +20,9 @@ export type NewEvent = {
 export type Event = {
   id: number;
   title: string;
-  title_slug?: string;
-  start_date?: string | Date;
-  end_date?: string | Date;
+  title_slug: string;
+  start_date: string;
+  end_date: string;
   banner?: string;
   thumbnail?: string;
   location?: string;
@@ -30,7 +30,7 @@ export type Event = {
   description?: string;
   rules?: string;
   contact?: string;
-  type_event?: string;
+  type_event?: { name: string };
   type_event_id?: number;
   game?: {
     id: null | number;

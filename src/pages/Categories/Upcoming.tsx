@@ -50,6 +50,7 @@ function Upcoming() {
               }
               date={event.start_date}
               countdown={calculateDaysLeft(event.start_date)}
+              className="img"
             />
           </Anchor>
         ))}
