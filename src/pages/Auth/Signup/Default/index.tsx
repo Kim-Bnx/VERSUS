@@ -17,7 +17,7 @@ import { signup } from '../../../../store/reducers/signup';
 import { login } from '../../../../store/reducers/login';
 import signupSchema, {
   SignupSchemaType,
-} from '../../../../validation/signupSchema';
+} from '../../../../validations/signupSchema';
 
 type DefaultProps = {
   onChangeView: (step: string) => void;
@@ -67,8 +67,8 @@ function Default({ onChangeView }: DefaultProps) {
           render={({ field }) => (
             <TextInput
               {...field}
-              label="Email"
-              placeholder="Saisissez votre email"
+              label="Adresse Email"
+              placeholder="Saisissez votre adresse email"
               c="#FFF"
               error={errors.email?.message}
             />
@@ -96,8 +96,8 @@ function Default({ onChangeView }: DefaultProps) {
           render={({ field }) => (
             <PasswordInput
               {...field}
-              label="Confirmation de mot de passe"
-              placeholder="Saisissez votre mot de passe"
+              label="Confirmation du mot de passe"
+              placeholder="Ressaisissez votre mot de passe"
               className="last-input"
               c="#FFF"
               mt="1rem"

@@ -16,7 +16,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { login } from '../../../store/reducers/login';
-import loginSchema, { LoginSchemaType } from '../../../validation/loginSchema';
+import loginSchema, { LoginSchemaType } from '../../../validations/loginSchema';
 
 function Login() {
   const navigate = useNavigate();
