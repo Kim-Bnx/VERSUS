@@ -76,7 +76,7 @@ function Home() {
       {isConnected && userEvents.length > 0 && (
         <Box className="container">
           <Flex justify="space-between" align="center" className="title">
-            <Title>Mes participations</Title>
+            <Title order={2}>Mes participations</Title>
 
             <NavLink
               to={`/profile/${username}/participations`}
@@ -115,7 +115,7 @@ function Home() {
 
       <Box className="container">
         <Flex justify="space-between" align="center" className="title">
-          <Title>Évènements à venir</Title>
+          <Title order={2}>Évènements à venir</Title>
 
           <NavLink
             to="/events/upcoming"
@@ -151,7 +151,7 @@ function Home() {
 
       <Box className="container">
         <Flex justify="space-between" align="center" className="title">
-          <Title>Évènements populaires</Title>
+          <Title order={2}>Évènements populaires</Title>
 
           <NavLink
             to="/events/populars"
@@ -188,7 +188,7 @@ function Home() {
       {isConnected && favGames.length > 0 && (
         <Box className="container">
           <Box className="title">
-            <Title>Mes jeux préférés</Title>
+            <Title order={2}>Mes jeux préférés</Title>
           </Box>
 
           <div className="games__grid">

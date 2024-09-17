@@ -9,6 +9,7 @@ import MyProfile from './pages/Profile/MyProfile/MyProfile';
 import Auth from './pages/Auth/Auth';
 import Signup from './pages/Auth/Signup/Signup';
 import Login from './pages/Auth/Login/Login';
+import ForgottenPassword from './pages/Auth/ForgottenPassword/ForgottenPassword';
 import CreateEvent from './pages/CreateEvent/CreateEvent';
 import About from './pages/Footer/About/Abouts';
 import Contact from './pages/Footer/Contact/Contact';
@@ -103,6 +104,10 @@ export const router = createBrowserRouter([
       {
         path: '/sign-in',
         element: <Login />,
+      },
+      {
+        path: '/forgotten-password',
+        element: <ForgottenPassword />,
       },
     ],
   },

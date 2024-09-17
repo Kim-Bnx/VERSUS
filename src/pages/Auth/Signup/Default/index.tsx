@@ -52,7 +52,7 @@ function Default({ onChangeView }: DefaultProps) {
 
   return (
     <Box>
-      <Title className="title" size="2.25rem" c="#FFF">
+      <Title order={2} className="title" size="2.25rem" c="#FFF">
         Inscription
       </Title>
 

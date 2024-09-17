@@ -32,7 +32,7 @@ function Populars() {
 
   return (
     <>
-      <Title order={1}>Les évènements populaires</Title>
+      <Title order={2}>Les évènements populaires</Title>
       <Space h="xl" />
       <div className="categories-grid">
         {sortedEvents.map((event) => (

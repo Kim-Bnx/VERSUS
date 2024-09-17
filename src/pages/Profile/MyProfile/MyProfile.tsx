@@ -208,7 +208,7 @@ function MyProfile() {
   return (
     <Box className="wrapper" w="100%">
       <Flex justify="space-between" align="center">
-        <Title size="2rem" order={2}>
+        <Title order={2} size="2rem">
           {toggleEditProfile ? 'Modifier votre profil' : 'Votre profil'}
         </Title>
 
@@ -220,7 +220,7 @@ function MyProfile() {
       </Flex>
 
       <Box mt="2rem">
-        <Title className="title" order={3}>
+        <Title order={3} className="title">
           Votre compte
         </Title>
 
@@ -327,12 +327,12 @@ function MyProfile() {
       </Box>
 
       <Box mt="4rem">
-        <Title className="title" order={3}>
+        <Title order={3} className="title">
           Vos préférences
         </Title>
 
         <Box className="section section-full">
-          <Title className="section-title" order={4}>
+          <Title order={4} className="section-title">
             Mes plateformes
           </Title>
 
@@ -364,7 +364,7 @@ function MyProfile() {
         </Box>
 
         <Box className="section section-full">
-          <Title className="section-title" order={4}>
+          <Title order={4} className="section-title">
             Mes jeux
           </Title>
 

@@ -218,7 +218,7 @@ function EventSettings() {
       <div className="settings_header full-width content-grid">
         <Flex align="end" justify="space-between">
           <Box>
-            <Title order={1}>Configurer son évènement</Title>
+            <Title order={2}>Configurer son évènement</Title>
             <Text>{eventData.title}</Text>
           </Box>
           <Button

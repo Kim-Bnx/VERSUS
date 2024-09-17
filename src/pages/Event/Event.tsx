@@ -150,7 +150,7 @@ function Event() {
             <Box className="event_infos--presentation">
               {eventData.type_event && <Pill>{eventData.type_event.name}</Pill>}
               <Flex align="center" gap="sm">
-                <Title order={1}>{eventData.title}</Title>
+                <Title order={2}>{eventData.title}</Title>
 
                 {isEventAdmin() && eventData.status === 'published' ? (
                   <Tooltip.Floating label="Evènement publié" color="gray">

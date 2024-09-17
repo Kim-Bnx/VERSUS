@@ -59,7 +59,7 @@ function UserProfile() {
             </Box>
 
             <Flex ml="1rem" direction="column">
-              <Title tt="capitalize" size="2rem" c="white" order={2}>
+              <Title order={2} tt="capitalize" size="2rem" c="white">
                 {userNameValue}
               </Title>
 
@@ -173,12 +173,12 @@ function UserProfile() {
       </Box>
 
       <Box mt="2rem">
-        <Title className="title" order={3}>
+        <Title order={3} className="title">
           Gaming
         </Title>
 
         <Box className="section section-full">
-          <Title className="section-title" order={4}>
+          <Title order={4} className="section-title">
             Platformes
           </Title>
 
@@ -194,7 +194,7 @@ function UserProfile() {
         </Box>
 
         <Box className="section section-full">
-          <Title className="section-title" order={4}>
+          <Title order={4} className="section-title">
             Jeux
           </Title>
 

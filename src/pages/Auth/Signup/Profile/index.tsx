@@ -79,13 +79,15 @@ function Profile({ onChangeView }: ProfileProps) {
   return (
     <Flex align="center" justify="center" direction="column">
       <Box className="title">
-        <Title size="1.5rem">Configuration de votre profil</Title>
+        <Title order={2} size="1.5rem">
+          Configuration de votre profil
+        </Title>
 
         <Text>Etape 1 sur 2</Text>
       </Box>
 
       <Box w="100%">
-        <Title className="form-title" order={2} size="1rem">
+        <Title order={3} className="form-title" size="1rem">
           Pseudo
         </Title>
 
@@ -99,7 +101,7 @@ function Profile({ onChangeView }: ProfileProps) {
 
       <Flex justify="space-around" className="avatar section">
         <Box className="avatar-selected">
-          <Title className="form-title" order={2} size="1rem">
+          <Title order={3} className="form-title" size="1rem">
             Avatar
           </Title>
           {!selectedAvatar ? (

@@ -27,7 +27,7 @@ function UserEventsCreated() {
 
   return (
     <>
-      <Title order={1}>Mes évènements créés</Title>
+      <Title order={2}>Mes évènements créés</Title>
       <Space h="xs" />
       <div className="categories-grid">
         {userEvents.map((event) => (

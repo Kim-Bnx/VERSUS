@@ -29,7 +29,7 @@ function UserParticipations() {
 
   return (
     <>
-      <Title order={1}>Mes participations</Title>
+      <Title order={2}>Mes participations</Title>
       <Space h="xs" />
       <div className="categories-grid">
         {userParticipations.map((event) => (

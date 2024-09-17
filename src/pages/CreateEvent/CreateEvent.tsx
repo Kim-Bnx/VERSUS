@@ -87,7 +87,7 @@ function CreateEvent() {
 
   return (
     <>
-      <Title order={1}>Créer un évènement</Title>
+      <Title order={2}>Créer un évènement</Title>
       <form onSubmit={form.onSubmit(handleSubmitCreateEvent)}>
         <Grid>
           <Grid.Col span={12}>

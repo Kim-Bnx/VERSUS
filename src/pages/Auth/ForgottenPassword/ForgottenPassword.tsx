@@ -10,15 +10,16 @@ import {
   Group,
   Button,
   Flex,
-  PasswordInput,
 } from '@mantine/core';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { login } from '../../../store/reducers/login';
-import loginSchema, { LoginSchemaType } from '../../../validations/loginSchema';
+import forgottenPasswordSchema, {
+  ForgottenPasswordSchema,
+} from '../../../validations/forgottenPasswordSchema';
 
-function Login() {
+function ForgottenPassword() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -29,15 +30,14 @@ function Login() {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginSchemaType>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<ForgottenPasswordSchema>({
+    resolver: zodResolver(forgottenPasswordSchema),
     defaultValues: {
       email: '',
-      password: '',
     },
   });
 
-  const onSubmit = (data: LoginSchemaType) => {
+  const onSubmit = (data: ForgottenPasswordSchema) => {
     dispatch(login(data));
   };
 
@@ -50,7 +50,10 @@ function Login() {
   return (
     <Box className="right-content">
       <Title order={2} className="title" size="2.25rem" c="#FFF">
-        Connexion
+        Mot de passe oublié
+        <Text mt="1rem">
+          Pas de panique ! Nous avons juste besoin de ton adresse email.
+        </Text>
       </Title>
 
       <Stack>
@@ -61,26 +64,11 @@ function Login() {
             render={({ field }) => (
               <TextInput
                 {...field}
-                label="Email"
+                label="Adresse Email"
                 placeholder="Saisissez votre adresse email"
                 c="#FFF"
                 className="section"
                 error={errors.email?.message}
-              />
-            )}
-          />
-
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => (
-              <PasswordInput
-                {...field}
-                label="Mot de passe"
-                placeholder="Saisissez votre mot de passe"
-                c="#FFF"
-                className="section last-input"
-                error={errors.password?.message}
               />
             )}
           />
@@ -92,17 +80,8 @@ function Login() {
           )}
 
           <Group justify="space-between" className="section">
-            <Anchor
-              href="/forgotten-password"
-              c="#FFF"
-              fz="0.9rem"
-              className="link"
-            >
-              Mot de passe oublié ?
-            </Anchor>
-
             <Button type="submit" className="button">
-              Se connecter
+              Réinitialiser mon mot de passe
             </Button>
           </Group>
         </Box>
@@ -117,13 +96,29 @@ function Login() {
             href="/sign-up"
             variant="outline"
             fullWidth
-            className="last-cta button"
+            className="button"
           >
             Créer un compte Versus
           </Button>
+        </Flex>
+
+        <Flex mt="1rem" direction="row" wrap="wrap" className="form-bottom">
+          <Text c="#FFF" fz="0.9rem">
+            Vous avez déjà un compte ?
+          </Text>
+
+          <Button
+            component="a"
+            href="/sign-in"
+            variant="outline"
+            fullWidth
+            className="last-cta button"
+          >
+            Me connecter avec mon compte
+          </Button>
 
           <Anchor href="/" className="link" c="#FFF" fz="0.9rem">
-            Retourner à la page d&apos;accueil
+            Retour à la page d&apos;accueil
           </Anchor>
         </Flex>
       </Stack>
@@ -131,4 +126,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default ForgottenPassword;

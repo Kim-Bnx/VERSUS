@@ -10,7 +10,7 @@ function Error() {
         direction="column"
         style={{ height: '100%' }}
       >
-        <Title order={1}>404 ERROR</Title>
+        <Title order={2}>404 ERROR</Title>
         <Text>Tu sembles t&apos;être perdu</Text>
         <Button component="a" href="/">
           VERSUS Home

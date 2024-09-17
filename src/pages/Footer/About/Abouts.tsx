@@ -18,7 +18,7 @@ function About() {
   return (
     <>
       <Box className="team__presentation">
-        <Title order={1}>L&apos;équipe Versus</Title>
+        <Title order={2}>L&apos;équipe de Versus</Title>
         <Space h="sm" />
         <Text>
           Les visages qui ont fait de Versus un super projet de fin d&apos;étude
