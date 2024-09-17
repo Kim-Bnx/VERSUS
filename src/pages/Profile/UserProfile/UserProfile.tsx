@@ -33,10 +33,11 @@ function UserProfile() {
   const userEventsParticipations = userData.events;
   const userEventsCreated = userData.organize;
 
-  const calculateDaysLeft = (startDate) => {
+  const calculateDaysLeft = (startDate: string): number => {
     const now = new Date();
     const start = new Date(startDate);
-    const difference = start - now;
+    const difference = start.getTime() - now.getTime();
+
     const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
 
     return daysLeft > 0 ? daysLeft : 0;
@@ -99,7 +100,7 @@ function UserProfile() {
             href={`/profile/${slugify(`${userNameValue}`, {
               lower: true,
             })}/participations`}
-            className="categories__title-more"
+            className="categories__title-more link"
           >
             Voir plus
           </Anchor>
@@ -117,6 +118,7 @@ function UserProfile() {
               <EventThumb
                 image={userEvent.banner || 'url_de_limage_par_defaut'}
                 name={userEvent.title}
+                game={userEvent.game ? userEvent.game.name : 'Jeu non défini'}
                 type={
                   userEvent.platform
                     ? userEvent.platform.name
@@ -138,7 +140,7 @@ function UserProfile() {
             href={`/profile/${slugify(`${userNameValue}`, {
               lower: true,
             })}/events`}
-            className="categories__title-more"
+            className="categories__title-more link"
           >
             Voir plus
           </Anchor>
@@ -156,6 +158,7 @@ function UserProfile() {
               <EventThumb
                 image={userEvent.thumbnail || 'url_de_limage_par_defaut'}
                 name={userEvent.title}
+                game={userEvent.game ? userEvent.game.name : 'Jeu non défini'}
                 type={
                   userEvent.platform
                     ? userEvent.platform.name

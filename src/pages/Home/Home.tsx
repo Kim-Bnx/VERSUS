@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Anchor, Image, Box, Flex, Title } from '@mantine/core';
+import { Image, Box, Flex, Title } from '@mantine/core';
 import { NavLink } from 'react-router-dom';
 import Slider from '../../components/Slider/Slider';
 import EventThumb from '../../components/Element/Thumb/Event';
@@ -23,7 +23,7 @@ function Home() {
   }, [dispatch]);
 
   // function that calculates the number of days left until the event starts
-  const calculateDaysLeft = (startDate) => {
+  const calculateDaysLeft = (startDate: string): number => {
     // creates a new Date object representing the current date and time
     const now = new Date();
 
@@ -32,7 +32,7 @@ function Home() {
     const start = new Date(startDate);
 
     // calculates the difference in milliseconds between the event's start date and the current date
-    const difference = start - now;
+    const difference = start.getTime() - now.getTime();
 
     // converts the difference from milliseconds to days
     // math.ceil is used to round up to the nearest whole day as even a partial day counts as a full day for the countdown.
@@ -53,9 +53,7 @@ function Home() {
   const sortedEvents = sortEventsByParticipants(events);
 
   const isConnected = useAppSelector((state) => state.login.isConnected);
-  const username = useAppSelector(
-    (state) => state.loggedUser.data.username_slug
-  );
+  const username = useAppSelector((state) => state.loggedUser.data.username);
   // const userGames = useAppSelector((state) => state.loggedUser.data.games);
 
   useEffect(() => {
@@ -70,7 +68,7 @@ function Home() {
   return (
     <>
       <Box className="hero full-height">
-        <Title order={1}>Organisez, rassemblez, jouez !</Title>
+        <Title order={1}>Organisez, Rassemblez et Jouez</Title>
       </Box>
 
       <Slider />
@@ -82,7 +80,7 @@ function Home() {
 
             <NavLink
               to={`/profile/${username}/participations`}
-              className="categories__title-more"
+              className="categories__title-more link"
             >
               Voir plus
             </NavLink>
@@ -119,7 +117,10 @@ function Home() {
         <Flex justify="space-between" align="center" className="title">
           <Title>Évènements à venir</Title>
 
-          <NavLink to="/events/upcoming" className="categories__title-more">
+          <NavLink
+            to="/events/upcoming"
+            className="categories__title-more link"
+          >
             Voir plus
           </NavLink>
         </Flex>
@@ -152,7 +153,10 @@ function Home() {
         <Flex justify="space-between" align="center" className="title">
           <Title>Évènements populaires</Title>
 
-          <NavLink to="/events/populars" className="categories__title-more">
+          <NavLink
+            to="/events/populars"
+            className="categories__title-more link"
+          >
             Voir plus
           </NavLink>
         </Flex>

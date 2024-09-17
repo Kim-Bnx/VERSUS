@@ -1,16 +1,6 @@
 import { useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useDisclosure } from '@mantine/hooks';
-import {
-  Box,
-  Button,
-  Anchor,
-  AppShell,
-  Flex,
-  Avatar,
-  Burger,
-  Text,
-} from '@mantine/core';
+import { Box, Button, AppShell, Flex, Burger, Text } from '@mantine/core';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import SearchBar from '../SearchBar/SearchBar';
 
@@ -44,9 +34,9 @@ function Header({ opened, toggle }: { opened: boolean; toggle: () => void }) {
         <div className="header__actions">
           <Button
             visibleFrom="sm"
-            className="button header__actions-event"
             component={Link}
             to={isConnected ? '/event/create' : '/sign-in'}
+            className="button"
           >
             Organiser un event
           </Button>
@@ -56,11 +46,7 @@ function Header({ opened, toggle }: { opened: boolean; toggle: () => void }) {
 
         {!isConnected ? (
           <Box className="header__connexion">
-            <Button
-              component={Link}
-              to="/sign-in"
-              className="button button-login"
-            >
+            <Button component={Link} to="/sign-in" className="button">
               Se connecter
             </Button>
           </Box>

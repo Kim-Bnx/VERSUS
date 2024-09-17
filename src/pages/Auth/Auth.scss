@@ -51,12 +51,28 @@
     .section {
       margin-bottom: 2rem;
       width: 100%;
-    }
 
+    }
+    
+    .last-input {
+      margin-bottom: 1rem;
+    }
+  
     .form-title,
     .form-subtitle,
     label {
       margin-bottom: 0.5rem;
+    }
+
+    .error {
+      height: 25px;
+      margin-bottom: 1rem;
+
+      & p {
+        color: rgb(238, 81, 81);
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+      }
     }
 
     .profile {
@@ -73,7 +89,7 @@
         padding-bottom: 0.5rem;
       }
 
-      button {
+      .last-cta {
         margin-bottom: 3rem;
       }
 

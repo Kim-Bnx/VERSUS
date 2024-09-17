@@ -29,10 +29,25 @@ input {
   }
 }
 
-a {
-  color: var(--mantine-color-anchor);
+.button {
+  letter-spacing: 0.8px;
+	&:hover {
+    background-color: #4d4086 !important;
+	}
+}
 
-  &:hover:not(.button, .logo, .eventhumb-link) {
-    text-decoration: underline;
+.link {
+  text-decoration: underline;
+
+  &:hover {
+    text-decoration: none;
   }
 }
+
+// a {
+//   color: var(--mantine-color-anchor);
+
+//   &:hover:not(.button, .logo, .eventhumb-link) {
+//     text-decoration: underline;
+//   }
+// }

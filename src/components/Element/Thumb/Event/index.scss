@@ -11,6 +11,14 @@
 
 .eventhumb {
   position: relative;
+  top: 0;
+  transition: all 0.1s ease-in;
+
+
+  &:hover {
+    top: -0.5rem;
+    filter: drop-shadow(0 0 0.55rem rgb(22, 22, 22));
+  }
 
   &__image {
     overflow: hidden;
@@ -60,9 +68,6 @@
   &__dates {
     padding: 0.5rem 1rem;
   }
-}
-
-.thumb__dates {
 }
 
 [data-mantine-color-scheme='dark'] .thumb__dates {

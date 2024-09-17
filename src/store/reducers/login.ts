@@ -52,7 +52,8 @@ const loginSlice = createSlice({
         state.error = null;
       })
       .addCase(login.rejected, (state) => {
-        state.error = 'Email ou mot de passe incorrect';
+        state.error =
+          'Oups... l\u2019email ou le mot de passe n\u2019est pas le bon :/';
         state.isLoading = false;
       })
       .addCase(login.fulfilled, (state, action) => {

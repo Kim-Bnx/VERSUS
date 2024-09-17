@@ -119,7 +119,7 @@ function Slider() {
                 <Button
                   component={Link}
                   to={`/event/${event.title_slug}`}
-                  className="slide-button"
+                  className="slide-button button"
                 >
                   Voir l'événement
                 </Button>
