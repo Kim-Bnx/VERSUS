@@ -44,15 +44,24 @@
 
 .navbar__link {
   display: block;
-  color: var(--mantine-color-anchor);
+  color: white;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 600;
+  transition: color 0.1s ease-out;
 
-  &:hover {
+  &:hover{
     text-decoration: underline;
+    color: var(--mantine-primary-color-5);
+  }
+
+  &--active {
+    text-decoration: underline;
+    color: var(--mantine-primary-color-5);
   }
 }
 
 .navbar__section {
-  margin: var(--mantine-spacing-lg) 0;
+  margin: 1rem 0 2rem 0;
 }
 
 /** ACCORDION NAVBAR **/

@@ -20,6 +20,7 @@ import gameReducer from './reducers/game';
 import platformReducer from './reducers/platform';
 import passwordChangeReducer from './reducers/passwordChange';
 import userEventsReducer from './reducers/userEvents';
+import resetPasswordReducer from './reducers/resetPassword';
 
 const store = configureStore({
   reducer: {
@@ -44,6 +45,7 @@ const store = configureStore({
     game: gameReducer,
     platform: platformReducer,
     passwordChange: passwordChangeReducer,
+    resetPassword: resetPasswordReducer,
   },
 });
 

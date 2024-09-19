@@ -25,8 +25,28 @@
       padding-bottom: 4rem;
     }
 
-    .form {
-      padding-bottom: 3rem;
+    form {
+   
+      .error-message {
+        position: relative;
+        margin-bottom: 1rem;
+        margin-top: 0.2rem;
+        height: 19px;
+     
+        &.last-error-box {
+          margin-bottom: 2rem;
+        }
+  
+        & p {
+          color: #e03131;
+          font-size: var(--mantine-font-size-xs);
+          padding-left: 2px;
+        }
+      }
+
+      .input-error input {
+        border: 1px solid #e03131;
+      }
     }
 
     .avatar {
@@ -52,27 +72,16 @@
       margin-bottom: 2rem;
       width: 100%;
 
+      &.last-input {
+        margin-bottom: 1rem;
+      }
     }
     
-    .last-input {
-      margin-bottom: 1rem;
-    }
   
     .form-title,
     .form-subtitle,
     label {
       margin-bottom: 0.5rem;
-    }
-
-    .error {
-      height: 25px;
-      margin-bottom: 1rem;
-
-      & p {
-        color: rgb(238, 81, 81);
-        font-size: 0.9rem;
-        letter-spacing: 0.5px;
-      }
     }
 
     .profile {

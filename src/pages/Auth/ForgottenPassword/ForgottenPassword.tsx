@@ -8,13 +8,14 @@ import {
   Stack,
   Anchor,
   Group,
+  Divider,
   Button,
   Flex,
 } from '@mantine/core';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { login } from '../../../store/reducers/login';
+import { resetPassword } from '../../../store/reducers/resetPassword';
 import forgottenPasswordSchema, {
   ForgottenPasswordSchema,
 } from '../../../validations/forgottenPasswordSchema';
@@ -24,7 +25,8 @@ function ForgottenPassword() {
   const dispatch = useAppDispatch();
 
   const isConnected = useAppSelector((state) => state.login.isConnected);
-  const errorMsg = useAppSelector((state) => state.login.error);
+  const resetErrorMsg = useAppSelector((state) => state.resetPassword.error);
+  const successMsg = useAppSelector((state) => state.resetPassword.success);
 
   const {
     control,
@@ -38,7 +40,8 @@ function ForgottenPassword() {
   });
 
   const onSubmit = (data: ForgottenPasswordSchema) => {
-    dispatch(login(data));
+    const { email } = data; // No need to handle undefined as it's validated
+    dispatch(resetPassword(email));
   };
 
   useEffect(() => {
@@ -66,25 +69,26 @@ function ForgottenPassword() {
                 {...field}
                 label="Adresse Email"
                 placeholder="Saisissez votre adresse email"
+                className={`${errors.email ? 'input-error' : ''}`}
                 c="#FFF"
-                className="section"
-                error={errors.email?.message}
               />
             )}
           />
 
-          {errorMsg && (
-            <Box className="error">
-              <Text>{errorMsg}</Text>
-            </Box>
-          )}
+          <Box className="error-message last-error-box">
+            {errors.email && <Text>{errors.email.message}</Text>}
+            {resetErrorMsg && <Text>{resetErrorMsg}</Text>}
+            {successMsg && <Text>{successMsg}</Text>}
+          </Box>
 
-          <Group justify="space-between" className="section">
+          <Group mt="1rem" justify="flex-end">
             <Button type="submit" className="button">
               Réinitialiser mon mot de passe
             </Button>
           </Group>
         </Box>
+
+        <Divider my="xl" />
 
         <Flex direction="row" wrap="wrap" className="form-bottom">
           <Text c="#FFF" fz="0.9rem">
@@ -118,7 +122,7 @@ function ForgottenPassword() {
           </Button>
 
           <Anchor href="/" className="link" c="#FFF" fz="0.9rem">
-            Retour à la page d&apos;accueil
+            Retourner à la page d&apos;accueil
           </Anchor>
         </Flex>
       </Stack>

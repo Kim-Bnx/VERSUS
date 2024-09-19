@@ -64,11 +64,14 @@ function Login() {
                 label="Email"
                 placeholder="Saisissez votre adresse email"
                 c="#FFF"
-                className="section"
-                error={errors.email?.message}
+                className={`${errors.email ? 'input-error' : ''}`}
               />
             )}
           />
+
+          <Box className="error-message">
+            {errors.email && <Text>{errors.email.message}</Text>}
+          </Box>
 
           <Controller
             name="password"
@@ -79,17 +82,15 @@ function Login() {
                 label="Mot de passe"
                 placeholder="Saisissez votre mot de passe"
                 c="#FFF"
-                className="section last-input"
-                error={errors.password?.message}
+                className={`${errors.password ? 'input-error' : ''}`}
               />
             )}
           />
 
-          {errorMsg && (
-            <Box className="error">
-              <Text>{errorMsg}</Text>
-            </Box>
-          )}
+          <Box className="error-message last-error-box">
+            {errors.password && <Text>{errors.password?.message}</Text>}
+            {errorMsg && <Text>{errorMsg}</Text>}
+          </Box>
 
           <Group justify="space-between" className="section">
             <Anchor

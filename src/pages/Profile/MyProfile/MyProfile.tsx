@@ -13,7 +13,7 @@ import {
   GridCol,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { IconKey, IconSettingsFilled, IconUpload } from '@tabler/icons-react';
+import { IconKey, IconUpload } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
@@ -88,6 +88,10 @@ function MyProfile() {
 
   const handleEditProfile = () => {
     setToggleEditProfile(!toggleEditProfile);
+
+    if (toggleEditProfile) {
+      setUsername(usernameState); // Reset to current username when exiting edit mode
+    }
   };
 
   const handleChangeUsernameValue = (event: ChangeEvent<HTMLInputElement>) => {
@@ -213,8 +217,8 @@ function MyProfile() {
         </Title>
 
         <Flex justify="space-between" align="center">
-          <Button mr="1rem" onClick={handleEditProfile}>
-            <IconSettingsFilled />
+          <Button className="button" mr="1rem" onClick={handleEditProfile}>
+            {toggleEditProfile ? 'Annuler' : 'Éditer mon profil'}
           </Button>
         </Flex>
       </Flex>
@@ -241,7 +245,7 @@ function MyProfile() {
               <CreateAvatar hw="5rem" seed={useAvatarValue} />
             ) : (
               <Box className="upload">
-                <Button className="upload-button">
+                <Button bg="none" className="upload-button">
                   <FileButton onChange={setFile} accept="image/png,image/jpeg">
                     {(props) => <IconUpload {...props} />}
                   </FileButton>
@@ -267,7 +271,11 @@ function MyProfile() {
                     placeholder={usernameState}
                     onChange={handleChangeUsernameValue}
                   />
-                  <Button ml="2rem" onClick={handleUsernameSubmit}>
+                  <Button
+                    className="button"
+                    ml="2rem"
+                    onClick={handleUsernameSubmit}
+                  >
                     Valider
                   </Button>
                 </>
@@ -317,7 +325,7 @@ function MyProfile() {
                   onVisibilityChange={toggle}
                   {...form.getInputProps('confirmPassword')}
                 />
-                <Button mt="1rem" type="submit">
+                <Button className="button" mt="1rem" type="submit">
                   Valider
                 </Button>
               </form>
@@ -333,7 +341,7 @@ function MyProfile() {
 
         <Box className="section section-full">
           <Title order={4} className="section-title">
-            Mes plateformes
+            Plateformes sur lesquels je joue :
           </Title>
 
           {!toggleEditProfile ? (
@@ -356,8 +364,10 @@ function MyProfile() {
                 selectedPlatforms={selectedPlatforms}
                 handlePlatformSelection={handlePlatformSelection}
               />
-              <Flex mt="2rem" w="100%">
-                <Button onClick={handlePlatformsSubmit}>Valider</Button>
+              <Flex justify="end" mt="2rem" w="100%">
+                <Button className="button" onClick={handlePlatformsSubmit}>
+                  Valider
+                </Button>
               </Flex>
             </>
           )}
@@ -365,7 +375,7 @@ function MyProfile() {
 
         <Box className="section section-full">
           <Title order={4} className="section-title">
-            Mes jeux
+            Jeux auquels je joue :
           </Title>
 
           {!toggleEditProfile ? (
@@ -390,8 +400,10 @@ function MyProfile() {
                 selectedGames={selectedGames}
                 handleGameSelection={handleGameSelection}
               />
-              <Flex mt="2rem" w="100%">
-                <Button onClick={handleGamesSubmit}>Valider</Button>
+              <Flex justify="end" mt="2rem" w="100%">
+                <Button className="button" onClick={handleGamesSubmit}>
+                  Valider
+                </Button>
               </Flex>
             </>
           )}

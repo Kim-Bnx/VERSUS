@@ -70,10 +70,14 @@ function Default({ onChangeView }: DefaultProps) {
               label="Adresse Email"
               placeholder="Saisissez votre adresse email"
               c="#FFF"
-              error={errors.email?.message}
+              className={`${errors.email ? 'input-error' : ''}`}
             />
           )}
         />
+
+        <Box className="error-message">
+          {errors.email && <Text>{errors.email.message}</Text>}
+        </Box>
 
         <Controller
           name="password"
@@ -84,11 +88,14 @@ function Default({ onChangeView }: DefaultProps) {
               label="Mot de passe"
               placeholder="Saisissez votre mot de passe"
               c="#FFF"
-              mt="1rem"
-              error={errors.password?.message}
+              className={`${errors.password ? 'input-error' : ''}`}
             />
           )}
         />
+
+        <Box className="error-message">
+          {errors.password && <Text>{errors.password?.message}</Text>}
+        </Box>
 
         <Controller
           name="confirmation"
@@ -98,15 +105,16 @@ function Default({ onChangeView }: DefaultProps) {
               {...field}
               label="Confirmation du mot de passe"
               placeholder="Ressaisissez votre mot de passe"
-              className="last-input"
+              className={`${errors.confirmation ? 'input-error' : ''}`}
               c="#FFF"
-              mt="1rem"
-              error={errors.confirmation?.message}
             />
           )}
         />
 
-        <Box className="error">{errorMsg && <Text>{errorMsg}</Text>}</Box>
+        <Box className="error-message last-error-box">
+          {errors.confirmation && <Text>{errors.confirmation?.message}</Text>}
+          {errorMsg && <Text>{errorMsg}</Text>}
+        </Box>
 
         <Flex justify="flex-end">
           <Button type="submit" className="button">

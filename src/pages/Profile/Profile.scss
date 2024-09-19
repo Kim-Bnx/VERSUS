@@ -63,6 +63,10 @@
         right: -2.5rem;
         padding: 0;
         position: absolute;
+
+        &:hover {
+          bottom: -1.2rem;
+        }
       }
     }
 
