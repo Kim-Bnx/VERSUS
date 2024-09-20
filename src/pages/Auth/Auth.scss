@@ -26,21 +26,24 @@
     }
 
     form {
-   
       .error-message {
         position: relative;
         margin-bottom: 1rem;
         margin-top: 0.2rem;
         height: 19px;
-     
+
         &.last-error-box {
           margin-bottom: 2rem;
         }
-  
+
         & p {
           color: #e03131;
           font-size: var(--mantine-font-size-xs);
           padding-left: 2px;
+
+          &.success {
+            color: green;
+          }
         }
       }
 
@@ -76,8 +79,7 @@
         margin-bottom: 1rem;
       }
     }
-    
-  
+
     .form-title,
     .form-subtitle,
     label {

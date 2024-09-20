@@ -17,7 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { resetPassword } from '../../../store/reducers/resetPassword';
 import forgottenPasswordSchema, {
-  ForgottenPasswordSchema,
+  ForgottenPasswordSchemaType,
 } from '../../../validations/forgottenPasswordSchema';
 
 function ForgottenPassword() {
@@ -32,15 +32,16 @@ function ForgottenPassword() {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<ForgottenPasswordSchema>({
+  } = useForm<ForgottenPasswordSchemaType>({
     resolver: zodResolver(forgottenPasswordSchema),
     defaultValues: {
       email: '',
     },
   });
 
-  const onSubmit = (data: ForgottenPasswordSchema) => {
-    const { email } = data; // No need to handle undefined as it's validated
+  const onSubmit = (data: ForgottenPasswordSchemaType) => {
+    const { email } = data;
+
     dispatch(resetPassword(email));
   };
 
@@ -78,7 +79,7 @@ function ForgottenPassword() {
           <Box className="error-message last-error-box">
             {errors.email && <Text>{errors.email.message}</Text>}
             {resetErrorMsg && <Text>{resetErrorMsg}</Text>}
-            {successMsg && <Text>{successMsg}</Text>}
+            {successMsg && <Text className="success">{successMsg}</Text>}
           </Box>
 
           <Group mt="1rem" justify="flex-end">

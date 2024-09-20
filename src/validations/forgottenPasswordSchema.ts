@@ -7,6 +7,8 @@ const forgottenPasswordSchema = z.object({
     .email("L'adresse email n'est pas valide."),
 });
 
-export type ForgottenPasswordSchema = z.infer<typeof forgottenPasswordSchema>;
+export type ForgottenPasswordSchemaType = z.infer<
+  typeof forgottenPasswordSchema
+>;
 
 export default forgottenPasswordSchema;

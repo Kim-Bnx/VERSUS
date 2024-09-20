@@ -14,9 +14,9 @@ import {
 import { IconChevronRight } from '@tabler/icons-react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import {
-  loggedUserUpdate,
+  updateLoggedUser,
   changeInputUserValue,
-} from '../../../../store/reducers/loggedUserUpdate';
+} from '../../../../store/reducers/updateLoggedUser';
 import CreateAvatar from '../../../../components/Element/CreateAvatar';
 import { LocalStorage } from '../../../../utils/LocalStorage';
 
@@ -57,7 +57,7 @@ function Profile({ onChangeView }: ProfileProps) {
 
     dispatch(changeInputUserValue({ fieldName: 'username', value: username }));
     dispatch(
-      loggedUserUpdate({
+      updateLoggedUser({
         userDatas: { username, avatar: selectedAvatar },
         userId,
       })

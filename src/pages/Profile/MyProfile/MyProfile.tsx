@@ -17,12 +17,12 @@ import { IconKey, IconUpload } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { loggedUserUpdate } from '../../../store/reducers/loggedUserUpdate';
+import { updateLoggedUser } from '../../../store/reducers/updateLoggedUser';
 import { logout } from '../../../store/reducers/login';
 import { userGames } from '../../../store/reducers/userGames';
 import { fetchGames } from '../../../store/reducers/game';
 import { fetchPlatforms } from '../../../store/reducers/platform';
-import { patchPassword } from '../../../store/reducers/passwordChange';
+import { updatePassword } from '../../../store/reducers/updatePassword';
 import { userPlatforms } from '../../../store/reducers/userPlatforms';
 import { loggedUser } from '../../../store/reducers/loggedUser';
 import { LocalStorage } from '../../../utils/LocalStorage';
@@ -102,7 +102,7 @@ function MyProfile() {
 
   const handleUsernameSubmit = () => {
     dispatch(
-      loggedUserUpdate({
+      updateLoggedUser({
         userDatas: { username },
         userId,
       })
@@ -116,7 +116,7 @@ function MyProfile() {
   const handlePasswordSubmit = () => {
     const { values } = form;
 
-    dispatch(patchPassword({ id: userId, ...values }))
+    dispatch(updatePassword({ id: userId, ...values }))
       .unwrap()
       .then(() => {
         dispatch(logout());

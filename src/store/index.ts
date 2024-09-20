@@ -11,14 +11,14 @@ import unregisterEventReducer from './reducers/unregisterEvent';
 import searchReducer from './reducers/search';
 import signupReducer from './reducers/signup';
 import loggedUserReducer from './reducers/loggedUser';
-import loggedUserUpdateReducer from './reducers/loggedUserUpdate';
+import updateLoggedUserReducer from './reducers/updateLoggedUser';
 import userFavGamesReducer from './reducers/userFavGames';
 import userGamesReducer from './reducers/userGames';
 import userPlatformsReducer from './reducers/userPlatforms';
 import profileReducer from './reducers/profile';
 import gameReducer from './reducers/game';
 import platformReducer from './reducers/platform';
-import passwordChangeReducer from './reducers/passwordChange';
+import updatePasswordReducer from './reducers/updatePassword';
 import userEventsReducer from './reducers/userEvents';
 import resetPasswordReducer from './reducers/resetPassword';
 
@@ -37,14 +37,14 @@ const store = configureStore({
     signup: signupReducer,
     loggedUser: loggedUserReducer,
     userEvents: userEventsReducer,
-    loggedUserUpdate: loggedUserUpdateReducer,
+    updateLoggedUser: updateLoggedUserReducer,
     userFavGames: userFavGamesReducer,
     userGames: userGamesReducer,
     userPlatforms: userPlatformsReducer,
     profile: profileReducer,
     game: gameReducer,
     platform: platformReducer,
-    passwordChange: passwordChangeReducer,
+    updatePassword: updatePasswordReducer,
     resetPassword: resetPasswordReducer,
   },
 });

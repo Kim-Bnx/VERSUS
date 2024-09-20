@@ -17,13 +17,12 @@ export const resetPassword = createAsyncThunk(
   'resetPassword',
   async (email: string) => {
     const response = await axiosInstance.get('/request-password-reset', {
-      params: { email }, // Use params for query parameters
+      params: { email },
     });
     return response;
   }
 );
 
-// Create a slice
 const resetPasswordSlice = createSlice({
   name: 'resetPassword',
   initialState,
@@ -36,6 +35,7 @@ const resetPasswordSlice = createSlice({
       })
       .addCase(resetPassword.fulfilled, (state) => {
         state.isLoading = false;
+        state.success = 'Email envoyé :) Veuillez vérifier votre boîte mail.';
       })
       .addCase(resetPassword.rejected, (state) => {
         state.isLoading = false;

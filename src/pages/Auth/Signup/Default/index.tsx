@@ -139,7 +139,7 @@ function Default({ onChangeView }: DefaultProps) {
         </Button>
 
         <Anchor href="/" className="link" c="#FFF" fz="0.9rem">
-          Retour à la page d&apos;accueil
+          Retourner à la page d&apos;accueil
         </Anchor>
       </Flex>
     </Box>
