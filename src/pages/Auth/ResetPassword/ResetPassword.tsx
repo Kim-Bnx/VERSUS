@@ -27,8 +27,8 @@ function ResetPassword() {
 
   const [searchParams] = useSearchParams();
 
-  const email = searchParams.get('e'); // Getting the 'e' parameter
-  const token = searchParams.get('t'); // Getting the 't' parameter
+  const email = searchParams.get('e');
+  const token = searchParams.get('t');
 
   const resetErrorMsg = useAppSelector((state) => state.updatePassword.error);
   const successMsg = useAppSelector((state) => state.updatePassword.success);
@@ -67,7 +67,7 @@ function ResetPassword() {
   useEffect(() => {
     if (successMsg) {
       notifications.show({
-        title: 'Modificaiton de mot de passe effectué !',
+        title: 'Modification de mot de passe effectué !',
         message:
           'Vous allez être redirigé vers la page de connexion dans 3 secondes ...',
         autoClose: 3000,

@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { axiosInstanceToken } from '../../utils/axios';
 import { UpdatePasswordState, NewPassword } from '../../@types/user';
 
@@ -15,33 +16,50 @@ const initialState: UpdatePasswordState = {
 
 export const updatePassword = createAsyncThunk(
   'updatePassword',
-  async (newPasswordData: NewPassword) => {
+  async (newPasswordData: NewPassword, { rejectWithValue }) => {
     let requestData;
     let response;
 
-    // If the token and email are present, use token password reset, else fallback to id password reset
-    if (newPasswordData.token && newPasswordData.email) {
-      requestData = {
-        password: newPasswordData.password,
-        confirmation: newPasswordData.confirmPassword,
-        token: newPasswordData.token,
-      };
+    try {
+      if (newPasswordData.token && newPasswordData.email) {
+        requestData = {
+          password: newPasswordData.password,
+          confirmation: newPasswordData.confirmPassword,
+          token: newPasswordData.token,
+        };
+        response = await axiosInstanceToken.patch(
+          `/reset-password`,
+          requestData
+        );
+      } else {
+        requestData = {
+          id: newPasswordData.id,
+          password: newPasswordData.password,
+          confirmation: newPasswordData.confirmPassword,
+        };
+        response = await axiosInstanceToken.patch(
+          `/user/${newPasswordData.id}/edit/password`,
+          requestData
+        );
+      }
 
-      response = await axiosInstanceToken.patch(`/reset-password`, requestData);
-    } else {
-      requestData = {
-        id: newPasswordData.id,
-        password: newPasswordData.password,
-        confirmation: newPasswordData.confirmPassword,
-      };
-
-      response = await axiosInstanceToken.patch(
-        `/user/${newPasswordData.id}/edit/password`,
-        requestData
-      );
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response && error.response.status === 400) {
+          const errorMessage =
+            error.response.data.error || error.response.data.message;
+          if (
+            errorMessage === 'New password cannot be the same as the old one.'
+          ) {
+            return rejectWithValue(
+              "Le nouveau mot de passe doit être différent de l'ancien."
+            );
+          }
+        }
+      }
+      return rejectWithValue('Un problème est survenu. Veuillez réessayer.');
     }
-
-    return response.data;
   }
 );
 
@@ -55,9 +73,11 @@ const updatePasswordSlice = createSlice({
         state.error = null;
         state.success = null;
       })
-      .addCase(updatePassword.rejected, (state) => {
+      .addCase(updatePassword.rejected, (state, action) => {
         state.error =
-          'Un probléme est survenu. Veuillez renvoyer un email depuis la page de reset de password.';
+          typeof action.payload === 'string'
+            ? action.payload
+            : 'Un problème est survenu. Veuillez réessayer.';
       })
       .addCase(updatePassword.fulfilled, (state) => {
         state.error = null;

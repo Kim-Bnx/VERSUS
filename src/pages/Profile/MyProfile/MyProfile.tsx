@@ -12,10 +12,12 @@ import {
   Grid,
   GridCol,
 } from '@mantine/core';
-import { useForm } from '@mantine/form';
+
 import { IconKey, IconUpload } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
+import { Controller, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { updateLoggedUser } from '../../../store/reducers/updateLoggedUser';
 import { logout } from '../../../store/reducers/login';
@@ -29,7 +31,9 @@ import { LocalStorage } from '../../../utils/LocalStorage';
 import PlatformSquare from '../../../components/Element/PlatformsSquares';
 import GamesLabels from '../../../components/Element/GamesLabels';
 import CreateAvatar from '../../../components/Element/CreateAvatar';
-
+import resetPasswordSchema, {
+  ResetPasswordSchemaType,
+} from '../../../validations/resetPasswordSchema';
 import '../Profile.scss';
 
 type SelectedItems = { [key: number]: boolean };
@@ -64,23 +68,18 @@ function MyProfile() {
     (state) => state.loggedUser.data.platforms
   );
 
-  const form = useForm({
-    initialValues: {
-      password: '',
-      confirmPassword: '',
-    },
+  const resetErrorMsg = useAppSelector((state) => state.updatePassword.error);
+  const successMsg = useAppSelector((state) => state.updatePassword.success);
 
-    validate: {
-      password: (value) =>
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/gm.test(
-          value
-        )
-          ? null
-          : 'Le mot de passe doit faire 8 caractéres au minimum et doit comporter un chiffre, un caractére spécial et une majuscule',
-      confirmPassword: (value, values) =>
-        value !== values.password
-          ? 'Les mots de passe ne correspondent pas.'
-          : null,
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ResetPasswordSchemaType>({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: {
+      password: '',
+      confirmation: '',
     },
   });
 
@@ -113,10 +112,14 @@ function MyProfile() {
       });
   };
 
-  const handlePasswordSubmit = () => {
-    const { values } = form;
-
-    dispatch(updatePassword({ id: userId, ...values }))
+  const onPasswordSubmit = (data: ResetPasswordSchemaType) => {
+    dispatch(
+      updatePassword({
+        id: userId,
+        password: data.password,
+        confirmPassword: data.confirmation,
+      })
+    )
       .unwrap()
       .then(() => {
         dispatch(logout());
@@ -301,34 +304,63 @@ function MyProfile() {
                 {userPasswordValue}
               </Text>
             ) : (
-              <form onSubmit={form.onSubmit(handlePasswordSubmit)}>
-                <PasswordInput
-                  mb="1rem"
-                  maw="30rem"
-                  w="80%"
-                  aria-label="password"
-                  placeholder="Mot de passe"
-                  visible={visible}
-                  onVisibilityChange={toggle}
-                  {...form.getInputProps('password')}
+              <Box component="form" onSubmit={handleSubmit(onPasswordSubmit)}>
+                <Controller
+                  name="password"
+                  control={control}
+                  render={({ field }) => (
+                    <PasswordInput
+                      {...field}
+                      mb="1rem"
+                      maw="30rem"
+                      w="80%"
+                      aria-label="password"
+                      placeholder="Mot de passe"
+                      visible={visible}
+                      onVisibilityChange={toggle}
+                      className={`${errors.password ? 'input-error' : ''}`}
+                    />
+                  )}
                 />
+
+                <Box className="error-message">
+                  {errors.password && <Text>{errors.password?.message}</Text>}
+                </Box>
+
                 <Text mt="1.5rem" className="input-label">
                   confirmation de mot de passe
                 </Text>
-                <PasswordInput
-                  mb="1rem"
-                  maw="30rem"
-                  w="80%"
-                  aria-label="password-confirmation"
-                  placeholder="Confirmation du mot de passe"
-                  visible={visible}
-                  onVisibilityChange={toggle}
-                  {...form.getInputProps('confirmPassword')}
+
+                <Controller
+                  name="confirmation"
+                  control={control}
+                  render={({ field }) => (
+                    <PasswordInput
+                      {...field}
+                      mb="1rem"
+                      maw="30rem"
+                      w="80%"
+                      aria-label="password-confirmation"
+                      placeholder="Confirmation du mot de passe"
+                      className={`${errors.confirmation ? 'input-error' : ''}`}
+                      visible={visible}
+                      onVisibilityChange={toggle}
+                    />
+                  )}
                 />
+
+                <Box className="error-message last-error-box">
+                  {errors.confirmation && (
+                    <Text>{errors.confirmation?.message}</Text>
+                  )}
+                  {resetErrorMsg && <Text>{resetErrorMsg}</Text>}
+                  {successMsg && <Text className="success">{successMsg}</Text>}
+                </Box>
+
                 <Button className="button" mt="1rem" type="submit">
                   Valider
                 </Button>
-              </form>
+              </Box>
             )}
           </Box>
         </Flex>
