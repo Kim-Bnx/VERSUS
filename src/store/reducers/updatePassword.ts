@@ -33,10 +33,10 @@ export const updatePassword = createAsyncThunk(
         );
       } else {
         requestData = {
-          id: newPasswordData.id,
           password: newPasswordData.password,
           confirmation: newPasswordData.confirmPassword,
         };
+
         response = await axiosInstanceToken.patch(
           `/user/${newPasswordData.id}/edit/password`,
           requestData

@@ -23,6 +23,33 @@ code {
   }
 }
 
+form {
+  .error-message {
+    position: relative;
+    margin-bottom: 1rem;
+    margin-top: 0.2rem;
+    height: 19px;
+
+    &.last-error-box {
+      margin-bottom: 2rem;
+    }
+
+    & p {
+      color: #e03131;
+      font-size: var(--mantine-font-size-xs);
+      padding-left: 2px;
+
+      &.success {
+        color: green;
+      }
+    }
+  }
+
+  .input-error input {
+    border: 1px solid #e03131;
+  }
+}
+
 input {
   &:focus-visible {
     outline: none;
@@ -32,9 +59,9 @@ input {
 .button {
   letter-spacing: 0.8px;
 
-	&:hover {
+  &:hover {
     background-color: #4d4086 !important;
-	}
+  }
 }
 
 .link {

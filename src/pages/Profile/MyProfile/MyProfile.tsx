@@ -11,6 +11,7 @@ import {
   PasswordInput,
   Grid,
   GridCol,
+  rem,
 } from '@mantine/core';
 
 import { IconKey, IconUpload } from '@tabler/icons-react';
@@ -18,6 +19,8 @@ import { useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { notifications } from '@mantine/notifications';
+import { IoCheckmarkSharp } from 'react-icons/io5';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { updateLoggedUser } from '../../../store/reducers/updateLoggedUser';
 import { logout } from '../../../store/reducers/login';
@@ -31,9 +34,9 @@ import { LocalStorage } from '../../../utils/LocalStorage';
 import PlatformSquare from '../../../components/Element/PlatformsSquares';
 import GamesLabels from '../../../components/Element/GamesLabels';
 import CreateAvatar from '../../../components/Element/CreateAvatar';
-import resetPasswordSchema, {
-  ResetPasswordSchemaType,
-} from '../../../validations/resetPasswordSchema';
+import editPasswordSchema, {
+  EditPasswordSchemaType,
+} from '../../../validations/editPasswordSchema';
 import '../Profile.scss';
 
 type SelectedItems = { [key: number]: boolean };
@@ -67,7 +70,7 @@ function MyProfile() {
   const userPlatformsState = useAppSelector(
     (state) => state.loggedUser.data.platforms
   );
-
+  const [passwordChanged, setPasswordChanged] = useState(false);
   const resetErrorMsg = useAppSelector((state) => state.updatePassword.error);
   const successMsg = useAppSelector((state) => state.updatePassword.success);
 
@@ -75,15 +78,15 @@ function MyProfile() {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<ResetPasswordSchemaType>({
-    resolver: zodResolver(resetPasswordSchema),
+  } = useForm<EditPasswordSchemaType>({
+    resolver: zodResolver(editPasswordSchema),
     defaultValues: {
       password: '',
       confirmation: '',
     },
   });
 
-  const userPasswordValue = '******';
+  const userPasswordValue = '**********';
 
   const handleEditProfile = () => {
     setToggleEditProfile(!toggleEditProfile);
@@ -112,7 +115,7 @@ function MyProfile() {
       });
   };
 
-  const onPasswordSubmit = (data: ResetPasswordSchemaType) => {
+  const onPasswordSubmit = (data: EditPasswordSchemaType) => {
     dispatch(
       updatePassword({
         id: userId,
@@ -122,8 +125,11 @@ function MyProfile() {
     )
       .unwrap()
       .then(() => {
-        dispatch(logout());
-        navigate('/');
+        setPasswordChanged(true);
+        setTimeout(() => {
+          dispatch(logout());
+          navigate('/');
+        }, 5000);
       });
   };
 
@@ -211,6 +217,20 @@ function MyProfile() {
       setSelectedPlatforms(initialSelectedPlatforms);
     }
   }, [userPlatformsState]);
+
+  useEffect(() => {
+    if (successMsg && passwordChanged) {
+      notifications.show({
+        title: 'Mot de passe modifié avec succés !',
+        message:
+          'Vous allez être déconnecté. Veillez à bien vous reconnecter avec votre nouveau mot de passe.',
+        autoClose: 5000,
+        color: 'green',
+        icon: <IoCheckmarkSharp style={{ width: rem(18), height: rem(18) }} />,
+      });
+      setPasswordChanged(false);
+    }
+  }, [successMsg, passwordChanged]);
 
   return (
     <Box className="wrapper" w="100%">
@@ -311,7 +331,6 @@ function MyProfile() {
                   render={({ field }) => (
                     <PasswordInput
                       {...field}
-                      mb="1rem"
                       maw="30rem"
                       w="80%"
                       aria-label="password"
@@ -327,7 +346,7 @@ function MyProfile() {
                   {errors.password && <Text>{errors.password?.message}</Text>}
                 </Box>
 
-                <Text mt="1.5rem" className="input-label">
+                <Text className="input-label">
                   confirmation de mot de passe
                 </Text>
 
@@ -337,7 +356,6 @@ function MyProfile() {
                   render={({ field }) => (
                     <PasswordInput
                       {...field}
-                      mb="1rem"
                       maw="30rem"
                       w="80%"
                       aria-label="password-confirmation"
@@ -354,10 +372,9 @@ function MyProfile() {
                     <Text>{errors.confirmation?.message}</Text>
                   )}
                   {resetErrorMsg && <Text>{resetErrorMsg}</Text>}
-                  {successMsg && <Text className="success">{successMsg}</Text>}
                 </Box>
 
-                <Button className="button" mt="1rem" type="submit">
+                <Button className="button" type="submit">
                   Valider
                 </Button>
               </Box>

@@ -11,9 +11,12 @@ import {
   Divider,
   Button,
   Flex,
+  rem,
 } from '@mantine/core';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { notifications } from '@mantine/notifications';
+import { IoCheckmarkSharp } from 'react-icons/io5';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { resetPassword } from '../../../store/reducers/resetPassword';
 import forgottenPasswordSchema, {
@@ -51,6 +54,20 @@ function ForgottenPassword() {
     }
   }, [isConnected, navigate]);
 
+  // Display the notification and redirect after 3 seconds
+  useEffect(() => {
+    if (successMsg) {
+      notifications.show({
+        title: 'Email de reset envoyé !',
+        message:
+          'Vous allez bientôt recevoir un email pour changer votre mot de passe.',
+        autoClose: 3000,
+        color: 'green',
+        icon: <IoCheckmarkSharp style={{ width: rem(18), height: rem(18) }} />,
+      });
+    }
+  }, [successMsg, navigate]);
+
   return (
     <Box className="right-content">
       <Title order={2} className="title" size="2.25rem" c="#FFF">
@@ -79,7 +96,6 @@ function ForgottenPassword() {
           <Box className="error-message last-error-box">
             {errors.email && <Text>{errors.email.message}</Text>}
             {resetErrorMsg && <Text>{resetErrorMsg}</Text>}
-            {successMsg && <Text className="success">{successMsg}</Text>}
           </Box>
 
           <Group mt="1rem" justify="flex-end">
