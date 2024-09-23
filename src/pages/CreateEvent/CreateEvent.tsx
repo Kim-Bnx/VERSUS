@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   Grid,
-  rem,
   Space,
   TextInput,
   Title,
@@ -15,10 +14,11 @@ import 'dayjs/locale/fr';
 import { zodResolver } from '@hookform/resolvers/zod';
 import slugify from 'slugify';
 import { Controller, useForm } from 'react-hook-form';
-import { notifications } from '@mantine/notifications';
-import { IoCheckmarkSharp } from 'react-icons/io5';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { createEvent } from '../../store/reducers/createEvent';
+import useNotification, {
+  NotificationProps,
+} from '../../components/Notification/useNotification';
 import createEventSchema, {
   CreateEventSchemaType,
 } from '../../validations/createEventSchema';
@@ -26,6 +26,7 @@ import createEventSchema, {
 function CreateEvent() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { showNotification } = useNotification();
   const userId = useAppSelector((state) => state.loggedUser.data.id);
   const successMsg = useAppSelector((state) => state.resetPassword.success);
 
@@ -42,18 +43,6 @@ function CreateEvent() {
     },
   });
 
-  useEffect(() => {
-    if (successMsg) {
-      notifications.show({
-        title: `L'événement a été crée avec succés.`,
-        message: `Il a été ajouté à vos événements brouillon.`,
-        autoClose: 3000,
-        color: 'green',
-        icon: <IoCheckmarkSharp style={{ width: rem(18), height: rem(18) }} />,
-      });
-    }
-  }, [successMsg, navigate]);
-
   const onSubmit = (data: CreateEventSchemaType) => {
     const eventData = {
       title: data.title,
@@ -67,6 +56,18 @@ function CreateEvent() {
         navigate(`/event/${slugify(data.title, { lower: true })}/settings`);
       });
   };
+
+  useEffect(() => {
+    if (successMsg) {
+      const notificationProps: NotificationProps = {
+        title: `L'événement a été crée avec succés !`,
+        message: `Il vient d'être ajouté à vos événements brouillon.`,
+        type: 'success',
+      };
+
+      showNotification(notificationProps);
+    }
+  }, [successMsg, showNotification]);
 
   return (
     <>

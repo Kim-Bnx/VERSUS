@@ -11,7 +11,6 @@ import {
   PasswordInput,
   Grid,
   GridCol,
-  rem,
 } from '@mantine/core';
 
 import { IconKey, IconUpload } from '@tabler/icons-react';
@@ -19,8 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { notifications } from '@mantine/notifications';
-import { IoCheckmarkSharp } from 'react-icons/io5';
+
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { updateLoggedUser } from '../../../store/reducers/updateLoggedUser';
 import { logout } from '../../../store/reducers/login';
@@ -34,6 +32,9 @@ import { LocalStorage } from '../../../utils/LocalStorage';
 import PlatformSquare from '../../../components/Element/PlatformsSquares';
 import GamesLabels from '../../../components/Element/GamesLabels';
 import CreateAvatar from '../../../components/Element/CreateAvatar';
+import useNotification, {
+  NotificationProps,
+} from '../../../components/Notification/useNotification';
 import editPasswordSchema, {
   EditPasswordSchemaType,
 } from '../../../validations/editPasswordSchema';
@@ -71,6 +72,7 @@ function MyProfile() {
     (state) => state.loggedUser.data.platforms
   );
   const [passwordChanged, setPasswordChanged] = useState(false);
+  const { showNotification } = useNotification();
   const resetErrorMsg = useAppSelector((state) => state.updatePassword.error);
   const successMsg = useAppSelector((state) => state.updatePassword.success);
 
@@ -220,17 +222,16 @@ function MyProfile() {
 
   useEffect(() => {
     if (successMsg && passwordChanged) {
-      notifications.show({
-        title: 'Mot de passe modifié avec succés !',
-        message:
-          'Vous allez être déconnecté. Veillez à bien vous reconnecter avec votre nouveau mot de passe.',
-        autoClose: 5000,
-        color: 'green',
-        icon: <IoCheckmarkSharp style={{ width: rem(18), height: rem(18) }} />,
-      });
+      const notificationProps: NotificationProps = {
+        title: `Mot de passe modifié avec succés !`,
+        message: `Vous allez être déconnecté. Veillez à bien vous reconnecter avec votre nouveau mot de passe.`,
+        type: 'success',
+      };
+
+      showNotification(notificationProps);
       setPasswordChanged(false);
     }
-  }, [successMsg, passwordChanged]);
+  }, [successMsg, showNotification, passwordChanged]);
 
   return (
     <Box className="wrapper" w="100%">

@@ -16,9 +16,7 @@ import {
   Title,
   Tooltip,
   TypographyStylesProvider,
-  rem,
 } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
 import {
   IoCalendarClearOutline,
   IoCheckmarkSharp,
@@ -34,7 +32,9 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { fetchEvent } from '../../store/reducers/event';
 import { registerToEvent } from '../../store/reducers/registerEvent';
 import { unregisterToEvent } from '../../store/reducers/unregisterEvent';
-
+import useNotification, {
+  NotificationProps,
+} from '../../components/Notification/useNotification';
 import './Event.scss';
 // import CreateAvatar from '../../components/Element/CreateAvatar';
 
@@ -45,11 +45,6 @@ function Event() {
   if (!slug) throw new Error('Invalid slug');
   const eventData = useAppSelector((state) => state.event.event);
   const userData = useAppSelector((state) => state.loggedUser.data);
-
-  useEffect(() => {
-    dispatch(fetchEvent(slug));
-  }, [dispatch, slug]);
-
   const sanitizedEventRules = DOMPurify.sanitize(eventData.rules || '');
 
   const isRegisterToEvent = () => {
@@ -62,6 +57,7 @@ function Event() {
   const isEventAdmin = () => {
     return eventData.organizer.id === userData.id;
   };
+  const { showNotification } = useNotification();
 
   const handleEventRegister = () => {
     dispatch(
@@ -72,16 +68,14 @@ function Event() {
     )
       .unwrap()
       .then(() => {
-        notifications.show({
+        const notificationProps: NotificationProps = {
           title: 'Inscription validée !',
           message: "Vous êtes bien inscrit·e à l'évènement.",
-          autoClose: 3000,
+          type: 'success',
           onClose: () => navigate(0),
-          color: 'green',
-          icon: (
-            <IoCheckmarkSharp style={{ width: rem(18), height: rem(18) }} />
-          ),
-        });
+        };
+
+        showNotification(notificationProps);
       });
   };
 
@@ -94,16 +88,13 @@ function Event() {
     )
       .unwrap()
       .then(() => {
-        notifications.show({
-          title: 'Inscription annulée',
+        const notificationProps: NotificationProps = {
+          title: 'Inscription annulée !',
           message: "Vous n'êtes plus inscrit·e à l'évènement.",
-          autoClose: 3000,
           onClose: () => navigate(0),
-          color: 'blue',
-          icon: (
-            <IoCheckmarkSharp style={{ width: rem(18), height: rem(18) }} />
-          ),
-        });
+        };
+
+        showNotification(notificationProps);
       });
   };
 
@@ -116,18 +107,19 @@ function Event() {
     )
       .unwrap()
       .then(() => {
-        notifications.show({
-          title: 'Participant retiré',
-          message: '',
-          autoClose: 2500,
+        const notificationProps: NotificationProps = {
+          title: 'Participant retiré.',
+          message: 'Le participant a bien été retiré de cet événement.',
           onClose: () => navigate(0),
-          color: 'blue',
-          icon: (
-            <IoCheckmarkSharp style={{ width: rem(18), height: rem(18) }} />
-          ),
-        });
+        };
+
+        showNotification(notificationProps);
       });
   };
+
+  useEffect(() => {
+    dispatch(fetchEvent(slug));
+  }, [dispatch, slug]);
 
   return (
     <>

@@ -9,14 +9,15 @@ import {
   Divider,
   Button,
   PasswordInput,
-  rem,
 } from '@mantine/core';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { notifications } from '@mantine/notifications';
-import { IoCheckmarkSharp } from 'react-icons/io5';
+
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { updatePassword } from '../../../store/reducers/updatePassword';
+import useNotification, {
+  NotificationProps,
+} from '../../../components/Notification/useNotification';
 import resetPasswordSchema, {
   ResetPasswordSchemaType,
 } from '../../../validations/resetPasswordSchema';
@@ -24,12 +25,10 @@ import resetPasswordSchema, {
 function ResetPassword() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
   const [searchParams] = useSearchParams();
-
   const email = searchParams.get('e');
   const token = searchParams.get('t');
-
+  const { showNotification } = useNotification();
   const resetErrorMsg = useAppSelector((state) => state.updatePassword.error);
   const successMsg = useAppSelector((state) => state.updatePassword.success);
 
@@ -66,17 +65,17 @@ function ResetPassword() {
   // Display the notification and redirect after 3 seconds
   useEffect(() => {
     if (successMsg) {
-      notifications.show({
+      const notificationProps: NotificationProps = {
         title: 'Modification de mot de passe effectué !',
         message:
           'Vous allez être redirigé vers la page de connexion dans 3 secondes ...',
-        autoClose: 3000,
+        type: 'success',
         onClose: () => navigate('/sign-in'),
-        color: 'green',
-        icon: <IoCheckmarkSharp style={{ width: rem(18), height: rem(18) }} />,
-      });
+      };
+
+      showNotification(notificationProps);
     }
-  }, [successMsg, navigate]);
+  }, [successMsg, navigate, showNotification]);
 
   return (
     <Box className="right-content">
