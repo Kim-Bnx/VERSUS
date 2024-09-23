@@ -7,6 +7,7 @@ export type NewEventState = {
   end_date: string;
   isLoading: boolean;
   error: string | null;
+  success: string | null;
 };
 
 export type NewEvent = {

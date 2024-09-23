@@ -1,4 +1,4 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { axiosInstanceToken } from '../../utils/axios';
 import { NewEventState, NewEvent } from '../../@types/event';
 
@@ -8,6 +8,7 @@ const initialState: NewEventState = {
   start_date: '',
   end_date: '',
   isLoading: false,
+  success: null,
   error: null,
 };
 
@@ -22,18 +23,7 @@ export const createEvent = createAsyncThunk(
 const newEventSlice = createSlice({
   name: 'newEvent',
   initialState,
-  reducers: {
-    changeInputEventValue(
-      state,
-      action: PayloadAction<{
-        fieldName: keyof NewEventState;
-        value: string;
-      }>
-    ) {
-      const { fieldName, value } = action.payload;
-      state[fieldName] = value;
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(createEvent.pending, (state) => {
@@ -41,14 +31,14 @@ const newEventSlice = createSlice({
         state.error = null;
       })
       .addCase(createEvent.rejected, (state) => {
-        state.error = 'Format de date incorrectes';
+        state.error = 'Un problème est survenu. Veuillez réessayer.';
         state.isLoading = false;
       })
       .addCase(createEvent.fulfilled, (state) => {
         state.isLoading = false;
+        state.success = `L'événement a été crée avec succés.`;
       });
   },
 });
 
-export const { changeInputEventValue } = newEventSlice.actions;
 export default newEventSlice.reducer;

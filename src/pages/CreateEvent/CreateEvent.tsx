@@ -1,137 +1,149 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+  Box,
   Button,
   Grid,
-  Input,
+  rem,
   Space,
   TextInput,
   Title,
-  VisuallyHidden,
+  Text,
 } from '@mantine/core';
-import { TransformedValues, useForm } from '@mantine/form';
 import { DateTimePicker, DatesProvider } from '@mantine/dates';
 import 'dayjs/locale/fr';
+import { zodResolver } from '@hookform/resolvers/zod';
 import slugify from 'slugify';
-
+import { Controller, useForm } from 'react-hook-form';
+import { notifications } from '@mantine/notifications';
+import { IoCheckmarkSharp } from 'react-icons/io5';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import {
-  changeInputEventValue,
-  createEvent,
-} from '../../store/reducers/createEvent';
+import { createEvent } from '../../store/reducers/createEvent';
+import createEventSchema, {
+  CreateEventSchemaType,
+} from '../../validations/createEventSchema';
 
 function CreateEvent() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userId = useAppSelector((state) => state.loggedUser.data.id);
+  const successMsg = useAppSelector((state) => state.resetPassword.success);
 
-  const form = useForm({
-    initialValues: {
-      title: useAppSelector((state) => state.newEvent.title),
-      start_date: useAppSelector((state) => state.newEvent.start_date),
-      end_date: useAppSelector((state) => state.newEvent.end_date),
-      user_id: userId,
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateEventSchemaType>({
+    resolver: zodResolver(createEventSchema),
+    defaultValues: {
+      title: '',
+      startDate: undefined,
+      endDate: undefined,
     },
-    transformValues: (values) => ({
-      ...values,
-      start_date: values.start_date.toString(),
-      end_date: values.end_date.toString(),
-    }),
   });
 
   useEffect(() => {
-    form.setValues({
+    if (successMsg) {
+      notifications.show({
+        title: `L'événement a été crée avec succés.`,
+        message: `Il a été ajouté à vos événements brouillon.`,
+        autoClose: 3000,
+        color: 'green',
+        icon: <IoCheckmarkSharp style={{ width: rem(18), height: rem(18) }} />,
+      });
+    }
+  }, [successMsg, navigate]);
+
+  const onSubmit = (data: CreateEventSchemaType) => {
+    const eventData = {
+      title: data.title,
+      start_date: data.startDate.toISOString(),
+      end_date: data.endDate.toISOString(),
       user_id: userId,
-    });
-  }, [userId]);
-
-  useEffect(() => {
-    dispatch(
-      changeInputEventValue({ fieldName: 'title', value: form.values.title })
-    );
-  }, [dispatch, form.values.title]);
-
-  useEffect(() => {
-    const startDate = form.values.start_date.toString();
-    dispatch(
-      changeInputEventValue({
-        fieldName: 'start_date',
-        value: startDate,
-      })
-    );
-  }, [dispatch, form.values.start_date]);
-
-  useEffect(() => {
-    const endDate = form.values.end_date.toString();
-    dispatch(
-      changeInputEventValue({
-        fieldName: 'end_date',
-        value: endDate,
-      })
-    );
-  }, [dispatch, form.values.end_date]);
-
-  // SUBMIT FORM TO CREATE EVENT
-  const handleSubmitCreateEvent = (values: TransformedValues<typeof form>) => {
-    dispatch(createEvent(values))
-      // Catch the asyncThunk result
-      // https://redux-toolkit.js.org/api/createAsyncThunk#unwrapping-result-actions
+    };
+    dispatch(createEvent(eventData))
       .unwrap()
       .then(() => {
-        navigate(`/event/${slugify(values.title, { lower: true })}/settings`);
-      })
-      .catch(() => {
-        console.log('error');
+        navigate(`/event/${slugify(data.title, { lower: true })}/settings`);
       });
   };
 
   return (
     <>
       <Title order={2}>Créer un évènement</Title>
-      <form onSubmit={form.onSubmit(handleSubmitCreateEvent)}>
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <Grid>
           <Grid.Col span={12}>
-            <TextInput
-              required
-              label="Titre de l'évènement"
-              placeholder="Titre de l'évènement"
-              {...form.getInputProps('title')}
+            <Controller
+              name="title"
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  {...field}
+                  label="Titre de l'évènement"
+                  placeholder="Titre de l'évènement"
+                  className={`${errors.title ? 'input-error' : ''}`}
+                />
+              )}
             />
+
+            <Box className="error-message">
+              {errors.title && <Text>{errors.title.message}</Text>}
+            </Box>
           </Grid.Col>
+
           <DatesProvider settings={{ locale: 'fr', timezone: 'CET' }}>
             <Grid.Col span={6}>
-              <DateTimePicker
-                clearable
-                required
-                valueFormat="DD MMMM YYYY à hh:mm"
-                label="Commence le"
-                placeholder="Choisir une date de début"
-                minDate={new Date()}
-                {...form.getInputProps('start_date')}
+              <Controller
+                name="startDate"
+                control={control}
+                render={({ field }) => (
+                  <DateTimePicker
+                    {...field}
+                    clearable
+                    valueFormat="DD MMMM YYYY à hh:mm"
+                    label="Date de début"
+                    placeholder="Choisir une date de début"
+                    minDate={new Date()}
+                    className={`${errors.startDate ? 'input-error' : ''}`}
+                  />
+                )}
               />
+
+              <Box className="error-message ">
+                {errors.startDate && <Text>{errors.startDate.message}</Text>}
+              </Box>
             </Grid.Col>
+
             <Grid.Col span={6}>
-              <DateTimePicker
-                clearable
-                required
-                valueFormat="DD MMMM YYYY à hh:mm"
-                label="Termine le"
-                placeholder="Choisir une date de fin"
-                minDate={new Date()}
-                {...form.getInputProps('end_date')}
+              <Controller
+                name="endDate"
+                control={control}
+                render={({ field }) => (
+                  <DateTimePicker
+                    {...field}
+                    clearable
+                    valueFormat="DD MMMM YYYY à hh:mm"
+                    label="Date de fin"
+                    placeholder="Choisir une date de fin"
+                    minDate={new Date()}
+                    className={`${errors.endDate ? 'input-error' : ''}`}
+                  />
+                )}
               />
+
+              <Box className="error-message last-error-box">
+                {errors.endDate && <Text>{errors.endDate.message}</Text>}
+              </Box>
             </Grid.Col>
           </DatesProvider>
-          <VisuallyHidden>
-            <Grid.Col span={12}>
-              <Input type="number" {...form.getInputProps('user_id')} />
-            </Grid.Col>
-          </VisuallyHidden>
         </Grid>
 
         <Space h="lg" />
-        <Button type="submit">Créer l&apos;évènement</Button>
-      </form>
+        <Button className="button" type="submit">
+          Créer l&apos;évènement
+        </Button>
+      </Box>
     </>
   );
 }

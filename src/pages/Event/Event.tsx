@@ -74,8 +74,8 @@ function Event() {
       .then(() => {
         notifications.show({
           title: 'Inscription validée !',
-          message: "Vous êtes inscrit·e à l'évènement",
-          autoClose: 2500,
+          message: "Vous êtes bien inscrit·e à l'évènement.",
+          autoClose: 3000,
           onClose: () => navigate(0),
           color: 'green',
           icon: (
@@ -96,8 +96,8 @@ function Event() {
       .then(() => {
         notifications.show({
           title: 'Inscription annulée',
-          message: "Vous n'êtes plus inscrit·e à l'évènement",
-          autoClose: 2500,
+          message: "Vous n'êtes plus inscrit·e à l'évènement.",
+          autoClose: 3000,
           onClose: () => navigate(0),
           color: 'blue',
           icon: (
