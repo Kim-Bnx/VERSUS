@@ -8,8 +8,8 @@ const initialState: ProfileGamesState = {
   isSuccess: false,
 };
 
-export const profileGames = createAsyncThunk(
-  'profileGames',
+export const updateProfileGames = createAsyncThunk(
+  'updateProfileGames',
   async ({ games, userId }: { games: number[]; userId: number | null }) => {
     const { data } = await axiosInstance.patch(`/user/${userId}`, games);
 
@@ -17,8 +17,8 @@ export const profileGames = createAsyncThunk(
   }
 );
 
-const profileGamesSlice = createSlice({
-  name: 'profileGames',
+const updateProfileGamesSlice = createSlice({
+  name: 'updateProfileGames',
   initialState,
   reducers: {
     changeSelectedGames(
@@ -34,20 +34,20 @@ const profileGamesSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(profileGames.pending, (state) => {
+      .addCase(updateProfileGames.pending, (state) => {
         state.error = null;
         state.isSuccess = false;
       })
-      .addCase(profileGames.rejected, (state) => {
+      .addCase(updateProfileGames.rejected, (state) => {
         state.error = 'Jeux rejetés';
         state.isSuccess = false;
       })
-      .addCase(profileGames.fulfilled, (state) => {
+      .addCase(updateProfileGames.fulfilled, (state) => {
         state.error = null;
         state.isSuccess = true;
       });
   },
 });
 
-export const { changeSelectedGames } = profileGamesSlice.actions;
-export default profileGamesSlice.reducer;
+export const { changeSelectedGames } = updateProfileGamesSlice.actions;
+export default updateProfileGamesSlice.reducer;

@@ -1,15 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { EventState } from '../../@types/event';
-import { UserData as TUserData } from '../../@types/user';
+import { UserData as UserDataType } from '../../@types/types';
 import { axiosInstance } from '../../utils/axios';
 
-const UserData: TUserData = {
+const UserData: UserDataType = {
   id: 0,
-  email: '',
-  password: '',
-  confirmPassword: '',
-  username: '',
-  avatar: '',
 };
 
 const initialState: EventState = {
@@ -26,22 +21,8 @@ const initialState: EventState = {
     description: '',
     rules: '',
     contact: '',
-    type_event: '',
-    type_event_id: 0,
-    game: {
-      id: null,
-      name: '',
-      thumbnail: '',
-      createdAt: '',
-      updatedAt: null,
-    },
+    type_id: 0,
     game_id: 0,
-    platform: {
-      id: null,
-      name: '',
-      createdAt: '',
-      updatedAt: '',
-    },
     platform_id: 0,
     user_id: 0,
     organizer: UserData,
@@ -56,6 +37,7 @@ export const fetchEvent = createAsyncThunk(
   'event/fetch',
   async (slug: string) => {
     const { data } = await axiosInstance.get(`/event/${slug}`);
+
     return data;
   }
 );
@@ -79,6 +61,11 @@ const eventSlice = createSlice({
             state.event[key] = action.payload[key];
           }
         });
+      })
+      .addCase(fetchEvent.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || null; // Capture the error message
+        state.event = initialState.event; // Reset event state if fetch fails
       });
   },
 });

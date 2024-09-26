@@ -1,4 +1,4 @@
-import { createTheme, MantineTheme } from '@mantine/core';
+import { createTheme, MantineTheme, ButtonVariant } from '@mantine/core';
 
 const blueVersus: [
   string,
@@ -34,24 +34,25 @@ const themeProps = createTheme({
   defaultRadius: 'sm',
   components: {
     Button: {
-      styles: (theme: MantineTheme) => ({
+      styles: (
+        theme: MantineTheme,
+        { variant }: { variant: ButtonVariant }
+      ) => ({
         root: {
-          backgroundColor: theme.colors.blue[9],
+          backgroundColor: variant === 'default' ? theme.colors.blue[9] : '',
           color: theme.white,
           textDecoration: 'none',
-          '&:hover': {
-            backgroundColor: '#FFFFFF',
-          },
+          transition: 'background-color 0.3s ease',
 
           '&:active': {
-            backgroundColor: theme.colors.blue[8], // Background color when button is active
-            color: theme.colors.blue[8], // Color when button is active
+            backgroundColor:
+              variant === 'default' ? theme.colors.blue[8] : 'transparent', // Active color for default variant
+            color: variant === 'default' ? theme.colors.blue[8] : theme.white, // Maintain text color on active
           },
         },
       }),
     },
   },
-
   fontFamily: 'Open Sans, sans-serif',
 });
 

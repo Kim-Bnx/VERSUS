@@ -11,13 +11,12 @@ import Signup from './pages/Auth/Signup/Signup';
 import Login from './pages/Auth/Login/Login';
 import ForgottenPassword from './pages/Auth/ForgottenPassword/ForgottenPassword';
 import ResetPassword from './pages/Auth/ResetPassword/ResetPassword';
-import CreateEvent from './pages/CreateEvent/CreateEvent';
+import CreateEvent from './pages/Event/NewEvent/NewEvent';
 import About from './pages/Footer/About/Abouts';
 import Contact from './pages/Footer/Contact/Contact';
 import Terms from './pages/Footer/Terms/Terms';
-import EventSettings from './pages/EventSettings/EventSettings';
+import EditEvent from './pages/Event/EditEvent/EditEvent';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-import EventAdmin from './components/ProtectedRoute/EventAdmin';
 import Populars from './pages/Categories/Populars';
 import Upcoming from './pages/Categories/Upcoming';
 import UserParticipations from './pages/Profile/UserProfile/UserParticipations';
@@ -51,11 +50,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'event/:slug/settings',
-        element: (
-          <EventAdmin>
-            <EventSettings />
-          </EventAdmin>
-        ),
+        element: <EditEvent />,
       },
       {
         // route for the connected user to see researched user's profile or his own

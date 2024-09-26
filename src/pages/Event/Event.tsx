@@ -22,9 +22,6 @@ import {
   IoCheckmarkSharp,
   IoCloseOutline,
   IoCreateOutline,
-  IoGameController,
-  IoLocationSharp,
-  IoTv,
 } from 'react-icons/io5';
 import slugify from 'slugify';
 import Date from '../../components/Date/Date';
@@ -36,6 +33,7 @@ import useNotification, {
   NotificationProps,
 } from '../../components/Notification/useNotification';
 import './Event.scss';
+import EventInfoDetails from '../../components/Element/EventInfoDetail/EventInfoDetail';
 // import CreateAvatar from '../../components/Element/CreateAvatar';
 
 function Event() {
@@ -54,9 +52,10 @@ function Event() {
     return participantFound.includes(userData.id);
   };
 
-  const isEventAdmin = () => {
+  const isEventAdminGuard = () => {
     return eventData.organizer.id === userData.id;
   };
+
   const { showNotification } = useNotification();
 
   const handleEventRegister = () => {
@@ -127,24 +126,27 @@ function Event() {
         src={eventData.banner}
         className="event__banner full-height full-width"
       />
+
       <div className="event__header full-width content-grid">
         <div className="event__header-content">
           <Box className="event__image">
             <Image
-              src={eventData.thumbnail}
+              src={eventData.thumbnail || eventData.game?.thumbnail}
               h={200}
               w={200}
               radius="sm"
               fit="cover"
             />
           </Box>
+
           <div className="event__infos">
             <Box className="event_infos--presentation">
-              {eventData.type_event && <Pill>{eventData.type_event.name}</Pill>}
               <Flex align="center" gap="sm">
-                <Title order={2}>{eventData.title}</Title>
+                <Title order={2} tt="uppercase">
+                  {eventData.title}
+                </Title>
 
-                {isEventAdmin() && eventData.status === 'published' ? (
+                {isEventAdminGuard() && eventData.status === 'published' ? (
                   <Tooltip.Floating label="Evènement publié" color="gray">
                     <Badge color="green" size="sm">
                       <IoCheckmarkSharp />
@@ -158,35 +160,27 @@ function Event() {
                   </Tooltip.Floating>
                 )}
               </Flex>
-              <Text size="md">
-                <Flex align="center" gap="sm">
-                  <IoCalendarClearOutline />
-                  <Date
-                    startDate={eventData.start_date}
-                    endDate={eventData.end_date}
-                  />
-                </Flex>
-              </Text>
+
+              <Flex align="center" gap="sm">
+                <IoCalendarClearOutline />
+                <Date
+                  startDate={eventData.start_date}
+                  endDate={eventData.end_date}
+                />
+              </Flex>
+
+              <Text m="1rem 0">{eventData.description}</Text>
+
+              {eventData && <Pill>{eventData.event_type?.name}</Pill>}
             </Box>
 
             <Flex gap="xl" className="event__infos-details">
-              <Text>
-                <IoGameController color="var(--mantine-color-indigo-filled)" />
-                {eventData.game?.name}
-              </Text>
-              <Text>
-                <IoLocationSharp color="var(--mantine-color-indigo-filled)" />
-                {eventData.location}
-              </Text>
-              <Text>
-                <IoTv color="var(--mantine-color-indigo-filled)" />
-                {eventData.platform?.name}
-              </Text>
+              <EventInfoDetails eventData={eventData} />
             </Flex>
           </div>
 
-          <Stack className="event__buttons">
-            {isEventAdmin() && (
+          <Flex direction="column" justify="space-between" className="event__buttons">
+            {isEventAdminGuard() && (
               <Button
                 className="event__buttons--follow"
                 variant="outline"
@@ -196,26 +190,27 @@ function Event() {
                 Editer
               </Button>
             )}
-            <Button className="event__buttons--contact">
-              {eventData.contact}
-            </Button>
+          
+            <Text td="underline" className='event__buttons--contact'>{eventData.contact}</Text>
 
-            {isRegisterToEvent() ? (
-              <Button
-                className="event__buttons--register"
-                onClick={handleEventUnregister}
-              >
-                Se désinscrire
-              </Button>
-            ) : (
-              <Button
-                className="event__buttons--register"
-                onClick={handleEventRegister}
-              >
-                S&apos;inscrire
-              </Button>
-            )}
-          </Stack>
+            <Box className="event__buttons--last">
+              {isRegisterToEvent() ? (
+                <Button
+                  className="event__buttons--register"
+                  onClick={handleEventUnregister}
+                >
+                  Se désinscrire
+                </Button>
+              ) : (
+                <Button
+                  className="event__buttons--register"
+                  onClick={handleEventRegister}
+                >
+                  S&apos;inscrire
+                </Button>
+              )}
+            </Box>
+          </Flex>
         </div>
       </div>
 
@@ -260,7 +255,7 @@ function Event() {
                       {attendee.username}
                     </Anchor>
 
-                    {isEventAdmin() && (
+                    {isEventAdminGuard() && (
                       <ActionIcon
                         variant="outline"
                         aria-label="Supprimer participant"

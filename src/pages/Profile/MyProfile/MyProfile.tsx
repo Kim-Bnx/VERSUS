@@ -23,8 +23,8 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { updateLoggedUser } from '../../../store/reducers/updateLoggedUser';
 import { logout } from '../../../store/reducers/login';
 import { userGames } from '../../../store/reducers/userGames';
-import { fetchGames } from '../../../store/reducers/game';
-import { fetchPlatforms } from '../../../store/reducers/platform';
+import { fetchGames } from '../../../store/reducers/games';
+import { fetchPlatforms } from '../../../store/reducers/platforms';
 import { updatePassword } from '../../../store/reducers/updatePassword';
 import { userPlatforms } from '../../../store/reducers/userPlatforms';
 import { loggedUser } from '../../../store/reducers/loggedUser';
@@ -65,9 +65,9 @@ function MyProfile() {
   const useAvatarValue = useAppSelector(
     (state) => state.loggedUser.data.avatar
   );
-  const gamesState = useAppSelector((state) => state.game.games);
+  const gamesState = useAppSelector((state) => state.games.games);
   const userGamesState = useAppSelector((state) => state.loggedUser.data.games);
-  const platformsState = useAppSelector((state) => state.platform.platforms);
+  const platformsState = useAppSelector((state) => state.platforms.platforms);
   const userPlatformsState = useAppSelector(
     (state) => state.loggedUser.data.platforms
   );

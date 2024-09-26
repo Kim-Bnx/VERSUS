@@ -35,18 +35,21 @@ form {
     }
 
     & p {
-      color: #e03131;
+      color: v.$color-error;
       font-size: var(--mantine-font-size-xs);
       padding-left: 2px;
 
       &.success {
-        color: green;
+        color: v.$color-success;
       }
     }
   }
 
-  .input-error input {
-    border: 1px solid #e03131;
+  .input-error {
+    input,
+    button {
+      border: 1px solid v.$color-error;
+    }
   }
 }
 
@@ -56,12 +59,8 @@ input {
   }
 }
 
-.button {
+button {
   letter-spacing: 0.8px;
-
-  &:hover {
-    background-color: #4d4086 !important;
-  }
 }
 
 .link {

@@ -14,7 +14,6 @@ import {
 } from '@mantine/core';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { resetPassword } from '../../../store/reducers/resetPassword';
 import forgottenPasswordSchema, {
@@ -27,11 +26,10 @@ import useNotification, {
 function ForgottenPassword() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
+  const { showNotification } = useNotification();
   const isConnected = useAppSelector((state) => state.login.isConnected);
   const resetErrorMsg = useAppSelector((state) => state.resetPassword.error);
   const successMsg = useAppSelector((state) => state.resetPassword.success);
-  const { showNotification } = useNotification();
 
   const {
     control,

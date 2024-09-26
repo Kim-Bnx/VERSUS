@@ -1,29 +1,21 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Grid,
-  Space,
-  TextInput,
-  Title,
-  Text,
-} from '@mantine/core';
+import { Box, Button, Grid, TextInput, Title, Text, Flex } from '@mantine/core';
 import { DateTimePicker, DatesProvider } from '@mantine/dates';
 import 'dayjs/locale/fr';
 import { zodResolver } from '@hookform/resolvers/zod';
 import slugify from 'slugify';
 import { Controller, useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { createEvent } from '../../store/reducers/createEvent';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { createEvent } from '../../../store/reducers/createEvent';
 import useNotification, {
   NotificationProps,
-} from '../../components/Notification/useNotification';
+} from '../../../components/Notification/useNotification';
 import createEventSchema, {
   CreateEventSchemaType,
-} from '../../validations/createEventSchema';
+} from '../../../validations/createEventSchema';
 
-function CreateEvent() {
+function NewEvent() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { showNotification } = useNotification();
@@ -88,13 +80,13 @@ function CreateEvent() {
               )}
             />
 
-            <Box className="error-message">
+            <Box mb="0" className="error-message">
               {errors.title && <Text>{errors.title.message}</Text>}
             </Box>
           </Grid.Col>
 
-          <DatesProvider settings={{ locale: 'fr', timezone: 'CET' }}>
-            <Grid.Col span={6}>
+          <Grid.Col span={6}>
+            <DatesProvider settings={{ locale: 'fr', timezone: 'CET' }}>
               <Controller
                 name="startDate"
                 control={control}
@@ -102,7 +94,7 @@ function CreateEvent() {
                   <DateTimePicker
                     {...field}
                     clearable
-                    valueFormat="DD MMMM YYYY à hh:mm"
+                    valueFormat="DD MMMM YYYY à HH:mm"
                     label="Date de début"
                     placeholder="Choisir une date de début"
                     minDate={new Date()}
@@ -110,13 +102,15 @@ function CreateEvent() {
                   />
                 )}
               />
+            </DatesProvider>
 
-              <Box className="error-message ">
-                {errors.startDate && <Text>{errors.startDate.message}</Text>}
-              </Box>
-            </Grid.Col>
+            <Box mb="0" className="error-message">
+              {errors.startDate && <Text>{errors.startDate.message}</Text>}
+            </Box>
+          </Grid.Col>
 
-            <Grid.Col span={6}>
+          <Grid.Col span={6}>
+            <DatesProvider settings={{ locale: 'fr', timezone: 'CET' }}>
               <Controller
                 name="endDate"
                 control={control}
@@ -124,7 +118,7 @@ function CreateEvent() {
                   <DateTimePicker
                     {...field}
                     clearable
-                    valueFormat="DD MMMM YYYY à hh:mm"
+                    valueFormat="DD MMMM YYYY à HH:mm"
                     label="Date de fin"
                     placeholder="Choisir une date de fin"
                     minDate={new Date()}
@@ -132,21 +126,22 @@ function CreateEvent() {
                   />
                 )}
               />
+            </DatesProvider>
 
-              <Box className="error-message last-error-box">
-                {errors.endDate && <Text>{errors.endDate.message}</Text>}
-              </Box>
-            </Grid.Col>
-          </DatesProvider>
+            <Box mb="0" className="error-message">
+              {errors.endDate && <Text>{errors.endDate.message}</Text>}
+            </Box>
+          </Grid.Col>
         </Grid>
 
-        <Space h="lg" />
-        <Button className="button" type="submit">
-          Créer l&apos;évènement
-        </Button>
+        <Flex justify="flex-end">
+          <Button mt="1rem" className="button" type="submit">
+            Créer l&apos;évènement
+          </Button>
+        </Flex>
       </Box>
     </>
   );
 }
 
-export default CreateEvent;
+export default NewEvent;

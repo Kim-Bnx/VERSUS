@@ -24,7 +24,7 @@ type Event = {
   contact: null;
   createdAt: string;
   updatedAt: string;
-  type_event_id: null;
+  type_id: null;
   game_id: null;
   user_id: null;
 };

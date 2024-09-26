@@ -1,8 +1,12 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { useAppSelector } from '../../hooks/redux';
 
-function ProtectedRoute({ children }) {
+interface ProtectedRouteProps {
+  children: ReactNode;
+}
+
+function ProtectedRoute({ children }: ProtectedRouteProps) {
   const isConnected = useAppSelector((state) => state.login.isConnected);
   const navigate = useNavigate();
 

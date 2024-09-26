@@ -13,7 +13,6 @@
 
   &-content {
     display: flex;
-    flex-wrap: wrap;
     gap: var(--mantine-spacing-lg);
   }
 }
@@ -27,6 +26,10 @@
 
 .event__content {
   margin-top: -1rem;
+}
+
+.event__buttons--last {
+  align-self: flex-end;
 }
 
 .content__tabs {

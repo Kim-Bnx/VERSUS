@@ -8,8 +8,8 @@ const initialState: ProfilePlatformsState = {
   isSuccess: false,
 };
 
-export const profilePlatforms = createAsyncThunk(
-  'profilePlatforms',
+export const updateProfilePlatforms = createAsyncThunk(
+  'updateProfilePlatforms',
   async ({
     platforms,
     userId,
@@ -23,8 +23,8 @@ export const profilePlatforms = createAsyncThunk(
   }
 );
 
-const profilePlatformsSlice = createSlice({
-  name: 'profilePlatforms',
+const updateProfilePlatformsSlice = createSlice({
+  name: 'updateProfilePlatforms',
   initialState,
   reducers: {
     changeSelectedPlatforms(
@@ -40,20 +40,20 @@ const profilePlatformsSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(profilePlatforms.pending, (state) => {
+      .addCase(updateProfilePlatforms.pending, (state) => {
         state.error = null;
         state.isSuccess = false;
       })
-      .addCase(profilePlatforms.rejected, (state) => {
+      .addCase(updateProfilePlatforms.rejected, (state) => {
         state.error = 'Jeux rejetés';
         state.isSuccess = false;
       })
-      .addCase(profilePlatforms.fulfilled, (state) => {
+      .addCase(updateProfilePlatforms.fulfilled, (state) => {
         state.error = null;
         state.isSuccess = true;
       });
   },
 });
 
-export const { changeSelectedPlatforms } = profilePlatformsSlice.actions;
-export default profilePlatformsSlice.reducer;
+export const { changeSelectedPlatforms } = updateProfilePlatformsSlice.actions;
+export default updateProfilePlatformsSlice.reducer;

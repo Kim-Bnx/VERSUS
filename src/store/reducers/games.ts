@@ -12,8 +12,8 @@ export const fetchGames = createAsyncThunk('game', async () => {
   return data;
 });
 
-const gameSlice = createSlice({
-  name: 'game',
+const gamesSlice = createSlice({
+  name: 'games',
   initialState,
   reducers: {},
   extraReducers(builder) {
@@ -31,4 +31,4 @@ const gameSlice = createSlice({
   },
 });
 
-export default gameSlice.reducer;
+export default gamesSlice.reducer;
