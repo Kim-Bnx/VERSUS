@@ -4,12 +4,14 @@ import DOMPurify from 'dompurify';
 import {
   ActionIcon,
   Anchor,
+  BackgroundImage,
   Badge,
   Box,
   Button,
   Flex,
   Image,
   Pill,
+  Skeleton,
   Stack,
   Tabs,
   Text,
@@ -44,6 +46,7 @@ function Event() {
   const eventData = useAppSelector((state) => state.event.event);
   const userData = useAppSelector((state) => state.loggedUser.data);
   const sanitizedEventRules = DOMPurify.sanitize(eventData.rules || '');
+  const isLoading = useAppSelector((state) => state.event.isLoading);
 
   const isRegisterToEvent = () => {
     const participantFound = eventData.participants.map(
@@ -122,29 +125,43 @@ function Event() {
 
   return (
     <>
-      <Image
-        src={eventData.banner}
-        className="event__banner full-height full-width"
-      />
+      <Box className="event__banner content-grid full-width">
+        <Skeleton visible={isLoading} className="full-width">
+          <BackgroundImage h="25rem" bgp="top" src={eventData.banner || ''}>
+            <Box className="event__banner--gradient" />
+          </BackgroundImage>
+        </Skeleton>
+      </Box>
 
-      <div className="event__header full-width content-grid">
-        <div className="event__header-content">
-          <Box className="event__image">
-            <Image
-              src={eventData.thumbnail || eventData.game?.thumbnail}
-              h={200}
-              w={200}
-              radius="sm"
-              fit="cover"
-            />
-          </Box>
+      <Box className="event__header full-width content-grid">
+        <Box>
+          <Flex className="event__header-content">
+            <Box className="event__image">
+              <Skeleton visible={isLoading} h="100%" w="200px" maw={200}>
+                <Image
+                  src={eventData.thumbnail || eventData.game?.thumbnail}
+                  radius="sm"
+                  h="100%"
+                  w="200px"
+                  maw={200}
+                  fit="cover"
+                />
+              </Skeleton>
+            </Box>
 
-          <div className="event__infos">
-            <Box className="event_infos--presentation">
-              <Flex align="center" gap="sm">
-                <Title order={2} tt="uppercase">
-                  {eventData.title}
-                </Title>
+            <Flex direction="column" mt="6rem" justify="flex-start">
+              <Flex
+                align="center"
+                gap="xl"
+                className="event__infos--presentation"
+              >
+                {isLoading ? (
+                  <Skeleton height={25} mb={15} />
+                ) : (
+                  <Title order={2} tt="uppercase">
+                    {eventData.title}
+                  </Title>
+                )}
 
                 {isEventAdminGuard() && eventData.status === 'published' ? (
                   <Tooltip.Floating label="Evènement publié" color="gray">
@@ -169,50 +186,63 @@ function Event() {
                 />
               </Flex>
 
-              <Text m="1rem 0">{eventData.description}</Text>
-
-              {eventData && <Pill>{eventData.event_type?.name}</Pill>}
-            </Box>
-
-            <Flex gap="xl" className="event__infos-details">
-              <EventInfoDetails eventData={eventData} />
-            </Flex>
-          </div>
-
-          <Flex direction="column" justify="space-between" className="event__buttons">
-            {isEventAdminGuard() && (
-              <Button
-                className="event__buttons--follow"
-                variant="outline"
-                component="a"
-                href={`/event/${eventData.title_slug}/settings`}
-              >
-                Editer
-              </Button>
-            )}
-          
-            <Text td="underline" className='event__buttons--contact'>{eventData.contact}</Text>
-
-            <Box className="event__buttons--last">
-              {isRegisterToEvent() ? (
-                <Button
-                  className="event__buttons--register"
-                  onClick={handleEventUnregister}
-                >
-                  Se désinscrire
-                </Button>
+              {true ? (
+                <>
+                  <Skeleton height={8} mt={18} radius="xl" />
+                  <Skeleton height={8} mt={6} radius="xl" />
+                </>
               ) : (
+                <Text m="1rem 0 0 0" ta="justify">
+                  {eventData.description}
+                </Text>
+              )}
+            </Flex>
+
+            <Flex
+              direction="column"
+              justify="space-between"
+              className="event__buttons"
+            >
+              {isEventAdminGuard() && (
                 <Button
-                  className="event__buttons--register"
-                  onClick={handleEventRegister}
+                  className="event__buttons--follow"
+                  variant="outline"
+                  component="a"
+                  href={`/event/${eventData.title_slug}/settings`}
                 >
-                  S&apos;inscrire
+                  Editer
                 </Button>
               )}
-            </Box>
+
+              <Text td="underline" className="event__buttons--contact">
+                {eventData.contact}
+              </Text>
+
+              <Box className="event__buttons--last">
+                {isRegisterToEvent() ? (
+                  <Button
+                    className="event__buttons--register"
+                    onClick={handleEventUnregister}
+                  >
+                    Se désinscrire
+                  </Button>
+                ) : (
+                  <Button
+                    className="event__buttons--register"
+                    onClick={handleEventRegister}
+                  >
+                    S&apos;inscrire
+                  </Button>
+                )}
+              </Box>
+            </Flex>
           </Flex>
-        </div>
-      </div>
+          <Flex gap="xl" mt="1rem">
+            <EventInfoDetails eventData={eventData} />
+            {eventData && <Pill>{eventData.event_type?.name}</Pill>}
+          </Flex>
+        </Box>
+      </Box>
 
       <Tabs
         color="indigo"

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Image, Box, Flex, Title } from '@mantine/core';
+import { Image, Box, Flex, Title, Skeleton } from '@mantine/core';
 import { NavLink } from 'react-router-dom';
 import Slider from '../../components/Slider/Slider';
 import EventThumb from '../../components/Element/Thumb/Event';
@@ -17,6 +17,7 @@ function Home() {
   const events = useAppSelector((state) => state.events.events);
   const favGames = useAppSelector((state) => state.userFavGames.games);
   const userEvents = useAppSelector((state) => state.userEvents.events);
+  const isLoading = useAppSelector((state) => state.events.isLoading);
 
   useEffect(() => {
     dispatch(fetchAllEvents());
@@ -126,26 +127,30 @@ function Home() {
         </Flex>
 
         <div className="categories-grid">
-          {events.slice(0, 3).map((event) => (
-            <NavLink
-              key={event.id}
-              to={`/event/${event.title_slug}`}
-              className="eventhumb-link"
-            >
-              <EventThumb
-                image={event.banner || 'url_de_limage_par_defaut'}
-                game={event.game ? event.game.name : 'Jeu non défini'}
-                name={event.title}
-                type={
-                  event.platform
-                    ? event.platform.name
-                    : 'Plateforme non définie'
-                }
-                date={event.start_date}
-                countdown={calculateDaysLeft(event.start_date)}
-              />
-            </NavLink>
-          ))}
+          {isLoading
+            ? Array.from({ length: 3 }, (_, index) => (
+                <Skeleton key={index} height={'15rem'} radius="md" />
+              ))
+            : events.slice(0, 3).map((event) => (
+                <NavLink
+                  key={event.id}
+                  to={`/event/${event.title_slug}`}
+                  className="eventhumb-link"
+                >
+                  <EventThumb
+                    image={event.banner || 'url_de_limage_par_defaut'}
+                    game={event.game ? event.game.name : 'Jeu non défini'}
+                    name={event.title}
+                    type={
+                      event.platform
+                        ? event.platform.name
+                        : 'Plateforme non définie'
+                    }
+                    date={event.start_date}
+                    countdown={calculateDaysLeft(event.start_date)}
+                  />
+                </NavLink>
+              ))}
         </div>
       </Box>
 
@@ -162,26 +167,32 @@ function Home() {
         </Flex>
 
         <div className="categories-grid">
-          {sortedEvents.slice(0, 3).map((event) => (
-            <NavLink
-              to={`/event/${event.title_slug}`}
-              key={event.id}
-              className="eventhumb-link"
-            >
-              <EventThumb
-                image={event.banner || 'url_de_limage_par_defaut'}
-                game={event.game ? event.game.name : 'Jeu non défini'}
-                name={event.title}
-                type={
-                  event.platform
-                    ? event.platform.name
-                    : 'Plateforme non définie'
-                }
-                date={event.start_date}
-                countdown={calculateDaysLeft(event.start_date)}
-              />
-            </NavLink>
-          ))}
+          {isLoading
+            ? Array.from({ length: 3 }, (_, index) => (
+                <Skeleton key={index} height={'15rem'} radius="md" />
+              ))
+            : sortedEvents.slice(0, 3).map((event) => (
+                <NavLink
+                  to={`/event/${event.title_slug}`}
+                  key={event.id}
+                  className="eventhumb-link"
+                >
+                  <Skeleton visible={isLoading}>
+                    <EventThumb
+                      image={event.banner || 'url_de_limage_par_defaut'}
+                      game={event.game ? event.game.name : 'Jeu non défini'}
+                      name={event.title}
+                      type={
+                        event.platform
+                          ? event.platform.name
+                          : 'Plateforme non définie'
+                      }
+                      date={event.start_date}
+                      countdown={calculateDaysLeft(event.start_date)}
+                    />
+                  </Skeleton>
+                </NavLink>
+              ))}
         </div>
       </Box>
 
