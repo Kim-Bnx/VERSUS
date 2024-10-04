@@ -64,6 +64,7 @@ function NewEvent() {
   return (
     <>
       <Title order={2}>Créer un évènement</Title>
+
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <Grid>
           <Grid.Col span={12}>

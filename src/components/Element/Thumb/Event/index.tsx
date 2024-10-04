@@ -12,7 +12,8 @@ type EventThumbProps = {
   name: string;
   type: string;
   date: string;
-  countdown: number;
+  countdown?: number;
+  participants?: number;
 };
 
 function EventThumb({
@@ -22,6 +23,7 @@ function EventThumb({
   type,
   date,
   countdown,
+  participants,
 }: EventThumbProps) {
   return (
     <Box className="eventhumb">
@@ -48,7 +50,10 @@ function EventThumb({
             </Flex>
 
             <Text className="thumb__dates-duration">
-              Dans {countdown} jours
+              {/* Show countdown if available, otherwise show participants */}
+              {countdown !== undefined
+                ? `Dans ${countdown} jours`
+                : `${participants} participant${participants !== 1 ? 's' : ''}`}
             </Text>
           </Flex>
         </Box>

@@ -76,12 +76,12 @@ function NavBarGuest() {
         </NavLink>
 
         <NavLink
-          to="/events/upcoming"
+          to="/events/all"
           className={({ isActive }) =>
             clsx('navbar__link', { 'navbar__link--active': isActive })
           }
         >
-          Évènements à venir
+          Tous les Évènements
         </NavLink>
       </Flex>
 

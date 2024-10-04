@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Anchor, Skeleton, Space, Title } from '@mantine/core';
+import { Anchor, Box, Title } from '@mantine/core';
 import { fetchAllEvents } from '../../store/reducers/events';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { Event as AppEvent } from '../../@types/event';
@@ -8,7 +8,6 @@ import EventThumb from '../../components/Element/Thumb/Event';
 function Populars() {
   const dispatch = useAppDispatch();
   const events = useAppSelector((state) => state.events.events);
-  const isLoading = useAppSelector((state) => state.events.isLoading);
 
   const sortEventsByParticipants = (eventsArray: AppEvent[]) => {
     return eventsArray
@@ -16,7 +15,7 @@ function Populars() {
       .sort((a, b) => b.participants.length - a.participants.length);
   };
 
-  const sortedEvents = sortEventsByParticipants(events);
+  const sortedEvents = sortEventsByParticipants(events).slice(0, 6);
 
   useEffect(() => {
     dispatch(fetchAllEvents());
@@ -33,33 +32,31 @@ function Populars() {
 
   return (
     <>
-      <Title order={2}>Les évènements populaires</Title>
+      <Title order={2} mb="1rem">
+        Les évènements les plus populaires
+      </Title>
 
-      <Skeleton visible={isLoading}>
-        <div className="categories-grid">
-          {sortedEvents.map((event) => (
-            <Anchor
-              unstyled
-              href={`/event/${event.title_slug}`}
-              key={event.id}
-              className="eventhumb-link"
-            >
-              <EventThumb
-                image={event.banner || 'url_de_limage_par_defaut'}
-                game={event.game ? event.game.name : 'Jeu non défini'}
-                name={event.title}
-                type={
-                  event.platform
-                    ? event.platform.name
-                    : 'Plateforme non définie'
-                }
-                date={event.start_date}
-                countdown={calculateDaysLeft(event.start_date)}
-              />
-            </Anchor>
-          ))}
-        </div>
-      </Skeleton>
+      <Box className="categories-grid">
+        {sortedEvents.map((event) => (
+          <Anchor
+            unstyled
+            href={`/event/${event.title_slug}`}
+            key={event.id}
+            className="eventhumb-link"
+          >
+            <EventThumb
+              image={event.banner || 'url_de_limage_par_defaut'}
+              game={event.game ? event.game.name : 'Jeu non défini'}
+              name={event.title}
+              type={
+                event.platform ? event.platform.name : 'Plateforme non définie'
+              }
+              date={event.start_date}
+              participants={event.participants.length}
+            />
+          </Anchor>
+        ))}
+      </Box>
     </>
   );
 }

@@ -1,3 +1,4 @@
+import { useEffect, lazy, Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Box,
@@ -9,13 +10,15 @@ import {
   GridCol,
   Anchor,
   Space,
+  Skeleton,
 } from '@mantine/core';
-import { useEffect } from 'react';
 import slugify from 'slugify';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { profile } from '../../../store/reducers/profile';
 import EventThumb from '../../../components/Element/Thumb/Event';
-import CreateAvatar from '../../../components/Element/CreateAvatar';
+const CreateAvatar = lazy(
+  () => import('../../../components/Element/CreateAvatar')
+);
 import DateFormat from '../../../components/Date/Date';
 
 import '../Profile.scss';
@@ -55,7 +58,9 @@ function UserProfile() {
         <Flex justify="space-between" align="center">
           <Flex justify="center" align="center">
             <Box mr="1rem">
-              <CreateAvatar hw="7rem" seed={userAvatarValue} />
+              <Suspense fallback={<Skeleton height={50} circle />}>
+                <CreateAvatar hw="7rem" seed={userAvatarValue} />
+              </Suspense>
             </Box>
 
             <Flex ml="1rem" direction="column">
@@ -107,7 +112,7 @@ function UserProfile() {
         </Flex>
         <Space h="md" />
 
-        <div className="categories-grid">
+        <Box className="categories-grid">
           {userEventsParticipations.slice(0, 3).map((userEvent) => (
             <Anchor
               href={`/event/${userEvent.title_slug}`}
@@ -129,7 +134,7 @@ function UserProfile() {
               />
             </Anchor>
           ))}
-        </div>
+        </Box>
       </Box>
 
       <Box mt="2rem">
@@ -147,7 +152,7 @@ function UserProfile() {
         </Flex>
         <Space h="md" />
 
-        <div className="categories-grid">
+        <Box className="categories-grid">
           {userEventsCreated.slice(0, 3).map((userEvent) => (
             <Anchor
               href={`/event/${userEvent.title_slug}`}
@@ -169,7 +174,7 @@ function UserProfile() {
               />
             </Anchor>
           ))}
-        </div>
+        </Box>
       </Box>
 
       <Box mt="2rem">

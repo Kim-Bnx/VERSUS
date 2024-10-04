@@ -21,8 +21,8 @@ function Preferences({ onChangeView }: PreferencesProps) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isSuccess = useAppSelector((state) => state.signup.isSuccess);
-  const gamesState = useAppSelector((state) => state.game.games);
-  const platformsState = useAppSelector((state) => state.platform.platforms);
+  const gamesState = useAppSelector((state) => state.games.games);
+  const platformsState = useAppSelector((state) => state.platforms.platforms);
 
   const [selectedGames, setSelectedGames] = useState<{
     [key: number]: boolean;

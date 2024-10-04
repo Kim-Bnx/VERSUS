@@ -18,7 +18,7 @@ import Terms from './pages/Footer/Terms/Terms';
 import EditEvent from './pages/Event/EditEvent/EditEvent';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Populars from './pages/Categories/Populars';
-import Upcoming from './pages/Categories/Upcoming';
+import AllEvents from './pages/Categories/AllEvents';
 import UserParticipations from './pages/Profile/UserProfile/UserParticipations';
 import UserEventsCreated from './pages/Profile/UserProfile/UserEvents';
 
@@ -37,8 +37,8 @@ export const router = createBrowserRouter([
         element: <Populars />,
       },
       {
-        path: '/events/upcoming',
-        element: <Upcoming />,
+        path: '/events/all',
+        element: <AllEvents />,
       },
       {
         path: 'event/create',

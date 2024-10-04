@@ -87,7 +87,7 @@ function Home() {
             </NavLink>
           </Flex>
 
-          <div className="categories-grid">
+          <Box className="categories-grid">
             {userEvents.slice(0, 3).map((userEvent) => (
               <NavLink
                 to={`/event/${userEvent.title_slug}`}
@@ -110,7 +110,7 @@ function Home() {
                 />
               </NavLink>
             ))}
-          </div>
+          </Box>
         </Box>
       )}
 
@@ -119,14 +119,14 @@ function Home() {
           <Title order={2}>Évènements à venir</Title>
 
           <NavLink
-            to="/events/upcoming"
+            to={isConnected ? '/events/all' : '/sign-in'}
             className="categories__title-more link"
           >
-            Voir plus
+            Voir tous
           </NavLink>
         </Flex>
 
-        <div className="categories-grid">
+        <Box className="categories-grid">
           {isLoading
             ? Array.from({ length: 3 }, (_, index) => (
                 <Skeleton key={index} height={'15rem'} radius="md" />
@@ -151,22 +151,22 @@ function Home() {
                   />
                 </NavLink>
               ))}
-        </div>
+        </Box>
       </Box>
 
       <Box className="container">
         <Flex justify="space-between" align="center" className="title">
-          <Title order={2}>Évènements populaires</Title>
+          <Title order={2}>Évènements Populaires</Title>
 
           <NavLink
-            to="/events/populars"
+            to={isConnected ? '/event/create' : '/events/populars'}
             className="categories__title-more link"
           >
             Voir plus
           </NavLink>
         </Flex>
 
-        <div className="categories-grid">
+        <Box className="categories-grid">
           {isLoading
             ? Array.from({ length: 3 }, (_, index) => (
                 <Skeleton key={index} height={'15rem'} radius="md" />
@@ -193,7 +193,7 @@ function Home() {
                   </Skeleton>
                 </NavLink>
               ))}
-        </div>
+        </Box>
       </Box>
 
       {isConnected && favGames.length > 0 && (
@@ -202,13 +202,13 @@ function Home() {
             <Title order={2}>Mes jeux préférés</Title>
           </Box>
 
-          <div className="games__grid">
+          <Box className="games__grid">
             {favGames.slice(0, 4).map((game) => (
               <NavLink to="/game/events" key={game.id}>
                 <Image src={game.thumbnail} h={350} radius="md" sizes="cover" />
               </NavLink>
             ))}
-          </div>
+          </Box>
         </Box>
       )}
     </>

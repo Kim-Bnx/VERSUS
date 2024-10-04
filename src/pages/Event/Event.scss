@@ -23,18 +23,6 @@
   margin-top: 19rem;
   background-color: var(--mantine-color-indigo-light);
   padding: var(--mantine-spacing-xl) 0;
-
-  &-content {
-    display: flex;
-    gap: var(--mantine-spacing-lg);
-  }
-}
-
-.event__infos {
-  flex-grow: 5;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .event__content {

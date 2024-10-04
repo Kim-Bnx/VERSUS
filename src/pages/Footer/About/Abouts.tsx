@@ -2,9 +2,7 @@ import {
   Anchor,
   Badge,
   Box,
-  Button,
   Card,
-  Flex,
   Group,
   Image,
   Space,
@@ -19,14 +17,18 @@ function About() {
     <>
       <Box className="team__presentation">
         <Title order={2}>L&apos;équipe de Versus</Title>
+
         <Space h="sm" />
+
         <Text>
           Les visages qui ont fait de Versus un super projet de fin d&apos;étude
           !
         </Text>
+
         <Space h="xl" />
       </Box>
-      <div className="team full-width">
+
+      <Box className="team full-width">
         <Card shadow="sm" padding="lg" radius="md">
           <Card.Section>
             <Image
@@ -141,7 +143,7 @@ function About() {
             adorables bébés de ce dévoué maître chien.
           </Text>
         </Card>
-      </div>
+      </Box>
     </>
   );
 }

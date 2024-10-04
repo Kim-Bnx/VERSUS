@@ -226,7 +226,7 @@ function EditEvent() {
       className="content-grid full-width full-height settings-form"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="full-width content-grid settings_banner">
+      <Box className="full-width content-grid settings_banner">
         <img
           alt="Bannière"
           className="full-width settings_banner-image"
@@ -263,9 +263,9 @@ function EditEvent() {
             <IoCheckmarkSharp />
           </Button>
         </Modal>
-      </div>
+      </Box>
 
-      <div className="settings_header full-width content-grid">
+      <Box className="settings_header full-width content-grid">
         <Flex align="end" justify="space-between">
           <Box>
             <Title order={2}>Configurer son évènement</Title>
@@ -284,7 +284,7 @@ function EditEvent() {
             </Button>
           </Flex>
         </Flex>
-      </div>
+      </Box>
       <Fieldset
         legend="Informations"
         variant="unstyled"
@@ -509,7 +509,7 @@ function EditEvent() {
         />
       </Fieldset>
 
-      <div className="settings_actions">
+      <Box className="settings_actions">
         <Flex align="center" justify="space-between" gap="md">
           <Button color="red" onClick={handleDeleteEvent}>
             Supprimer
@@ -519,7 +519,7 @@ function EditEvent() {
             <Button type="submit">Modifier et enregistrer</Button>
           </Flex>
         </Flex>
-      </div>
+      </Box>
     </Box>
   );
 }

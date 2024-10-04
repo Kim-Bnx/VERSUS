@@ -1,4 +1,11 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useState,
+  lazy,
+  Suspense,
+} from 'react';
 import {
   Avatar,
   Box,
@@ -11,6 +18,7 @@ import {
   PasswordInput,
   Grid,
   GridCol,
+  Skeleton,
 } from '@mantine/core';
 
 import { IconKey, IconUpload } from '@tabler/icons-react';
@@ -18,7 +26,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { updateLoggedUser } from '../../../store/reducers/updateLoggedUser';
 import { logout } from '../../../store/reducers/login';
@@ -31,7 +38,9 @@ import { loggedUser } from '../../../store/reducers/loggedUser';
 import { LocalStorage } from '../../../utils/LocalStorage';
 import PlatformSquare from '../../../components/Element/PlatformsSquares';
 import GamesLabels from '../../../components/Element/GamesLabels';
-import CreateAvatar from '../../../components/Element/CreateAvatar';
+const CreateAvatar = lazy(
+  () => import('../../../components/Element/CreateAvatar')
+);
 import useNotification, {
   NotificationProps,
 } from '../../../components/Notification/useNotification';
@@ -266,7 +275,9 @@ function MyProfile() {
               </Text>
             )}
             {!toggleEditProfile ? (
-              <CreateAvatar hw="5rem" seed={useAvatarValue} />
+              <Suspense fallback={<Skeleton height={50} circle />}>
+                <CreateAvatar hw="5rem" seed={useAvatarValue} />
+              </Suspense>
             ) : (
               <Box className="upload">
                 <Button bg="none" className="upload-button">

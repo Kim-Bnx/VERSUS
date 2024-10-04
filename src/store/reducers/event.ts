@@ -5,6 +5,7 @@ import { axiosInstance } from '../../utils/axios';
 
 const UserData: UserDataType = {
   id: 0,
+  username: '',
 };
 
 const initialState: EventState = {
@@ -57,15 +58,14 @@ const eventSlice = createSlice({
         const payloadKeys = Object.keys(action.payload);
 
         payloadKeys.forEach((key) => {
-          if (action.payload[key] !== null) {
-            state.event[key] = action.payload[key];
-          }
+          // Cast state.event to allow dynamic key access
+          (state.event as { [key: string]: any })[key] = action.payload[key];
         });
       })
       .addCase(fetchEvent.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message || null; // Capture the error message
-        state.event = initialState.event; // Reset event state if fetch fails
+        state.error = action.error.message || null;
+        state.event = initialState.event;
       });
   },
 });

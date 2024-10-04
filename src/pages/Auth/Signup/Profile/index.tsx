@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState, lazy, Suspense } from 'react';
 import {
   Anchor,
   Box,
@@ -10,6 +10,7 @@ import {
   TextInput,
   Title,
   Avatar,
+  Skeleton,
 } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
@@ -17,8 +18,10 @@ import {
   updateLoggedUser,
   changeInputUserValue,
 } from '../../../../store/reducers/updateLoggedUser';
-import CreateAvatar from '../../../../components/Element/CreateAvatar';
 import { LocalStorage } from '../../../../utils/LocalStorage';
+const CreateAvatar = lazy(
+  () => import('../../../../components/Element/CreateAvatar')
+);
 
 type ProfileProps = {
   onChangeView: (step: string) => void;
@@ -107,7 +110,9 @@ function Profile({ onChangeView }: ProfileProps) {
           {!selectedAvatar ? (
             <Avatar className="circle" />
           ) : (
-            <CreateAvatar hw="5rem" seed={selectedAvatar} />
+            <Suspense fallback={<Skeleton height={50} circle />}>
+              <CreateAvatar hw="5rem" seed={selectedAvatar} />
+            </Suspense>
           )}
         </Box>
 
@@ -121,7 +126,9 @@ function Profile({ onChangeView }: ProfileProps) {
                   justify="center"
                   onClick={() => handleClickAvatarValue(avatar)}
                 >
-                  <CreateAvatar hw="4rem" seed={avatar} />
+                  <Suspense fallback={<Skeleton height={50} circle />}>
+                    <CreateAvatar hw="4rem" seed={avatar} />
+                  </Suspense>
                 </Flex>
               </Grid.Col>
             ))}

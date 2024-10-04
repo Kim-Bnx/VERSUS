@@ -8,11 +8,11 @@ import {
   Badge,
   Box,
   Button,
+  Divider,
   Flex,
   Image,
   Pill,
   Skeleton,
-  Stack,
   Tabs,
   Text,
   Title,
@@ -36,7 +36,6 @@ import useNotification, {
 } from '../../components/Notification/useNotification';
 import './Event.scss';
 import EventInfoDetails from '../../components/Element/EventInfoDetail/EventInfoDetail';
-// import CreateAvatar from '../../components/Element/CreateAvatar';
 
 function Event() {
   const dispatch = useAppDispatch();
@@ -56,7 +55,7 @@ function Event() {
   };
 
   const isEventAdminGuard = () => {
-    return eventData.organizer.id === userData.id;
+    return eventData.organizer?.id === userData?.id;
   };
 
   const { showNotification } = useNotification();
@@ -134,36 +133,41 @@ function Event() {
       </Box>
 
       <Box className="event__header full-width content-grid">
-        <Box>
-          <Flex className="event__header-content">
-            <Box className="event__image">
-              <Skeleton visible={isLoading} h="100%" w="200px" maw={200}>
-                <Image
-                  src={eventData.thumbnail || eventData.game?.thumbnail}
-                  radius="sm"
-                  h="100%"
-                  w="200px"
-                  maw={200}
-                  fit="cover"
-                />
-              </Skeleton>
-            </Box>
+        <Flex gap="lg" className="event__header-content">
+          <Box className="event__image">
+            <Skeleton visible={isLoading} h="100%" w="200px" maw={200}>
+              <Image
+                src={eventData.thumbnail || eventData.game?.thumbnail}
+                radius="sm"
+                h="100%"
+                w="200px"
+                maw={200}
+                fit="cover"
+              />
+            </Skeleton>
+          </Box>
 
-            <Flex direction="column" mt="6rem" justify="flex-start">
-              <Flex
-                align="center"
-                gap="xl"
-                className="event__infos--presentation"
-              >
-                {isLoading ? (
-                  <Skeleton height={25} mb={15} />
-                ) : (
-                  <Title order={2} tt="uppercase">
-                    {eventData.title}
-                  </Title>
-                )}
+          <Flex
+            direction="column"
+            pt="6rem"
+            justify="flex-start"
+            style={{ flexGrow: 1 }}
+          >
+            <Flex
+              align="center"
+              gap="xl"
+              className="event__infos--presentation"
+            >
+              {isLoading ? (
+                <Skeleton height={25} mb={10} mt={5} width="40%" />
+              ) : (
+                <Title order={2} tt="uppercase">
+                  {eventData.title}
+                </Title>
+              )}
 
-                {isEventAdminGuard() && eventData.status === 'published' ? (
+              {isEventAdminGuard() &&
+                (eventData.status === 'published' ? (
                   <Tooltip.Floating label="Evènement publié" color="gray">
                     <Badge color="green" size="sm">
                       <IoCheckmarkSharp />
@@ -175,117 +179,136 @@ function Event() {
                       <IoCreateOutline />
                     </Badge>
                   </Tooltip.Floating>
-                )}
-              </Flex>
+                ))}
+            </Flex>
 
-              <Flex align="center" gap="sm">
-                <IoCalendarClearOutline />
+            <Flex align="center" gap="sm">
+              <IoCalendarClearOutline />
+              {isLoading ? (
+                <Skeleton height={15} radius="xl" width="40%" />
+              ) : (
                 <Date
                   startDate={eventData.start_date}
                   endDate={eventData.end_date}
                 />
-              </Flex>
+              )}
+            </Flex>
 
-              {true ? (
+            <Box h="100%" mt="1rem">
+              {isLoading ? (
                 <>
                   <Skeleton height={8} mt={18} radius="xl" />
                   <Skeleton height={8} mt={6} radius="xl" />
+                  <Skeleton height={8} mt={6} radius="xl" />
+                  <Skeleton height={8} mt={6} radius="xl" />
                 </>
               ) : (
-                <Text m="1rem 0 0 0" ta="justify">
-                  {eventData.description}
-                </Text>
+                <Flex direction="column" justify="space-between" h="100%">
+                  <Text ta="justify">{eventData.description}</Text>
+                  <Text fw="bold">
+                    {eventData.participants.length} participants
+                  </Text>
+                </Flex>
               )}
-            </Flex>
+            </Box>
+          </Flex>
 
-            <Flex
-              direction="column"
-              justify="space-between"
-              className="event__buttons"
-            >
-              {isEventAdminGuard() && (
+          <Flex
+            direction="column"
+            justify="space-between"
+            className="event__buttons"
+          >
+            {isEventAdminGuard() && (
+              <Button
+                className="event__buttons--follow"
+                variant="outline"
+                component="a"
+                href={`/event/${eventData.title_slug}/settings`}
+              >
+                Editer
+              </Button>
+            )}
+
+            <Text td="underline" className="event__buttons--contact">
+              {eventData.contact}
+            </Text>
+
+            <Box className="event__buttons--last">
+              {isRegisterToEvent() ? (
                 <Button
-                  className="event__buttons--follow"
-                  variant="outline"
-                  component="a"
-                  href={`/event/${eventData.title_slug}/settings`}
+                  className="event__buttons--register"
+                  onClick={handleEventUnregister}
                 >
-                  Editer
+                  Se désinscrire
+                </Button>
+              ) : (
+                <Button
+                  className="event__buttons--register"
+                  onClick={handleEventRegister}
+                >
+                  S&apos;inscrire
                 </Button>
               )}
-
-              <Text td="underline" className="event__buttons--contact">
-                {eventData.contact}
-              </Text>
-
-              <Box className="event__buttons--last">
-                {isRegisterToEvent() ? (
-                  <Button
-                    className="event__buttons--register"
-                    onClick={handleEventUnregister}
-                  >
-                    Se désinscrire
-                  </Button>
-                ) : (
-                  <Button
-                    className="event__buttons--register"
-                    onClick={handleEventRegister}
-                  >
-                    S&apos;inscrire
-                  </Button>
-                )}
-              </Box>
-            </Flex>
+            </Box>
           </Flex>
-          <Flex gap="xl" mt="1rem">
-            <EventInfoDetails eventData={eventData} />
-            {eventData && <Pill>{eventData.event_type?.name}</Pill>}
-          </Flex>
-        </Box>
+        </Flex>
+
+        <Flex gap="xl" mt="1rem">
+          <EventInfoDetails eventData={eventData} />
+          {eventData && <Pill>{eventData.event_type?.name}</Pill>}
+        </Flex>
       </Box>
 
-      <Tabs
-        color="indigo"
-        defaultValue="presentation_tab"
-        className="full-width event__content"
-      >
-        <div className="content__tabs full-width content-grid">
-          <div className="content__tabs-buttons">
-            <Tabs.List>
-              <Tabs.Tab value="presentation_tab">Présentation</Tabs.Tab>
-              <Tabs.Tab value="participant_tab">
-                Participants ({eventData.participants.length})
-              </Tabs.Tab>
-            </Tabs.List>
-          </div>
-        </div>
+      {isEventAdminGuard() ? (
+        <Tabs
+          color="indigo"
+          defaultValue="presentation_tab"
+          className="full-width event__content"
+        >
+          <Box className="content__tabs full-width content-grid">
+            <Box className="content__tabs-buttons">
+              <Tabs.List>
+                <Tabs.Tab value="presentation_tab">Présentation</Tabs.Tab>
+                <Tabs.Tab value="participant_tab">
+                  Participants ({eventData.participants.length})
+                </Tabs.Tab>
+              </Tabs.List>
+            </Box>
+          </Box>
 
-        <Box className="full-width content-grid" mt="50" mih="500">
-          <div className="content__tabs-panels">
-            <Tabs.Panel value="presentation_tab">
-              <TypographyStylesProvider>
-                <Box
-                  className="event__presentation"
-                  dangerouslySetInnerHTML={{
-                    __html: sanitizedEventRules,
-                  }}
-                />
-              </TypographyStylesProvider>
-            </Tabs.Panel>
-            <Tabs.Panel value="participant_tab">
-              <Box className="event__attendees">
-                {eventData.participants.map((attendee) => (
-                  <Box key={attendee.id} className="attendee">
-                    <Anchor
-                      className="attendee-username"
-                      href={`/profile/${slugify(attendee.username, {
-                        lower: true,
-                      })}`}
-                    >
-                      {attendee.username}
-                    </Anchor>
+          <Box className="full-width content-grid" mt="50" mih="500">
+            <Box className="content__tabs-panels">
+              <Tabs.Panel value="presentation_tab">
+                <TypographyStylesProvider mt="2rem">
+                  <Divider
+                    size="xs"
+                    mt="1rem"
+                    labelPosition="left"
+                    my="md"
+                    label={<Title order={3}>Régles de l'évènement</Title>}
+                  />
+                  <Box
+                    className="event__presentation"
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizedEventRules,
+                    }}
+                  />
+                </TypographyStylesProvider>
+              </Tabs.Panel>
 
-                    {isEventAdminGuard() && (
+              <Tabs.Panel value="participant_tab">
+                <Box className="event__attendees">
+                  {eventData.participants.map((attendee) => (
+                    <Box key={attendee.id} className="attendee">
+                      <Anchor
+                        className="attendee-username"
+                        href={`/profile/${slugify(attendee.username, {
+                          lower: true,
+                        })}`}
+                      >
+                        {attendee.username}
+                      </Anchor>
+
                       <ActionIcon
                         variant="outline"
                         aria-label="Supprimer participant"
@@ -293,14 +316,30 @@ function Event() {
                       >
                         <IoCloseOutline />
                       </ActionIcon>
-                    )}
-                  </Box>
-                ))}
-              </Box>
-            </Tabs.Panel>
-          </div>
-        </Box>
-      </Tabs>
+                    </Box>
+                  ))}
+                </Box>
+              </Tabs.Panel>
+            </Box>
+          </Box>
+        </Tabs>
+      ) : (
+        <TypographyStylesProvider mt="2rem">
+          <Divider
+            size="xs"
+            mt="1rem"
+            labelPosition="left"
+            my="md"
+            label={<Title order={3}>Régles de l'évènement</Title>}
+          />
+          <Box
+            className="event__presentation"
+            dangerouslySetInnerHTML={{
+              __html: sanitizedEventRules,
+            }}
+          />
+        </TypographyStylesProvider>
+      )}
     </>
   );
 }
