@@ -9,15 +9,16 @@ import MyProfile from './pages/Profile/MyProfile/MyProfile';
 import Auth from './pages/Auth/Auth';
 import Signup from './pages/Auth/Signup/Signup';
 import Login from './pages/Auth/Login/Login';
-import CreateEvent from './pages/CreateEvent/CreateEvent';
+import ForgottenPassword from './pages/Auth/ForgottenPassword/ForgottenPassword';
+import ResetPassword from './pages/Auth/ResetPassword/ResetPassword';
+import CreateEvent from './pages/Event/NewEvent/NewEvent';
 import About from './pages/Footer/About/Abouts';
 import Contact from './pages/Footer/Contact/Contact';
 import Terms from './pages/Footer/Terms/Terms';
-import EventSettings from './pages/EventSettings/EventSettings';
+import EditEvent from './pages/Event/EditEvent/EditEvent';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-import EventAdmin from './components/ProtectedRoute/EventAdmin';
 import Populars from './pages/Categories/Populars';
-import Upcoming from './pages/Categories/Upcoming';
+import AllEvents from './pages/Categories/AllEvents';
 import UserParticipations from './pages/Profile/UserProfile/UserParticipations';
 import UserEventsCreated from './pages/Profile/UserProfile/UserEvents';
 
@@ -36,8 +37,8 @@ export const router = createBrowserRouter([
         element: <Populars />,
       },
       {
-        path: '/events/upcoming',
-        element: <Upcoming />,
+        path: '/events/all',
+        element: <AllEvents />,
       },
       {
         path: 'event/create',
@@ -49,11 +50,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'event/:slug/settings',
-        element: (
-          <EventAdmin>
-            <EventSettings />
-          </EventAdmin>
-        ),
+        element: <EditEvent />,
       },
       {
         // route for the connected user to see researched user's profile or his own
@@ -103,6 +100,14 @@ export const router = createBrowserRouter([
       {
         path: '/sign-in',
         element: <Login />,
+      },
+      {
+        path: '/forgotten-password',
+        element: <ForgottenPassword />,
+      },
+      {
+        path: '/reset-password',
+        element: <ResetPassword />,
       },
     ],
   },

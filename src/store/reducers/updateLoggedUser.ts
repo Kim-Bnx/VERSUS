@@ -14,8 +14,8 @@ const initialState: ProfileState = {
   error: null,
 };
 
-export const loggedUserUpdate = createAsyncThunk(
-  'loggedUserUpdate',
+export const updateLoggedUser = createAsyncThunk(
+  'updateLoggedUser',
   async ({
     userDatas,
     userId,
@@ -32,8 +32,8 @@ export const loggedUserUpdate = createAsyncThunk(
   }
 );
 
-const loggedUserUpdateSlice = createSlice({
-  name: 'loggedUserUpdate',
+const updateLoggedUserSlice = createSlice({
+  name: 'updateLoggedUser',
   initialState,
   reducers: {
     changeInputUserValue(
@@ -58,20 +58,20 @@ const loggedUserUpdateSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(loggedUserUpdate.pending, (state) => {
+      .addCase(updateLoggedUser.pending, (state) => {
         state.error = null;
         state.isSuccess = false;
       })
-      .addCase(loggedUserUpdate.rejected, (state) => {
+      .addCase(updateLoggedUser.rejected, (state) => {
         state.error = 'Modification rejeté';
         state.isSuccess = false;
       })
-      .addCase(loggedUserUpdate.fulfilled, (state) => {
+      .addCase(updateLoggedUser.fulfilled, (state) => {
         state.error = null;
         state.isSuccess = true;
       });
   },
 });
 
-export const { changeInputUserValue } = loggedUserUpdateSlice.actions;
-export default loggedUserUpdateSlice.reducer;
+export const { changeInputUserValue } = updateLoggedUserSlice.actions;
+export default updateLoggedUserSlice.reducer;

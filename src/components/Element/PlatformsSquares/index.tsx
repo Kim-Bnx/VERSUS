@@ -16,7 +16,7 @@ function PlatformsSquares({
   handlePlatformSelection,
 }: PlatformSquareProps) {
   return (
-    <Grid justify="flex-start" align="center" gutter={15}>
+    <Grid justify="space-between" align="center" gutter={15}>
       {data.map((platform) => (
         <Grid.Col span={span} key={platform.id}>
           <Flex

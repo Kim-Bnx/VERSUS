@@ -25,10 +25,6 @@
       padding-bottom: 4rem;
     }
 
-    .form {
-      padding-bottom: 3rem;
-    }
-
     .avatar {
       &-selected {
         .circle {
@@ -51,6 +47,10 @@
     .section {
       margin-bottom: 2rem;
       width: 100%;
+
+      &.last-input {
+        margin-bottom: 1rem;
+      }
     }
 
     .form-title,
@@ -73,7 +73,7 @@
         padding-bottom: 0.5rem;
       }
 
-      button {
+      .last-cta {
         margin-bottom: 3rem;
       }
 

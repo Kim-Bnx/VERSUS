@@ -8,8 +8,8 @@ import { userPlatforms } from '../../../../store/reducers/userPlatforms';
 import PlatformSquares from '../../../../components/Element/PlatformsSquares';
 import GamesLabels from '../../../../components/Element/GamesLabels';
 import { LocalStorage } from '../../../../utils/LocalStorage';
-import { fetchGames } from '../../../../store/reducers/game';
-import { fetchPlatforms } from '../../../../store/reducers/platform';
+import { fetchGames } from '../../../../store/reducers/games';
+import { fetchPlatforms } from '../../../../store/reducers/platforms';
 
 type PreferencesProps = {
   onChangeView: (step: string) => void;
@@ -21,8 +21,8 @@ function Preferences({ onChangeView }: PreferencesProps) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isSuccess = useAppSelector((state) => state.signup.isSuccess);
-  const gamesState = useAppSelector((state) => state.game.games);
-  const platformsState = useAppSelector((state) => state.platform.platforms);
+  const gamesState = useAppSelector((state) => state.games.games);
+  const platformsState = useAppSelector((state) => state.platforms.platforms);
 
   const [selectedGames, setSelectedGames] = useState<{
     [key: number]: boolean;

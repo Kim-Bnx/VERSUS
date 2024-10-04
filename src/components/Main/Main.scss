@@ -1,6 +1,8 @@
 @use '../../styles/variables' as v;
 
 .page-content {
+  position: relative;
+
   & > :first-child:not(.full-height) {
     margin-top: 5rem;
   }

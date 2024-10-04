@@ -2,12 +2,13 @@
 import axios from 'axios';
 import { LocalStorage } from './LocalStorage';
 
+/* https://versus-api.onrender.com */
 export const axiosInstance = axios.create({
-  baseURL: 'https://versus-api.onrender.com',
+  baseURL: 'http://localhost:3000',
 });
 
 export const axiosInstanceToken = axios.create({
-  baseURL: 'https://versus-api.onrender.com',
+  baseURL: 'http://localhost:3000',
 });
 
 axiosInstanceToken.interceptors.request.use((config) => {

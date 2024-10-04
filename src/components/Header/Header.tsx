@@ -1,31 +1,27 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useDisclosure } from '@mantine/hooks';
 import {
   Box,
   Button,
-  Anchor,
   AppShell,
   Flex,
-  Avatar,
   Burger,
   Text,
+  Skeleton,
 } from '@mantine/core';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import SearchBar from '../SearchBar/SearchBar';
-
-import './Header.scss';
 import { LocalStorage } from '../../utils/LocalStorage';
 import { loggedUser } from '../../store/reducers/loggedUser';
-import CreateAvatar from '../Element/CreateAvatar';
+const CreateAvatar = lazy(() => import('../Element/CreateAvatar'));
+import './Header.scss';
 
 function Header({ opened, toggle }: { opened: boolean; toggle: () => void }) {
-  // const [opened, { toggle }] = useDisclosure();
   const dispatch = useAppDispatch();
   const isConnected = useAppSelector((state) => state.login.isConnected);
   const userData = useAppSelector((state) => state.loggedUser.data);
   const userNameValue = userData.username;
-  const useAvatarValue = userData.avatar;
+  const userAvatarValue = userData.avatar;
 
   useEffect(() => {
     if (isConnected) {
@@ -38,29 +34,25 @@ function Header({ opened, toggle }: { opened: boolean; toggle: () => void }) {
 
   return (
     <AppShell.Header p="lg">
-      <div className="header">
+      <Box className="header">
         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
 
-        <div className="header__actions">
+        <Box className="header__actions">
           <Button
             visibleFrom="sm"
-            className="button header__actions-event"
             component={Link}
             to={isConnected ? '/event/create' : '/sign-in'}
+            className="button"
           >
             Organiser un event
           </Button>
 
           <SearchBar />
-        </div>
+        </Box>
 
         {!isConnected ? (
           <Box className="header__connexion">
-            <Button
-              component={Link}
-              to="/sign-in"
-              className="button button-login"
-            >
+            <Button component={Link} to="/sign-in" className="button">
               Se connecter
             </Button>
           </Box>
@@ -68,11 +60,13 @@ function Header({ opened, toggle }: { opened: boolean; toggle: () => void }) {
           <NavLink to="/profile" className="header__profile">
             <Flex align="center" gap="sm">
               <Text visibleFrom="md">{userNameValue}</Text>
-              <CreateAvatar hw="2.5rem" seed={useAvatarValue} />
+              <Suspense fallback={<Skeleton height={50} circle />}>
+                <CreateAvatar hw="2.5rem" seed={userAvatarValue} />
+              </Suspense>
             </Flex>
           </NavLink>
         )}
-      </div>
+      </Box>
     </AppShell.Header>
   );
 }

@@ -1,4 +1,11 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useState,
+  lazy,
+  Suspense,
+} from 'react';
 import {
   Avatar,
   Box,
@@ -11,25 +18,35 @@ import {
   PasswordInput,
   Grid,
   GridCol,
+  Skeleton,
 } from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { IconKey, IconSettingsFilled, IconUpload } from '@tabler/icons-react';
+
+import { IconKey, IconUpload } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
+import { Controller, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { loggedUserUpdate } from '../../../store/reducers/loggedUserUpdate';
+import { updateLoggedUser } from '../../../store/reducers/updateLoggedUser';
 import { logout } from '../../../store/reducers/login';
 import { userGames } from '../../../store/reducers/userGames';
-import { fetchGames } from '../../../store/reducers/game';
-import { fetchPlatforms } from '../../../store/reducers/platform';
-import { patchPassword } from '../../../store/reducers/passwordChange';
+import { fetchGames } from '../../../store/reducers/games';
+import { fetchPlatforms } from '../../../store/reducers/platforms';
+import { updatePassword } from '../../../store/reducers/updatePassword';
 import { userPlatforms } from '../../../store/reducers/userPlatforms';
 import { loggedUser } from '../../../store/reducers/loggedUser';
 import { LocalStorage } from '../../../utils/LocalStorage';
 import PlatformSquare from '../../../components/Element/PlatformsSquares';
 import GamesLabels from '../../../components/Element/GamesLabels';
-import CreateAvatar from '../../../components/Element/CreateAvatar';
-
+const CreateAvatar = lazy(
+  () => import('../../../components/Element/CreateAvatar')
+);
+import useNotification, {
+  NotificationProps,
+} from '../../../components/Notification/useNotification';
+import editPasswordSchema, {
+  EditPasswordSchemaType,
+} from '../../../validations/editPasswordSchema';
 import '../Profile.scss';
 
 type SelectedItems = { [key: number]: boolean };
@@ -57,37 +74,37 @@ function MyProfile() {
   const useAvatarValue = useAppSelector(
     (state) => state.loggedUser.data.avatar
   );
-  const gamesState = useAppSelector((state) => state.game.games);
+  const gamesState = useAppSelector((state) => state.games.games);
   const userGamesState = useAppSelector((state) => state.loggedUser.data.games);
-  const platformsState = useAppSelector((state) => state.platform.platforms);
+  const platformsState = useAppSelector((state) => state.platforms.platforms);
   const userPlatformsState = useAppSelector(
     (state) => state.loggedUser.data.platforms
   );
+  const [passwordChanged, setPasswordChanged] = useState(false);
+  const { showNotification } = useNotification();
+  const resetErrorMsg = useAppSelector((state) => state.updatePassword.error);
+  const successMsg = useAppSelector((state) => state.updatePassword.success);
 
-  const form = useForm({
-    initialValues: {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<EditPasswordSchemaType>({
+    resolver: zodResolver(editPasswordSchema),
+    defaultValues: {
       password: '',
-      confirmPassword: '',
-    },
-
-    validate: {
-      password: (value) =>
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/gm.test(
-          value
-        )
-          ? null
-          : 'Le mot de passe doit faire 8 caractéres au minimum et doit comporter un chiffre, un caractére spécial et une majuscule',
-      confirmPassword: (value, values) =>
-        value !== values.password
-          ? 'Les mots de passe ne correspondent pas.'
-          : null,
+      confirmation: '',
     },
   });
 
-  const userPasswordValue = '******';
+  const userPasswordValue = '**********';
 
   const handleEditProfile = () => {
     setToggleEditProfile(!toggleEditProfile);
+
+    if (toggleEditProfile) {
+      setUsername(usernameState); // Reset to current username when exiting edit mode
+    }
   };
 
   const handleChangeUsernameValue = (event: ChangeEvent<HTMLInputElement>) => {
@@ -98,7 +115,7 @@ function MyProfile() {
 
   const handleUsernameSubmit = () => {
     dispatch(
-      loggedUserUpdate({
+      updateLoggedUser({
         userDatas: { username },
         userId,
       })
@@ -109,14 +126,21 @@ function MyProfile() {
       });
   };
 
-  const handlePasswordSubmit = () => {
-    const { values } = form;
-
-    dispatch(patchPassword({ id: userId, ...values }))
+  const onPasswordSubmit = (data: EditPasswordSchemaType) => {
+    dispatch(
+      updatePassword({
+        id: userId,
+        password: data.password,
+        confirmPassword: data.confirmation,
+      })
+    )
       .unwrap()
       .then(() => {
-        dispatch(logout());
-        navigate('/');
+        setPasswordChanged(true);
+        setTimeout(() => {
+          dispatch(logout());
+          navigate('/');
+        }, 5000);
       });
   };
 
@@ -205,22 +229,35 @@ function MyProfile() {
     }
   }, [userPlatformsState]);
 
+  useEffect(() => {
+    if (successMsg && passwordChanged) {
+      const notificationProps: NotificationProps = {
+        title: `Mot de passe modifié avec succés !`,
+        message: `Vous allez être déconnecté. Veillez à bien vous reconnecter avec votre nouveau mot de passe.`,
+        type: 'success',
+      };
+
+      showNotification(notificationProps);
+      setPasswordChanged(false);
+    }
+  }, [successMsg, showNotification, passwordChanged]);
+
   return (
     <Box className="wrapper" w="100%">
       <Flex justify="space-between" align="center">
-        <Title size="2rem" order={2}>
+        <Title order={2} size="2rem">
           {toggleEditProfile ? 'Modifier votre profil' : 'Votre profil'}
         </Title>
 
         <Flex justify="space-between" align="center">
-          <Button mr="1rem" onClick={handleEditProfile}>
-            <IconSettingsFilled />
+          <Button className="button" mr="1rem" onClick={handleEditProfile}>
+            {toggleEditProfile ? 'Annuler' : 'Éditer mon profil'}
           </Button>
         </Flex>
       </Flex>
 
       <Box mt="2rem">
-        <Title className="title" order={3}>
+        <Title order={3} className="title">
           Votre compte
         </Title>
 
@@ -238,10 +275,12 @@ function MyProfile() {
               </Text>
             )}
             {!toggleEditProfile ? (
-              <CreateAvatar hw="5rem" seed={useAvatarValue} />
+              <Suspense fallback={<Skeleton height={50} circle />}>
+                <CreateAvatar hw="5rem" seed={useAvatarValue} />
+              </Suspense>
             ) : (
               <Box className="upload">
-                <Button className="upload-button">
+                <Button bg="none" className="upload-button">
                   <FileButton onChange={setFile} accept="image/png,image/jpeg">
                     {(props) => <IconUpload {...props} />}
                   </FileButton>
@@ -267,7 +306,11 @@ function MyProfile() {
                     placeholder={usernameState}
                     onChange={handleChangeUsernameValue}
                   />
-                  <Button ml="2rem" onClick={handleUsernameSubmit}>
+                  <Button
+                    className="button"
+                    ml="2rem"
+                    onClick={handleUsernameSubmit}
+                  >
                     Valider
                   </Button>
                 </>
@@ -293,47 +336,73 @@ function MyProfile() {
                 {userPasswordValue}
               </Text>
             ) : (
-              <form onSubmit={form.onSubmit(handlePasswordSubmit)}>
-                <PasswordInput
-                  mb="1rem"
-                  maw="30rem"
-                  w="80%"
-                  aria-label="password"
-                  placeholder="Mot de passe"
-                  visible={visible}
-                  onVisibilityChange={toggle}
-                  {...form.getInputProps('password')}
+              <Box component="form" onSubmit={handleSubmit(onPasswordSubmit)}>
+                <Controller
+                  name="password"
+                  control={control}
+                  render={({ field }) => (
+                    <PasswordInput
+                      {...field}
+                      maw="30rem"
+                      w="80%"
+                      aria-label="password"
+                      placeholder="Mot de passe"
+                      visible={visible}
+                      onVisibilityChange={toggle}
+                      className={`${errors.password ? 'input-error' : ''}`}
+                    />
+                  )}
                 />
-                <Text mt="1.5rem" className="input-label">
+
+                <Box className="error-message">
+                  {errors.password && <Text>{errors.password?.message}</Text>}
+                </Box>
+
+                <Text className="input-label">
                   confirmation de mot de passe
                 </Text>
-                <PasswordInput
-                  mb="1rem"
-                  maw="30rem"
-                  w="80%"
-                  aria-label="password-confirmation"
-                  placeholder="Confirmation du mot de passe"
-                  visible={visible}
-                  onVisibilityChange={toggle}
-                  {...form.getInputProps('confirmPassword')}
+
+                <Controller
+                  name="confirmation"
+                  control={control}
+                  render={({ field }) => (
+                    <PasswordInput
+                      {...field}
+                      maw="30rem"
+                      w="80%"
+                      aria-label="password-confirmation"
+                      placeholder="Confirmation du mot de passe"
+                      className={`${errors.confirmation ? 'input-error' : ''}`}
+                      visible={visible}
+                      onVisibilityChange={toggle}
+                    />
+                  )}
                 />
-                <Button mt="1rem" type="submit">
+
+                <Box className="error-message last-error-box">
+                  {errors.confirmation && (
+                    <Text>{errors.confirmation?.message}</Text>
+                  )}
+                  {resetErrorMsg && <Text>{resetErrorMsg}</Text>}
+                </Box>
+
+                <Button className="button" type="submit">
                   Valider
                 </Button>
-              </form>
+              </Box>
             )}
           </Box>
         </Flex>
       </Box>
 
       <Box mt="4rem">
-        <Title className="title" order={3}>
+        <Title order={3} className="title">
           Vos préférences
         </Title>
 
         <Box className="section section-full">
-          <Title className="section-title" order={4}>
-            Mes plateformes
+          <Title order={4} className="section-title">
+            Plateformes sur lesquels je joue :
           </Title>
 
           {!toggleEditProfile ? (
@@ -356,16 +425,18 @@ function MyProfile() {
                 selectedPlatforms={selectedPlatforms}
                 handlePlatformSelection={handlePlatformSelection}
               />
-              <Flex mt="2rem" w="100%">
-                <Button onClick={handlePlatformsSubmit}>Valider</Button>
+              <Flex justify="end" mt="2rem" w="100%">
+                <Button className="button" onClick={handlePlatformsSubmit}>
+                  Valider
+                </Button>
               </Flex>
             </>
           )}
         </Box>
 
         <Box className="section section-full">
-          <Title className="section-title" order={4}>
-            Mes jeux
+          <Title order={4} className="section-title">
+            Jeux auquels je joue :
           </Title>
 
           {!toggleEditProfile ? (
@@ -390,8 +461,10 @@ function MyProfile() {
                 selectedGames={selectedGames}
                 handleGameSelection={handleGameSelection}
               />
-              <Flex mt="2rem" w="100%">
-                <Button onClick={handleGamesSubmit}>Valider</Button>
+              <Flex justify="end" mt="2rem" w="100%">
+                <Button className="button" onClick={handleGamesSubmit}>
+                  Valider
+                </Button>
               </Flex>
             </>
           )}

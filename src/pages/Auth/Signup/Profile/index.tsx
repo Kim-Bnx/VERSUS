@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState, lazy, Suspense } from 'react';
 import {
   Anchor,
   Box,
@@ -10,15 +10,18 @@ import {
   TextInput,
   Title,
   Avatar,
+  Skeleton,
 } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import {
-  loggedUserUpdate,
+  updateLoggedUser,
   changeInputUserValue,
-} from '../../../../store/reducers/loggedUserUpdate';
-import CreateAvatar from '../../../../components/Element/CreateAvatar';
+} from '../../../../store/reducers/updateLoggedUser';
 import { LocalStorage } from '../../../../utils/LocalStorage';
+const CreateAvatar = lazy(
+  () => import('../../../../components/Element/CreateAvatar')
+);
 
 type ProfileProps = {
   onChangeView: (step: string) => void;
@@ -57,7 +60,7 @@ function Profile({ onChangeView }: ProfileProps) {
 
     dispatch(changeInputUserValue({ fieldName: 'username', value: username }));
     dispatch(
-      loggedUserUpdate({
+      updateLoggedUser({
         userDatas: { username, avatar: selectedAvatar },
         userId,
       })
@@ -79,13 +82,15 @@ function Profile({ onChangeView }: ProfileProps) {
   return (
     <Flex align="center" justify="center" direction="column">
       <Box className="title">
-        <Title size="1.5rem">Configuration de votre profil</Title>
+        <Title order={2} size="1.5rem">
+          Configuration de votre profil
+        </Title>
 
         <Text>Etape 1 sur 2</Text>
       </Box>
 
       <Box w="100%">
-        <Title className="form-title" order={2} size="1rem">
+        <Title order={3} className="form-title" size="1rem">
           Pseudo
         </Title>
 
@@ -99,13 +104,15 @@ function Profile({ onChangeView }: ProfileProps) {
 
       <Flex justify="space-around" className="avatar section">
         <Box className="avatar-selected">
-          <Title className="form-title" order={2} size="1rem">
+          <Title order={3} className="form-title" size="1rem">
             Avatar
           </Title>
           {!selectedAvatar ? (
             <Avatar className="circle" />
           ) : (
-            <CreateAvatar hw="5rem" seed={selectedAvatar} />
+            <Suspense fallback={<Skeleton height={50} circle />}>
+              <CreateAvatar hw="5rem" seed={selectedAvatar} />
+            </Suspense>
           )}
         </Box>
 
@@ -119,7 +126,9 @@ function Profile({ onChangeView }: ProfileProps) {
                   justify="center"
                   onClick={() => handleClickAvatarValue(avatar)}
                 >
-                  <CreateAvatar hw="4rem" seed={avatar} />
+                  <Suspense fallback={<Skeleton height={50} circle />}>
+                    <CreateAvatar hw="4rem" seed={avatar} />
+                  </Suspense>
                 </Flex>
               </Grid.Col>
             ))}

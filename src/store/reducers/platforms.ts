@@ -12,8 +12,8 @@ export const fetchPlatforms = createAsyncThunk('platform', async () => {
   return data;
 });
 
-const platformSlice = createSlice({
-  name: 'platform',
+const platformsSlice = createSlice({
+  name: 'platforms',
   initialState,
   reducers: {},
   extraReducers(builder) {
@@ -31,4 +31,4 @@ const platformSlice = createSlice({
   },
 });
 
-export default platformSlice.reducer;
+export default platformsSlice.reducer;

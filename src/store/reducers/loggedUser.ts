@@ -4,7 +4,7 @@ import { axiosInstance } from '../../utils/axios';
 
 const initialState: UserState = {
   data: {
-    id: null,
+    id: 0,
     email: '',
     password: '',
     confirmPassword: '',
@@ -38,9 +38,8 @@ const userSlice = createSlice({
         const payloadKeys = Object.keys(action.payload);
 
         payloadKeys.forEach((key) => {
-          if (action.payload[key] !== null) {
-            state.data[key] = action.payload[key];
-          }
+          // Cast state.data to allow dynamic key access
+          (state.data as { [key: string]: any })[key] = action.payload[key];
         });
       });
   },

@@ -23,16 +23,50 @@ code {
   }
 }
 
+form {
+  .error-message {
+    position: relative;
+    margin-bottom: 1rem;
+    margin-top: 0.2rem;
+    height: 19px;
+
+    &.last-error-box {
+      margin-bottom: 2rem;
+    }
+
+    & p {
+      color: v.$color-error;
+      font-size: var(--mantine-font-size-xs);
+      padding-left: 2px;
+
+      &.success {
+        color: v.$color-success;
+      }
+    }
+  }
+
+  .input-error {
+    input,
+    button {
+      border: 1px solid v.$color-error;
+    }
+  }
+}
+
 input {
   &:focus-visible {
     outline: none;
   }
 }
 
-a {
-  color: var(--mantine-color-anchor);
+button {
+  letter-spacing: 0.8px;
+}
 
-  &:hover:not(.button, .logo, .eventhumb-link) {
-    text-decoration: underline;
+.link {
+  text-decoration: underline;
+
+  &:hover {
+    text-decoration: none;
   }
 }

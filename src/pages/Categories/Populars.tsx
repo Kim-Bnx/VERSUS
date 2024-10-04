@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Anchor, Space, Title } from '@mantine/core';
+import { Anchor, Box, Title } from '@mantine/core';
 import { fetchAllEvents } from '../../store/reducers/events';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { Event as AppEvent } from '../../@types/event';
@@ -15,26 +15,28 @@ function Populars() {
       .sort((a, b) => b.participants.length - a.participants.length);
   };
 
-  const sortedEvents = sortEventsByParticipants(events);
+  const sortedEvents = sortEventsByParticipants(events).slice(0, 6);
 
   useEffect(() => {
     dispatch(fetchAllEvents());
   }, [dispatch]);
 
   // function that calculates the number of days left until the event starts
-  const calculateDaysLeft = (startDate) => {
+  const calculateDaysLeft = (startDate: string | Date) => {
     const now = new Date();
     const start = new Date(startDate);
-    const difference = start - now;
+    const difference = start.getTime() - now.getTime();
     const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
     return daysLeft > 0 ? daysLeft : 0;
   };
 
   return (
     <>
-      <Title order={1}>Les évènements populaires</Title>
-      <Space h="xl" />
-      <div className="categories-grid">
+      <Title order={2} mb="1rem">
+        Les évènements les plus populaires
+      </Title>
+
+      <Box className="categories-grid">
         {sortedEvents.map((event) => (
           <Anchor
             unstyled
@@ -50,11 +52,11 @@ function Populars() {
                 event.platform ? event.platform.name : 'Plateforme non définie'
               }
               date={event.start_date}
-              countdown={calculateDaysLeft(event.start_date)}
+              participants={event.participants.length}
             />
           </Anchor>
         ))}
-      </div>
+      </Box>
     </>
   );
 }

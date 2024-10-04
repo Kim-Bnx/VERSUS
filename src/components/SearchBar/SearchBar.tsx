@@ -61,15 +61,15 @@ function SearchBar() {
     <>
       <Autocomplete
         className="search-bar"
-        placeholder="Recherche un event, joueur ..."
+        placeholder="Rechercher un événement, un joueur, une équipe ..."
         aria-label="Barre de recherche"
         leftSection={icon}
         value={searchTerm}
         onChange={handleChangeSearchValue}
         data={[
-          { group: 'Events', items: events },
-          { group: 'Utilisateurs', items: users },
-          { group: 'Teams', items: teams },
+          { group: 'Évènements trouvés', items: events },
+          { group: 'Utilisateurs trouvés', items: users },
+          { group: 'Équipes trouvées', items: teams },
         ]}
       />
       {errorMsg && <Box>{errorMsg}</Box>}

@@ -38,13 +38,16 @@ export type UserPlatforms = {
   name: string;
 };
 
-export type PasswordChangeState = {
-  data: NewPasswords;
+export type UpdatePasswordState = {
+  data: NewPassword;
   error: null | string;
+  success: null | string;
 };
 
 export type NewPassword = {
-  id: number;
   password: string;
   confirmPassword: string;
+  email?: null | string;
+  token?: null | string;
+  id?: number;
 };

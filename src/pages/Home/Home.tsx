@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Anchor, Image, Box, Flex, Title } from '@mantine/core';
+import { Image, Box, Flex, Title, Skeleton } from '@mantine/core';
 import { NavLink } from 'react-router-dom';
 import Slider from '../../components/Slider/Slider';
 import EventThumb from '../../components/Element/Thumb/Event';
@@ -17,13 +17,14 @@ function Home() {
   const events = useAppSelector((state) => state.events.events);
   const favGames = useAppSelector((state) => state.userFavGames.games);
   const userEvents = useAppSelector((state) => state.userEvents.events);
+  const isLoading = useAppSelector((state) => state.events.isLoading);
 
   useEffect(() => {
     dispatch(fetchAllEvents());
   }, [dispatch]);
 
   // function that calculates the number of days left until the event starts
-  const calculateDaysLeft = (startDate) => {
+  const calculateDaysLeft = (startDate: string): number => {
     // creates a new Date object representing the current date and time
     const now = new Date();
 
@@ -32,7 +33,7 @@ function Home() {
     const start = new Date(startDate);
 
     // calculates the difference in milliseconds between the event's start date and the current date
-    const difference = start - now;
+    const difference = start.getTime() - now.getTime();
 
     // converts the difference from milliseconds to days
     // math.ceil is used to round up to the nearest whole day as even a partial day counts as a full day for the countdown.
@@ -53,9 +54,7 @@ function Home() {
   const sortedEvents = sortEventsByParticipants(events);
 
   const isConnected = useAppSelector((state) => state.login.isConnected);
-  const username = useAppSelector(
-    (state) => state.loggedUser.data.username_slug
-  );
+  const username = useAppSelector((state) => state.loggedUser.data.username);
   // const userGames = useAppSelector((state) => state.loggedUser.data.games);
 
   useEffect(() => {
@@ -70,7 +69,7 @@ function Home() {
   return (
     <>
       <Box className="hero full-height">
-        <Title order={1}>Organisez, rassemblez, jouez !</Title>
+        <Title order={1}>Organisez, Rassemblez et Jouez</Title>
       </Box>
 
       <Slider />
@@ -78,17 +77,17 @@ function Home() {
       {isConnected && userEvents.length > 0 && (
         <Box className="container">
           <Flex justify="space-between" align="center" className="title">
-            <Title>Mes participations</Title>
+            <Title order={2}>Mes participations</Title>
 
             <NavLink
               to={`/profile/${username}/participations`}
-              className="categories__title-more"
+              className="categories__title-more link"
             >
               Voir plus
             </NavLink>
           </Flex>
 
-          <div className="categories-grid">
+          <Box className="categories-grid">
             {userEvents.slice(0, 3).map((userEvent) => (
               <NavLink
                 to={`/event/${userEvent.title_slug}`}
@@ -111,89 +110,105 @@ function Home() {
                 />
               </NavLink>
             ))}
-          </div>
+          </Box>
         </Box>
       )}
 
       <Box className="container">
         <Flex justify="space-between" align="center" className="title">
-          <Title>Évènements à venir</Title>
+          <Title order={2}>Évènements à venir</Title>
 
-          <NavLink to="/events/upcoming" className="categories__title-more">
-            Voir plus
+          <NavLink
+            to={isConnected ? '/events/all' : '/sign-in'}
+            className="categories__title-more link"
+          >
+            Voir tous
           </NavLink>
         </Flex>
 
-        <div className="categories-grid">
-          {events.slice(0, 3).map((event) => (
-            <NavLink
-              key={event.id}
-              to={`/event/${event.title_slug}`}
-              className="eventhumb-link"
-            >
-              <EventThumb
-                image={event.banner || 'url_de_limage_par_defaut'}
-                game={event.game ? event.game.name : 'Jeu non défini'}
-                name={event.title}
-                type={
-                  event.platform
-                    ? event.platform.name
-                    : 'Plateforme non définie'
-                }
-                date={event.start_date}
-                countdown={calculateDaysLeft(event.start_date)}
-              />
-            </NavLink>
-          ))}
-        </div>
+        <Box className="categories-grid">
+          {isLoading
+            ? Array.from({ length: 3 }, (_, index) => (
+                <Skeleton key={index} height={'15rem'} radius="md" />
+              ))
+            : events.slice(0, 3).map((event) => (
+                <NavLink
+                  key={event.id}
+                  to={`/event/${event.title_slug}`}
+                  className="eventhumb-link"
+                >
+                  <EventThumb
+                    image={event.banner || 'url_de_limage_par_defaut'}
+                    game={event.game ? event.game.name : 'Jeu non défini'}
+                    name={event.title}
+                    type={
+                      event.platform
+                        ? event.platform.name
+                        : 'Plateforme non définie'
+                    }
+                    date={event.start_date}
+                    countdown={calculateDaysLeft(event.start_date)}
+                  />
+                </NavLink>
+              ))}
+        </Box>
       </Box>
 
       <Box className="container">
         <Flex justify="space-between" align="center" className="title">
-          <Title>Évènements populaires</Title>
+          <Title order={2}>Évènements Populaires</Title>
 
-          <NavLink to="/events/populars" className="categories__title-more">
+          <NavLink
+            to={isConnected ? '/event/create' : '/events/populars'}
+            className="categories__title-more link"
+          >
             Voir plus
           </NavLink>
         </Flex>
 
-        <div className="categories-grid">
-          {sortedEvents.slice(0, 3).map((event) => (
-            <NavLink
-              to={`/event/${event.title_slug}`}
-              key={event.id}
-              className="eventhumb-link"
-            >
-              <EventThumb
-                image={event.banner || 'url_de_limage_par_defaut'}
-                game={event.game ? event.game.name : 'Jeu non défini'}
-                name={event.title}
-                type={
-                  event.platform
-                    ? event.platform.name
-                    : 'Plateforme non définie'
-                }
-                date={event.start_date}
-                countdown={calculateDaysLeft(event.start_date)}
-              />
-            </NavLink>
-          ))}
-        </div>
+        <Box className="categories-grid">
+          {isLoading
+            ? Array.from({ length: 3 }, (_, index) => (
+                <Skeleton key={index} height={'15rem'} radius="md" />
+              ))
+            : sortedEvents.slice(0, 3).map((event) => (
+                <NavLink
+                  to={`/event/${event.title_slug}`}
+                  key={event.id}
+                  className="eventhumb-link"
+                >
+                  <Skeleton visible={isLoading}>
+                    <EventThumb
+                      image={event.banner || 'url_de_limage_par_defaut'}
+                      game={event.game ? event.game.name : 'Jeu non défini'}
+                      name={event.title}
+                      type={
+                        event.platform
+                          ? event.platform.name
+                          : 'Plateforme non définie'
+                      }
+                      date={event.start_date}
+                      countdown={calculateDaysLeft(event.start_date)}
+                    />
+                  </Skeleton>
+                </NavLink>
+              ))}
+        </Box>
       </Box>
 
       {isConnected && favGames.length > 0 && (
         <Box className="container">
           <Box className="title">
-            <Title>Mes jeux préférés</Title>
+            <Title order={2}>Mes jeux préférés</Title>
           </Box>
 
-          <div className="games__grid">
+          <Box className="games__grid">
             {favGames.slice(0, 4).map((game) => (
               <NavLink to="/game/events" key={game.id}>
                 <Image src={game.thumbnail} h={350} radius="md" sizes="cover" />
               </NavLink>
             ))}
-          </div>
+          </Box>
         </Box>
       )}
     </>

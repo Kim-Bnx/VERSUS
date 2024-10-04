@@ -1,4 +1,4 @@
-import { UserData } from './user';
+import { UserData } from './types';
 
 export type NewEventState = {
   title: string;
@@ -7,6 +7,7 @@ export type NewEventState = {
   end_date: string;
   isLoading: boolean;
   error: string | null;
+  success: string | null;
 };
 
 export type NewEvent = {
@@ -16,13 +17,12 @@ export type NewEvent = {
   user_id: number;
 };
 
-// the ? are temporary
 export type Event = {
   id: number;
   title: string;
-  title_slug?: string;
-  start_date?: string | Date;
-  end_date?: string | Date;
+  title_slug: string;
+  start_date: string;
+  end_date: string;
   banner?: string;
   thumbnail?: string;
   location?: string;
@@ -30,23 +30,28 @@ export type Event = {
   description?: string;
   rules?: string;
   contact?: string;
-  type_event?: string;
-  type_event_id?: number;
-  game?: {
-    id: null | number;
-    name: string;
-    thumbnail: null | string;
-    createdAt: null | string;
-    updatedAt: null | string;
-  };
-  game_id?: number;
-  platform?: {
-    id: null | number;
+  type_id?: number;
+  event_type?: {
+    id: number;
     name: string;
     createdAt: string;
-    updatedAt: null | string;
+    updatedAt: string;
+  };
+  game_id?: number;
+  game?: {
+    id: number;
+    name: string;
+    thumbnail: string;
+    createdAt: string;
+    updatedAt: string;
   };
   platform_id?: number;
+  platform?: {
+    id: number;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  };
   user_id?: number;
   organizer: UserData;
   participants: UserData[];

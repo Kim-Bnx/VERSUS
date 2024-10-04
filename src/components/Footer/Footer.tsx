@@ -3,7 +3,7 @@ import './Footer.scss';
 
 function Footer() {
   return (
-    <div className="footer full-width content-grid">
+    <Box className="footer full-width content-grid">
       <Flex justify="space-between" align="end" wrap="wrap" gap="md">
         <Box className="footer__versus">
           <Title order={1}>Versus</Title>
@@ -19,7 +19,7 @@ function Footer() {
           <Anchor href="/terms">Mentions légales</Anchor>
         </Flex>
       </Flex>
-    </div>
+    </Box>
   );
 }
 

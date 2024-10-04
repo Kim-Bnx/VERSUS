@@ -2,31 +2,33 @@ import { configureStore } from '@reduxjs/toolkit';
 import loginReducer from './reducers/login';
 import eventReducer from './reducers/event';
 import eventsReducer from './reducers/events';
-import newEventReducer from './reducers/createEvent';
+import createEventReducer from './reducers/createEvent';
 import deleteEventReducer from './reducers/deleteEvent';
 import publishEventReducer from './reducers/publishEvent';
 import updateEventReducer from './reducers/updateEvent';
 import registerEventReducer from './reducers/registerEvent';
 import unregisterEventReducer from './reducers/unregisterEvent';
+import eventTypesReducer from './reducers/eventTypes';
 import searchReducer from './reducers/search';
 import signupReducer from './reducers/signup';
 import loggedUserReducer from './reducers/loggedUser';
-import loggedUserUpdateReducer from './reducers/loggedUserUpdate';
+import updateLoggedUserReducer from './reducers/updateLoggedUser';
 import userFavGamesReducer from './reducers/userFavGames';
 import userGamesReducer from './reducers/userGames';
 import userPlatformsReducer from './reducers/userPlatforms';
 import profileReducer from './reducers/profile';
-import gameReducer from './reducers/game';
-import platformReducer from './reducers/platform';
-import passwordChangeReducer from './reducers/passwordChange';
+import gamesReducer from './reducers/games';
+import platformsReducer from './reducers/platforms';
+import updatePasswordReducer from './reducers/updatePassword';
 import userEventsReducer from './reducers/userEvents';
+import resetPasswordReducer from './reducers/resetPassword';
 
 const store = configureStore({
   reducer: {
     login: loginReducer,
     event: eventReducer,
     events: eventsReducer,
-    newEvent: newEventReducer,
+    createEvent: createEventReducer,
     updatedEvent: updateEventReducer,
     deleteEvent: deleteEventReducer,
     publishEvent: publishEventReducer,
@@ -36,14 +38,16 @@ const store = configureStore({
     signup: signupReducer,
     loggedUser: loggedUserReducer,
     userEvents: userEventsReducer,
-    loggedUserUpdate: loggedUserUpdateReducer,
+    updateLoggedUser: updateLoggedUserReducer,
     userFavGames: userFavGamesReducer,
     userGames: userGamesReducer,
     userPlatforms: userPlatformsReducer,
     profile: profileReducer,
-    game: gameReducer,
-    platform: platformReducer,
-    passwordChange: passwordChangeReducer,
+    games: gamesReducer,
+    platforms: platformsReducer,
+    eventTypes: eventTypesReducer,
+    updatePassword: updatePasswordReducer,
+    resetPassword: resetPasswordReducer,
   },
 });
 

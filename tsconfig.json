@@ -13,12 +13,11 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "noEmit": false,
+    "jsx": "react-jsx",
+    "outDir": "./dist",  // This ensures all JS files are emitted in 'dist'
   },
   "include": [
-    "vite.config.ts",
-    ".eslintrc.cjs",
     "src"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]

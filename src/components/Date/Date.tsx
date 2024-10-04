@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
@@ -10,14 +11,14 @@ dayjs.extend(localizedFormat);
 dayjs.locale('fr');
 
 type DateProps = {
-  startDate: Date;
-  endDate?: Date;
+  startDate: string;
+  endDate?: string;
 };
 
-function Date({ startDate, endDate }: DateProps) {
+function Date({ startDate, endDate = 'N/A' }: DateProps) {
   const startDateFormating = dayjs(startDate).format('DD MMMM YYYY');
 
-  if (endDate) {
+  if (endDate !== 'N/A') {
     const endDateFormating = dayjs(endDate).format('DD MMMM YYYY');
     return (
       <span>
@@ -30,8 +31,3 @@ function Date({ startDate, endDate }: DateProps) {
 }
 
 export default Date;
-
-// HOW TO USE <DATE /> COMPONENT
-// It except 2 props
-// startDate="string" (required)
-// endDate="string" (optional)

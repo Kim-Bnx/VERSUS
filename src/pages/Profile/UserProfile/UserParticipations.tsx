@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Anchor, Space, Title } from '@mantine/core';
+import { Anchor, Box, Space, Title } from '@mantine/core';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { profile } from '../../../store/reducers/profile';
 import EventThumb from '../../../components/Element/Thumb/Event';
@@ -19,19 +19,21 @@ function UserParticipations() {
   }, [dispatch, username]);
 
   // function that calculates the number of days left until the event starts
-  const calculateDaysLeft = (startDate) => {
+  const calculateDaysLeft = (startDate: string) => {
     const now = new Date();
-    const start = new Date(startDate);
-    const difference = start - now;
+    const start = new Date(startDate); // Convert the string to a Date object
+    const difference = start.getTime() - now.getTime();
     const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
     return daysLeft > 0 ? daysLeft : 0;
   };
 
   return (
     <>
-      <Title order={1}>Mes participations</Title>
-      <Space h="xs" />
-      <div className="categories-grid">
+      <Title order={2} mb="1rem">
+        Mes participations à des évènements
+      </Title>
+
+      <Box className="categories-grid">
         {userParticipations.map((event) => (
           <Anchor
             unstyled
@@ -51,7 +53,7 @@ function UserParticipations() {
             />
           </Anchor>
         ))}
-      </div>
+      </Box>
     </>
   );
 }

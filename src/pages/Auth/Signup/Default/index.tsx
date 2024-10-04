@@ -1,4 +1,5 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+// src/components/Default/Default.tsx
+import React from 'react';
 import {
   Anchor,
   Text,
@@ -9,9 +10,14 @@ import {
   Flex,
   PasswordInput,
 } from '@mantine/core';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { signup } from '../../../../store/reducers/signup';
 import { login } from '../../../../store/reducers/login';
+import signupSchema, {
+  SignupSchemaType,
+} from '../../../../validations/signupSchema';
 
 type DefaultProps = {
   onChangeView: (step: string) => void;
@@ -19,88 +25,101 @@ type DefaultProps = {
 
 function Default({ onChangeView }: DefaultProps) {
   const dispatch = useAppDispatch();
-  const [emailValue, setEmailValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
-  const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignupSchemaType>({
+    resolver: zodResolver(signupSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+      confirmation: '',
+    },
+  });
 
   const errorMsg = useAppSelector((state) => state.signup.error);
 
-  const handleChangeEmailValue = (event: ChangeEvent<HTMLInputElement>) => {
-    const email = event.target.value;
-
-    setEmailValue(email);
-  };
-
-  const handleChangePasswordValue = (event: ChangeEvent<HTMLInputElement>) => {
-    const password = event.target.value;
-    setPasswordValue(password);
-  };
-
-  const handleChangeConfirmPasswordValue = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    const confirmPassword = event.target.value;
-
-    setConfirmPasswordValue(confirmPassword);
-  };
-
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    dispatch(
-      signup({
-        email: emailValue,
-        password: passwordValue,
-        confirmation: confirmPasswordValue,
-      })
-    )
-      .unwrap()
-      .then(() => {
-        dispatch(
-          login({
-            email: emailValue,
-            password: passwordValue,
-          })
-        );
-
-        onChangeView('profile');
-      });
+  const onSubmit = async (data: SignupSchemaType) => {
+    try {
+      await dispatch(signup(data)).unwrap();
+      await dispatch(login({ email: data.email, password: data.password }));
+      onChangeView('profile');
+    } catch (error) {
+      console.error('Signup failed:', error);
+    }
   };
 
   return (
     <Box>
-      <Title className="title" size="2.25rem" c="#FFF">
+      <Title order={2} className="title" size="2.25rem" c="#FFF">
         Inscription
       </Title>
 
-      <Box component="form" className="section" onSubmit={handleFormSubmit}>
-        <TextInput
-          onChange={handleChangeEmailValue}
-          label="Email"
-          placeholder="Saisissez votre email"
-          c="#FFF"
+      <Box
+        component="form"
+        className="section"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              label="Adresse Email"
+              placeholder="Saisissez votre adresse email"
+              c="#FFF"
+              className={`${errors.email ? 'input-error' : ''}`}
+            />
+          )}
         />
 
-        <PasswordInput
-          onChange={handleChangePasswordValue}
-          label="Mot de passe"
-          placeholder="Saisissez votre mot de passe"
-          c="#FFF"
-          mt="1rem"
+        <Box className="error-message">
+          {errors.email && <Text>{errors.email.message}</Text>}
+        </Box>
+
+        <Controller
+          name="password"
+          control={control}
+          render={({ field }) => (
+            <PasswordInput
+              {...field}
+              label="Mot de passe"
+              placeholder="Saisissez votre mot de passe"
+              c="#FFF"
+              className={`${errors.password ? 'input-error' : ''}`}
+            />
+          )}
         />
 
-        <PasswordInput
-          onChange={handleChangeConfirmPasswordValue}
-          label="Confirmation de mot de passe"
-          placeholder="Saisissez votre mot de passe"
-          c="#FFF"
-          mt="1rem"
+        <Box className="error-message">
+          {errors.password && <Text>{errors.password?.message}</Text>}
+        </Box>
+
+        <Controller
+          name="confirmation"
+          control={control}
+          render={({ field }) => (
+            <PasswordInput
+              {...field}
+              label="Confirmation du mot de passe"
+              placeholder="Ressaisissez votre mot de passe"
+              className={`${errors.confirmation ? 'input-error' : ''}`}
+              c="#FFF"
+            />
+          )}
         />
 
-        {errorMsg && <Text>{errorMsg}</Text>}
+        <Box className="error-message last-error-box">
+          {errors.confirmation && <Text>{errors.confirmation?.message}</Text>}
+          {errorMsg && <Text>{errorMsg}</Text>}
+        </Box>
 
-        <Flex mt="2rem" justify="flex-end">
-          <Button type="submit">S&apos;inscrire</Button>
+        <Flex justify="flex-end">
+          <Button type="submit" className="button">
+            S&apos;inscrire
+          </Button>
         </Flex>
       </Box>
 
@@ -109,12 +128,18 @@ function Default({ onChangeView }: DefaultProps) {
           Vous avez déjà un compte ?
         </Text>
 
-        <Button variant="outline" fullWidth>
-          <Anchor href="/sign-in">Se connecter</Anchor>
+        <Button
+          component="a"
+          href="/sign-in"
+          variant="outline"
+          fullWidth
+          className="last-cta button"
+        >
+          Me connecter avec mon compte
         </Button>
 
-        <Anchor href="/" underline="always" c="#FFF" fz="0.9rem">
-          Retour à la page d&apos;acccueil
+        <Anchor href="/" className="link" c="#FFF" fz="0.9rem">
+          Retourner à la page d&apos;accueil
         </Anchor>
       </Flex>
     </Box>

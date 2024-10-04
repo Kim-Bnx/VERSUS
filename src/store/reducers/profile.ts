@@ -18,7 +18,6 @@ const initialState: ProfileState = {
 
 export const profile = createAsyncThunk('profile', async (username: string) => {
   const { data } = await axiosInstance.get(`/user/${username}`);
-
   return data;
 });
 
@@ -38,13 +37,11 @@ const profileSlice = createSlice({
         const payloadKeys = Object.keys(action.payload);
 
         payloadKeys.forEach((key) => {
-          if (action.payload[key] !== null) {
-            state.data[key] = action.payload[key];
-          }
+          // Cast state.data to allow dynamic key access
+          (state.data as { [key: string]: any })[key] = action.payload[key];
         });
       });
   },
 });
 
-// export const {  } = profileSlice.actions;
 export default profileSlice.reducer;
